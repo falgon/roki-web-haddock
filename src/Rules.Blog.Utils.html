@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Rules.Blog.Utils</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-2"></span><span>    </span><span class="annot"><a href="Rules.Blog.Utils.html#appendFooter"><span class="hs-identifier">appendFooter</span></a></span><span>
+</span><span id="line-3"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-4"></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Except</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">MonadError</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Binary</span></span><span>          </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Binary</span></span><span class="hs-special">)</span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Time.Format</span></span><span>     </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">TimeLocale</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">formatTime</span></span><span class="hs-special">)</span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Time.LocalTime</span></span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">TimeZone</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">utcToLocalTime</span></span><span class="hs-special">)</span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Typeable</span></span><span>        </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Typeable</span></span><span class="hs-special">)</span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>
+</span><span id="line-11"></span><span>
+</span><span id="line-12"></span><span id="local-6989586621679285390"><span class="annot"><a href="Rules.Blog.Utils.html#appendFooter"><span class="hs-identifier hs-type">appendFooter</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Binary</span></span><span> </span><span class="annot"><a href="#local-6989586621679285390"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Typeable</span></span><span> </span><span class="annot"><a href="#local-6989586621679285390"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Semigroup</span></span><span> </span><span class="annot"><a href="#local-6989586621679285390"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-13"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-14"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">TimeLocale</span></span><span>
+</span><span id="line-15"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">TimeZone</span></span><span>
+</span><span id="line-16"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><a href="#local-6989586621679285390"><span class="hs-identifier hs-type">a</span></a></span><span>
+</span><span id="line-17"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Compiler</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><a href="#local-6989586621679285390"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">)</span></span><span>
+</span><span id="line-18"></span><span id="appendFooter"><span class="annot"><span class="annottext">appendFooter :: forall a.
+(Binary a, Typeable a, Semigroup a) =&gt;
+String -&gt; TimeLocale -&gt; TimeZone -&gt; Item a -&gt; Compiler (Item a)
+</span><a href="Rules.Blog.Utils.html#appendFooter"><span class="hs-identifier hs-var hs-var">appendFooter</span></a></span></span><span> </span><span id="local-6989586621679285453"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679285453"><span class="hs-identifier hs-var">blogName</span></a></span></span><span> </span><span id="local-6989586621679285454"><span class="annot"><span class="annottext">TimeLocale
+</span><a href="#local-6989586621679285454"><span class="hs-identifier hs-var">locale</span></a></span></span><span> </span><span id="local-6989586621679285455"><span class="annot"><span class="annottext">TimeZone
+</span><a href="#local-6989586621679285455"><span class="hs-identifier hs-var">zone</span></a></span></span><span> </span><span id="local-6989586621679285456"><span class="annot"><span class="annottext">Item a
+</span><a href="#local-6989586621679285456"><span class="hs-identifier hs-var">item</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-19"></span><span>    </span><span id="local-6989586621679285457"><span class="annot"><span class="annottext">Maybe UTCTime
+</span><a href="#local-6989586621679285457"><span class="hs-identifier hs-var">utc</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(UTCTime -&gt; Maybe UTCTime)
+-&gt; Compiler UTCTime -&gt; Compiler (Maybe UTCTime)
+forall a b. (a -&gt; b) -&gt; Compiler a -&gt; Compiler b
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">UTCTime -&gt; Maybe UTCTime
+forall a. a -&gt; Maybe a
+</span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">TimeLocale -&gt; Identifier -&gt; Compiler UTCTime
+forall (m :: * -&gt; *).
+(MonadMetadata m, MonadFail m) =&gt;
+TimeLocale -&gt; Identifier -&gt; m UTCTime
+</span><span class="hs-identifier hs-var">getItemUTC</span></span><span> </span><span class="annot"><span class="annottext">TimeLocale
+</span><a href="#local-6989586621679285454"><span class="hs-identifier hs-var">locale</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Item a -&gt; Identifier
+forall a. Item a -&gt; Identifier
+</span><span class="hs-identifier hs-var">itemIdentifier</span></span><span> </span><span class="annot"><span class="annottext">Item a
+</span><a href="#local-6989586621679285456"><span class="hs-identifier hs-var">item</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-20"></span><span>        </span><span class="annot"><span class="annottext">Compiler (Maybe UTCTime)
+-&gt; ([String] -&gt; Compiler (Maybe UTCTime))
+-&gt; Compiler (Maybe UTCTime)
+forall a. Compiler a -&gt; ([String] -&gt; Compiler a) -&gt; Compiler a
+forall e (m :: * -&gt; *) a.
+MonadError e m =&gt;
+m a -&gt; (e -&gt; m a) -&gt; m a
+</span><span class="hs-operator hs-var">`catchError`</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Maybe UTCTime) -&gt; [String] -&gt; Compiler (Maybe UTCTime)
+forall a b. a -&gt; b -&gt; a
+</span><span class="hs-identifier hs-var">const</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Maybe UTCTime -&gt; Compiler (Maybe UTCTime)
+forall a. a -&gt; Compiler a
+forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
+</span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">Maybe UTCTime
+forall a. Maybe a
+</span><span class="hs-identifier hs-var">Nothing</span></span><span class="hs-special">)</span><span>
+</span><span id="line-21"></span><span>    </span><span class="annot"><span class="annottext">Maybe String -&gt; Item a -&gt; Compiler (Item a)
+forall {b}.
+(Binary b, Typeable b, Semigroup b) =&gt;
+Maybe String -&gt; Item b -&gt; Compiler (Item b)
+</span><a href="#local-6989586621679285462"><span class="hs-identifier hs-var">appendFooterWith</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(UTCTime -&gt; String) -&gt; Maybe UTCTime -&gt; Maybe String
+forall a b. (a -&gt; b) -&gt; Maybe a -&gt; Maybe b
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">TimeLocale -&gt; String -&gt; LocalTime -&gt; String
+forall t. FormatTime t =&gt; TimeLocale -&gt; String -&gt; t -&gt; String
+</span><span class="hs-identifier hs-var">formatTime</span></span><span> </span><span class="annot"><span class="annottext">TimeLocale
+</span><a href="#local-6989586621679285454"><span class="hs-identifier hs-var">locale</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;%Y&quot;</span></span><span> </span><span class="annot"><span class="annottext">(LocalTime -&gt; String)
+-&gt; (UTCTime -&gt; LocalTime) -&gt; UTCTime -&gt; String
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">TimeZone -&gt; UTCTime -&gt; LocalTime
+</span><span class="hs-identifier hs-var">utcToLocalTime</span></span><span> </span><span class="annot"><span class="annottext">TimeZone
+</span><a href="#local-6989586621679285455"><span class="hs-identifier hs-var">zone</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Maybe UTCTime
+</span><a href="#local-6989586621679285457"><span class="hs-identifier hs-var">utc</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Item a
+</span><a href="#local-6989586621679285456"><span class="hs-identifier hs-var">item</span></a></span><span>
+</span><span id="line-22"></span><span>    </span><span class="hs-keyword">where</span><span>
+</span><span id="line-23"></span><span>        </span><span id="local-6989586621679285462"><span class="annot"><span class="annottext">appendFooterWith :: Maybe String -&gt; Item b -&gt; Compiler (Item b)
+</span><a href="#local-6989586621679285462"><span class="hs-identifier hs-var hs-var">appendFooterWith</span></a></span></span><span> </span><span id="local-6989586621679285474"><span class="annot"><span class="annottext">Maybe String
+</span><a href="#local-6989586621679285474"><span class="hs-identifier hs-var">y</span></a></span></span><span> </span><span id="local-6989586621679285475"><span class="annot"><span class="annottext">Item b
+</span><a href="#local-6989586621679285475"><span class="hs-identifier hs-var">item'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-24"></span><span>            </span><span id="local-6989586621679285476"><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679285476"><span class="hs-identifier hs-var">footer</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Identifier -&gt; Compiler b
+forall a. (Binary a, Typeable a) =&gt; Identifier -&gt; Compiler a
+</span><span class="hs-identifier hs-var">loadBody</span></span><span> </span><span class="annot"><span class="annottext">(Identifier -&gt; Compiler b) -&gt; Identifier -&gt; Compiler b
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Maybe String -&gt; Identifier -&gt; Identifier
+</span><span class="hs-identifier hs-var">setVersion</span></span><span> </span><span class="annot"><span class="annottext">Maybe String
+</span><a href="#local-6989586621679285474"><span class="hs-identifier hs-var">y</span></a></span><span> </span><span class="annot"><span class="annottext">(Identifier -&gt; Identifier) -&gt; Identifier -&gt; Identifier
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Identifier
+</span><span class="hs-identifier hs-var">fromFilePath</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679285453"><span class="hs-identifier hs-var">blogName</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;-footer.html&quot;</span></span><span class="hs-special">)</span><span>
+</span><span id="line-25"></span><span>            </span><span class="annot"><span class="annottext">(b -&gt; Compiler b) -&gt; Item b -&gt; Compiler (Item b)
+forall a b. (a -&gt; Compiler b) -&gt; Item a -&gt; Compiler (Item b)
+</span><span class="hs-identifier hs-var">withItemBody</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">b -&gt; Compiler b
+forall a. a -&gt; Compiler a
+forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
+</span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">(b -&gt; Compiler b) -&gt; (b -&gt; b) -&gt; b -&gt; Compiler b
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">b -&gt; b -&gt; b
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">b
+</span><a href="#local-6989586621679285476"><span class="hs-identifier hs-var">footer</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Item b
+</span><a href="#local-6989586621679285475"><span class="hs-identifier hs-var">item'</span></a></span><span>
+</span><span id="line-26"></span></pre></body></html>

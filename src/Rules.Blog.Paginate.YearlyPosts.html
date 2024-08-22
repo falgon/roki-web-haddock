@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Rules.Blog.Paginate.YearlyPosts</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-2"></span><span>    </span><span class="annot"><a href="Rules.Blog.Paginate.YearlyPosts.html#build"><span class="hs-identifier">build</span></a></span><span>
+</span><span id="line-3"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-4"></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Reader</span></span><span>      </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">asks</span></span><span class="hs-special">)</span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Trans</span></span><span>       </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">MonadTrans</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>
+</span><span id="line-8"></span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Archives.html"><span class="hs-identifier">Archives</span></a></span><span>                  </span><span class="hs-special">(</span><span class="annot"><a href="Archives.html#YearlyArchives"><span class="hs-identifier">YearlyArchives</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Archives.html#archivesRules"><span class="hs-identifier">archivesRules</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.Blog.html"><span class="hs-identifier">Config.Blog</span></a></span><span>               </span><span class="hs-special">(</span><span class="annot"><a href="Config.Blog.html#BlogConfig"><span class="hs-identifier">BlogConfig</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.ListPage.html"><span class="hs-identifier">Rules.Blog.ListPage</span></a></span><span>       </span><span class="hs-special">(</span><span class="annot"><a href="Rules.Blog.ListPage.html#ListPageOpts"><span class="hs-identifier">ListPageOpts</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Rules.Blog.ListPage.html#listPage"><span class="hs-identifier">listPage</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Paginate.Utils.html"><span class="hs-identifier">Rules.Blog.Paginate.Utils</span></a></span><span>
+</span><span id="line-13"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Type.html"><span class="hs-identifier">Rules.Blog.Type</span></a></span><span>
+</span><span id="line-14"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.html"><span class="hs-identifier">Vendor.FontAwesome</span></a></span><span>        </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">FA</span></span><span>
+</span><span id="line-15"></span><span>
+</span><span id="line-16"></span><span class="annot"><a href="Rules.Blog.Paginate.YearlyPosts.html#build"><span class="hs-identifier hs-type">build</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#FontAwesomeIcons"><span class="hs-identifier hs-type">FA.FontAwesomeIcons</span></a></span><span>
+</span><span id="line-17"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Tags</span></span><span>
+</span><span id="line-18"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.ListPage.html#ListPageOpts"><span class="hs-identifier hs-type">ListPageOpts</span></a></span><span>
+</span><span id="line-19"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="annot"><a href="Archives.html#YearlyArchives"><span class="hs-identifier hs-type">YearlyArchives</span></a></span><span>
+</span><span id="line-20"></span><span id="build"><span class="annot"><span class="annottext">build :: FontAwesomeIcons
+-&gt; Tags
+-&gt; ListPageOpts
+-&gt; BlogConfReader Rules Rules YearlyArchives
+</span><a href="Rules.Blog.Paginate.YearlyPosts.html#build"><span class="hs-identifier hs-var hs-var">build</span></a></span></span><span> </span><span id="local-6989586621679289306"><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679289306"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span id="local-6989586621679289307"><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679289307"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span id="local-6989586621679289308"><span class="annot"><span class="annottext">ListPageOpts
+</span><a href="#local-6989586621679289308"><span class="hs-identifier hs-var">listPageOpts</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-21"></span><span>    </span><span id="local-6989586621679289309"><span class="annot"><span class="annottext">YearlyArchives
+</span><a href="#local-6989586621679289309"><span class="hs-identifier hs-var">yearlyArchives</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig Rules -&gt; Rules YearlyArchives)
+-&gt; ReaderT (BlogConfig Rules) Rules (Rules YearlyArchives)
+forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
+</span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig Rules -&gt; Rules YearlyArchives
+forall (m :: * -&gt; *). BlogConfig m -&gt; m YearlyArchives
+</span><a href="Config.Blog.html#blogYearlyArchivesBuilder"><span class="hs-identifier hs-var">blogYearlyArchivesBuilder</span></a></span><span> </span><span class="annot"><span class="annottext">ReaderT (BlogConfig Rules) Rules (Rules YearlyArchives)
+-&gt; (Rules YearlyArchives
+    -&gt; BlogConfReader Rules Rules YearlyArchives)
+-&gt; BlogConfReader Rules Rules YearlyArchives
+forall a b.
+ReaderT (BlogConfig Rules) Rules a
+-&gt; (a -&gt; ReaderT (BlogConfig Rules) Rules b)
+-&gt; ReaderT (BlogConfig Rules) Rules b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">Rules YearlyArchives -&gt; BlogConfReader Rules Rules YearlyArchives
+forall (m :: * -&gt; *) a.
+Monad m =&gt;
+m a -&gt; ReaderT (BlogConfig Rules) m a
+forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
+(MonadTrans t, Monad m) =&gt;
+m a -&gt; t m a
+</span><span class="hs-identifier hs-var">lift</span></span><span>
+</span><span id="line-22"></span><span>    </span><span id="local-6989586621679289312"><span class="annot"><span class="annottext">[Identifier] -&gt; Rules [[Identifier]]
+</span><a href="#local-6989586621679289312"><span class="hs-identifier hs-var">grouper'</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">BlogConfReader Rules Rules ([Identifier] -&gt; Rules [[Identifier]])
+forall (m :: * -&gt; *) (f :: * -&gt; *) (n :: * -&gt; *).
+(Monad m, MonadMetadata f, MonadFail f) =&gt;
+BlogConfReader n m ([Identifier] -&gt; f [[Identifier]])
+</span><a href="Rules.Blog.Paginate.Utils.html#grouper"><span class="hs-identifier hs-var">grouper</span></a></span><span>
+</span><span id="line-23"></span><span>    </span><span id="local-6989586621679289314"><span class="annot"><span class="annottext">FilePath -&gt; PageNumber -&gt; Identifier
+</span><a href="#local-6989586621679289314"><span class="hs-identifier hs-var">makeId'</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig Rules -&gt; FilePath -&gt; FilePath)
+-&gt; BlogConfReader
+     Rules Rules (FilePath -&gt; PageNumber -&gt; Identifier)
+forall (n :: * -&gt; *) (m :: * -&gt; *) a.
+Monad n =&gt;
+(BlogConfig m -&gt; a -&gt; FilePath)
+-&gt; BlogConfReader m n (a -&gt; PageNumber -&gt; Identifier)
+</span><a href="Rules.Blog.Paginate.Utils.html#makeId"><span class="hs-identifier hs-var">makeId</span></a></span><span> </span><span class="annot"><span class="annottext">BlogConfig Rules -&gt; FilePath -&gt; FilePath
+forall (m :: * -&gt; *). BlogConfig m -&gt; FilePath -&gt; FilePath
+</span><a href="Config.Blog.html#blogYearlyPagePath"><span class="hs-identifier hs-var">blogYearlyPagePath</span></a></span><span>
+</span><span id="line-24"></span><span>    </span><span class="annot"><span class="annottext">Rules () -&gt; ReaderT (BlogConfig Rules) Rules ()
+forall (m :: * -&gt; *) a.
+Monad m =&gt;
+m a -&gt; ReaderT (BlogConfig Rules) m a
+forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
+(MonadTrans t, Monad m) =&gt;
+m a -&gt; t m a
+</span><span class="hs-identifier hs-var">lift</span></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; ReaderT (BlogConfig Rules) Rules ())
+-&gt; Rules () -&gt; ReaderT (BlogConfig Rules) Rules ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">YearlyArchives -&gt; (FilePath -&gt; Pattern -&gt; Rules ()) -&gt; Rules ()
+forall a. Archives a -&gt; (a -&gt; Pattern -&gt; Rules ()) -&gt; Rules ()
+</span><a href="Archives.html#archivesRules"><span class="hs-identifier hs-var">archivesRules</span></a></span><span> </span><span class="annot"><span class="annottext">YearlyArchives
+</span><a href="#local-6989586621679289309"><span class="hs-identifier hs-var">yearlyArchives</span></a></span><span> </span><span class="annot"><span class="annottext">((FilePath -&gt; Pattern -&gt; Rules ()) -&gt; Rules ())
+-&gt; (FilePath -&gt; Pattern -&gt; Rules ()) -&gt; Rules ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679289317"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679289317"><span class="hs-identifier hs-var">year</span></a></span></span><span> </span><span id="local-6989586621679289318"><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679289318"><span class="hs-identifier hs-var">pat</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-25"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679289319"><span class="annot"><span class="annottext">title' :: FilePath
+</span><a href="#local-6989586621679289319"><span class="hs-identifier hs-var hs-var">title'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+</span><a href="Rules.Blog.Paginate.Utils.html#title"><span class="hs-identifier hs-var">title</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><span class="hs-string">&quot;Yearly&quot;</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679289317"><span class="hs-identifier hs-var">year</span></a></span><span>
+</span><span id="line-26"></span><span>        </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">([Identifier] -&gt; Rules [[Identifier]])
+-&gt; Pattern -&gt; (PageNumber -&gt; Identifier) -&gt; Rules Paginate
+forall (m :: * -&gt; *).
+MonadMetadata m =&gt;
+([Identifier] -&gt; m [[Identifier]])
+-&gt; Pattern -&gt; (PageNumber -&gt; Identifier) -&gt; m Paginate
+</span><span class="hs-identifier hs-var">buildPaginateWith</span></span><span> </span><span class="annot"><span class="annottext">[Identifier] -&gt; Rules [[Identifier]]
+</span><a href="#local-6989586621679289312"><span class="hs-identifier hs-var">grouper'</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679289318"><span class="hs-identifier hs-var">pat</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; PageNumber -&gt; Identifier
+</span><a href="#local-6989586621679289314"><span class="hs-identifier hs-var">makeId'</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679289317"><span class="hs-identifier hs-var">year</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-27"></span><span>            </span><span class="annot"><span class="annottext">Rules Paginate -&gt; (Paginate -&gt; Rules ()) -&gt; Rules ()
+forall a b. Rules a -&gt; (a -&gt; Rules b) -&gt; Rules b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">Maybe FilePath
+-&gt; FontAwesomeIcons -&gt; Tags -&gt; ListPageOpts -&gt; Paginate -&gt; Rules ()
+</span><a href="Rules.Blog.ListPage.html#listPage"><span class="hs-identifier hs-var">listPage</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
+forall a. a -&gt; Maybe a
+</span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679289319"><span class="hs-identifier hs-var">title'</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679289306"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679289307"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
+</span><a href="#local-6989586621679289308"><span class="hs-identifier hs-var">listPageOpts</span></a></span><span>
+</span><span id="line-28"></span><span>    </span><span class="annot"><span class="annottext">YearlyArchives -&gt; BlogConfReader Rules Rules YearlyArchives
+forall a. a -&gt; ReaderT (BlogConfig Rules) Rules a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">YearlyArchives
+</span><a href="#local-6989586621679289309"><span class="hs-identifier hs-var">yearlyArchives</span></a></span><span>
+</span><span id="line-29"></span></pre></body></html>

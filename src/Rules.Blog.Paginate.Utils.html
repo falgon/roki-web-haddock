@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Rules.Blog.Paginate.Utils</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-2"></span><span>    </span><span class="annot"><a href="Rules.Blog.Paginate.Utils.html#grouper"><span class="hs-identifier">grouper</span></a></span><span>
+</span><span id="line-3"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Rules.Blog.Paginate.Utils.html#makeId"><span class="hs-identifier">makeId</span></a></span><span>
+</span><span id="line-4"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Rules.Blog.Paginate.Utils.html#title"><span class="hs-identifier">title</span></a></span><span>
+</span><span id="line-5"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-6"></span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Reader</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">asks</span></span><span class="hs-special">)</span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>
+</span><span id="line-9"></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.Blog.html"><span class="hs-identifier">Config.Blog</span></a></span><span>          </span><span class="hs-special">(</span><span class="annot"><a href="Config.Blog.html#BlogConfig"><span class="hs-identifier">BlogConfig</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Type.html"><span class="hs-identifier">Rules.Blog.Type</span></a></span><span>
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Utils.html"><span class="hs-identifier">Utils</span></a></span><span>                </span><span class="hs-special">(</span><span class="annot"><a href="Utils.Hakyll.html#makePageIdentifier"><span class="hs-identifier">makePageIdentifier</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span id="local-6989586621679285776"><span id="local-6989586621679285777"><span id="local-6989586621679285779"><span class="annot"><a href="Rules.Blog.Paginate.Utils.html#grouper"><span class="hs-identifier hs-type">grouper</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679285776"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadMetadata</span></span><span> </span><span class="annot"><a href="#local-6989586621679285777"><span class="hs-identifier hs-type">f</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadFail</span></span><span> </span><span class="annot"><a href="#local-6989586621679285777"><span class="hs-identifier hs-type">f</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-15"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679285779"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679285776"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Identifier</span></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679285777"><span class="hs-identifier hs-type">f</span></a></span><span> </span><span class="hs-special">[</span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Identifier</span></span><span class="hs-special">]</span><span class="hs-special">]</span><span class="hs-special">)</span></span></span></span><span>
+</span><span id="line-16"></span><span id="grouper"><span class="annot"><span class="annottext">grouper :: forall (m :: * -&gt; *) (f :: * -&gt; *) (n :: * -&gt; *).
+(Monad m, MonadMetadata f, MonadFail f) =&gt;
+BlogConfReader n m ([Identifier] -&gt; f [[Identifier]])
+</span><a href="Rules.Blog.Paginate.Utils.html#grouper"><span class="hs-identifier hs-var hs-var">grouper</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; [Identifier] -&gt; f [[Identifier]])
+-&gt; ReaderT (BlogConfig n) m ([Identifier] -&gt; f [[Identifier]])
+forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
+</span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">((BlogConfig n -&gt; [Identifier] -&gt; f [[Identifier]])
+ -&gt; ReaderT (BlogConfig n) m ([Identifier] -&gt; f [[Identifier]]))
+-&gt; (BlogConfig n -&gt; [Identifier] -&gt; f [[Identifier]])
+-&gt; ReaderT (BlogConfig n) m ([Identifier] -&gt; f [[Identifier]])
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span>
+</span><span id="line-17"></span><span>    </span><span class="annot"><span class="annottext">((f [Identifier] -&gt; f [[Identifier]])
+ -&gt; ([Identifier] -&gt; f [Identifier])
+ -&gt; [Identifier]
+ -&gt; f [[Identifier]])
+-&gt; ([Identifier] -&gt; f [Identifier])
+-&gt; (f [Identifier] -&gt; f [[Identifier]])
+-&gt; [Identifier]
+-&gt; f [[Identifier]]
+forall a b c. (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c
+</span><span class="hs-identifier hs-var">flip</span></span><span> </span><span class="annot"><span class="annottext">(f [Identifier] -&gt; f [[Identifier]])
+-&gt; ([Identifier] -&gt; f [Identifier])
+-&gt; [Identifier]
+-&gt; f [[Identifier]]
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">(.)</span></span><span> </span><span class="annot"><span class="annottext">[Identifier] -&gt; f [Identifier]
+forall (m :: * -&gt; *).
+(MonadMetadata m, MonadFail m) =&gt;
+[Identifier] -&gt; m [Identifier]
+</span><span class="hs-identifier hs-var">sortRecentFirst</span></span><span> </span><span class="annot"><span class="annottext">((f [Identifier] -&gt; f [[Identifier]])
+ -&gt; [Identifier] -&gt; f [[Identifier]])
+-&gt; (BlogConfig n -&gt; f [Identifier] -&gt; f [[Identifier]])
+-&gt; BlogConfig n
+-&gt; [Identifier]
+-&gt; f [[Identifier]]
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">([Identifier] -&gt; [[Identifier]])
+-&gt; f [Identifier] -&gt; f [[Identifier]]
+forall a b. (a -&gt; b) -&gt; f a -&gt; f b
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">(([Identifier] -&gt; [[Identifier]])
+ -&gt; f [Identifier] -&gt; f [[Identifier]])
+-&gt; (BlogConfig n -&gt; [Identifier] -&gt; [[Identifier]])
+-&gt; BlogConfig n
+-&gt; f [Identifier]
+-&gt; f [[Identifier]]
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Int -&gt; [Identifier] -&gt; [[Identifier]]
+forall a. Int -&gt; [a] -&gt; [[a]]
+</span><span class="hs-identifier hs-var">paginateEvery</span></span><span> </span><span class="annot"><span class="annottext">(Int -&gt; [Identifier] -&gt; [[Identifier]])
+-&gt; (BlogConfig n -&gt; Int)
+-&gt; BlogConfig n
+-&gt; [Identifier]
+-&gt; [[Identifier]]
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; Int
+forall (m :: * -&gt; *). BlogConfig m -&gt; Int
+</span><a href="Config.Blog.html#blogPageEntriesNum"><span class="hs-identifier hs-var">blogPageEntriesNum</span></a></span><span>
+</span><span id="line-18"></span><span>
+</span><span id="line-19"></span><span id="local-6989586621679285811"><span id="local-6989586621679285812"><span id="local-6989586621679285813"><span class="annot"><a href="Rules.Blog.Paginate.Utils.html#makeId"><span class="hs-identifier hs-type">makeId</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679285811"><span class="hs-identifier hs-type">n</span></a></span><span>
+</span><span id="line-20"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Config.Blog.html#BlogConfig"><span class="hs-identifier hs-type">BlogConfig</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679285812"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679285813"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span class="hs-special">)</span><span>
+</span><span id="line-21"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679285812"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679285811"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679285813"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">PageNumber</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Identifier</span></span><span class="hs-special">)</span></span></span></span><span>
+</span><span id="line-22"></span><span id="makeId"><span class="annot"><span class="annottext">makeId :: forall (n :: * -&gt; *) (m :: * -&gt; *) a.
+Monad n =&gt;
+(BlogConfig m -&gt; a -&gt; FilePath)
+-&gt; BlogConfReader m n (a -&gt; Int -&gt; Identifier)
+</span><a href="Rules.Blog.Paginate.Utils.html#makeId"><span class="hs-identifier hs-var hs-var">makeId</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">((a -&gt; FilePath) -&gt; a -&gt; Int -&gt; Identifier)
+-&gt; ReaderT (BlogConfig m) n (a -&gt; FilePath)
+-&gt; ReaderT (BlogConfig m) n (a -&gt; Int -&gt; Identifier)
+forall a b.
+(a -&gt; b)
+-&gt; ReaderT (BlogConfig m) n a -&gt; ReaderT (BlogConfig m) n b
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Int -&gt; Identifier
+</span><a href="Utils.Hakyll.html#makePageIdentifier"><span class="hs-identifier hs-var">makePageIdentifier</span></a></span><span> </span><span class="annot"><span class="annottext">(FilePath -&gt; Int -&gt; Identifier)
+-&gt; (a -&gt; FilePath) -&gt; a -&gt; Int -&gt; Identifier
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(ReaderT (BlogConfig m) n (a -&gt; FilePath)
+ -&gt; ReaderT (BlogConfig m) n (a -&gt; Int -&gt; Identifier))
+-&gt; ((BlogConfig m -&gt; a -&gt; FilePath)
+    -&gt; ReaderT (BlogConfig m) n (a -&gt; FilePath))
+-&gt; (BlogConfig m -&gt; a -&gt; FilePath)
+-&gt; ReaderT (BlogConfig m) n (a -&gt; Int -&gt; Identifier)
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; a -&gt; FilePath)
+-&gt; ReaderT (BlogConfig m) n (a -&gt; FilePath)
+forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
+</span><span class="hs-identifier hs-var">asks</span></span><span>
+</span><span id="line-23"></span><span>
+</span><span id="line-24"></span><span class="annot"><a href="Rules.Blog.Paginate.Utils.html#title"><span class="hs-identifier hs-type">title</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-25"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-26"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-27"></span><span id="title"><span class="annot"><span class="annottext">title :: FilePath -&gt; FilePath -&gt; FilePath
+</span><a href="Rules.Blog.Paginate.Utils.html#title"><span class="hs-identifier hs-var hs-var">title</span></a></span></span><span> </span><span id="local-6989586621679285851"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679285851"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span id="local-6989586621679285852"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679285852"><span class="hs-identifier hs-var">tag</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[FilePath] -&gt; FilePath
+</span><span class="hs-identifier hs-var">unwords</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679285851"><span class="hs-identifier hs-var">s</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><span class="hs-string">&quot;posts:&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679285852"><span class="hs-identifier hs-var">tag</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-28"></span><span>
+</span><span id="line-29"></span></pre></body></html>

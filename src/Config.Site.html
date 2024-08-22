@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
+</span><span id="line-2"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Config.Site</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-3"></span><span>    </span><span class="annot"><a href="Config.Site.html#siteName"><span class="hs-identifier">siteName</span></a></span><span>
+</span><span id="line-4"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Site.html#timeZoneJST"><span class="hs-identifier">timeZoneJST</span></a></span><span>
+</span><span id="line-5"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Site.html#defaultTimeLocale%27"><span class="hs-identifier">defaultTimeLocale'</span></a></span><span>
+</span><span id="line-6"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Site.html#GSuite"><span class="hs-identifier">GSuite</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><span id="line-7"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Site.html#gSuiteConf"><span class="hs-identifier">gSuiteConf</span></a></span><span>
+</span><span id="line-8"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-9"></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Time.Format</span></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">TimeLocale</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">defaultTimeLocale</span></span><span class="hs-special">)</span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Time.LocalTime</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">TimeZone</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-12"></span><span>
+</span><span id="line-13"></span><span class="annot"><a href="Config.Site.html#siteName"><span class="hs-identifier hs-type">siteName</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-14"></span><span id="siteName"><span class="annot"><span class="annottext">siteName :: String
+</span><a href="Config.Site.html#siteName"><span class="hs-identifier hs-var hs-var">siteName</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;roki.dev&quot;</span></span><span>
+</span><span id="line-15"></span><span>
+</span><span id="line-16"></span><span class="annot"><a href="Config.Site.html#timeZoneJST"><span class="hs-identifier hs-type">timeZoneJST</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">TimeZone</span></span><span>
+</span><span id="line-17"></span><span id="timeZoneJST"><span class="annot"><span class="annottext">timeZoneJST :: TimeZone
+</span><a href="Config.Site.html#timeZoneJST"><span class="hs-identifier hs-var hs-var">timeZoneJST</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int -&gt; Bool -&gt; String -&gt; TimeZone
+</span><span class="hs-identifier hs-var">TimeZone</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int
+</span><span class="hs-number">9</span></span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Int
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">*</span></span><span> </span><span class="annot"><span class="annottext">Int
+</span><span class="hs-number">60</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">False</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;JST&quot;</span></span><span>
+</span><span id="line-18"></span><span>
+</span><span id="line-19"></span><span class="annot"><a href="Config.Site.html#defaultTimeLocale%27"><span class="hs-identifier hs-type">defaultTimeLocale'</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">TimeLocale</span></span><span>
+</span><span id="line-20"></span><span id="defaultTimeLocale%27"><span class="annot"><span class="annottext">defaultTimeLocale' :: TimeLocale
+</span><a href="Config.Site.html#defaultTimeLocale%27"><span class="hs-identifier hs-var hs-var">defaultTimeLocale'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">TimeLocale
+</span><span class="hs-identifier hs-var">defaultTimeLocale</span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-21"></span><span>    </span><span class="annot"><span class="hs-identifier hs-var">knownTimeZones</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-var">knownTimeZones</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">defaultTimeLocale</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;&gt;</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Config.Site.html#timeZoneJST"><span class="hs-identifier hs-type">timeZoneJST</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-22"></span><span>  </span><span class="hs-special">}</span><span>
+</span><span id="line-23"></span><span>
+</span><span id="line-24"></span><span class="hs-keyword">data</span><span> </span><span id="GSuite"><span class="annot"><a href="Config.Site.html#GSuite"><span class="hs-identifier hs-var">GSuite</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="GSuite"><span class="annot"><a href="Config.Site.html#GSuite"><span class="hs-identifier hs-var">GSuite</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-25"></span><span>    </span><span id="gCxPrefix"><span class="annot"><span class="annottext">GSuite -&gt; String
+</span><a href="Config.Site.html#gCxPrefix"><span class="hs-identifier hs-var hs-var">gCxPrefix</span></a></span></span><span>      </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-26"></span><span>  </span><span class="hs-special">,</span><span> </span><span id="gSiteVerifyKey"><span class="annot"><span class="annottext">GSuite -&gt; String
+</span><a href="Config.Site.html#gSiteVerifyKey"><span class="hs-identifier hs-var hs-var">gSiteVerifyKey</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-27"></span><span>  </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span id="local-6989586621679283573"><span id="local-6989586621679283581"><span id="local-6989586621679283585"><span class="annot"><span class="annottext">Int -&gt; GSuite -&gt; ShowS
+[GSuite] -&gt; ShowS
+GSuite -&gt; String
+(Int -&gt; GSuite -&gt; ShowS)
+-&gt; (GSuite -&gt; String) -&gt; ([GSuite] -&gt; ShowS) -&gt; Show GSuite
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+$cshowsPrec :: Int -&gt; GSuite -&gt; ShowS
+showsPrec :: Int -&gt; GSuite -&gt; ShowS
+$cshow :: GSuite -&gt; String
+show :: GSuite -&gt; String
+$cshowList :: [GSuite] -&gt; ShowS
+showList :: [GSuite] -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span>
+</span><span id="line-28"></span><span>
+</span><span id="line-29"></span><span class="annot"><a href="Config.Site.html#gSuiteConf"><span class="hs-identifier hs-type">gSuiteConf</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Config.Site.html#GSuite"><span class="hs-identifier hs-type">GSuite</span></a></span><span>
+</span><span id="line-30"></span><span id="gSuiteConf"><span class="annot"><span class="annottext">gSuiteConf :: GSuite
+</span><a href="Config.Site.html#gSuiteConf"><span class="hs-identifier hs-var hs-var">gSuiteConf</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="Config.Site.html#GSuite"><span class="hs-identifier hs-type">GSuite</span></a></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-31"></span><span>    </span><span class="annot"><span class="annottext">gCxPrefix :: String
+</span><a href="Config.Site.html#gCxPrefix"><span class="hs-identifier hs-var">gCxPrefix</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;002573853708615501531&quot;</span></span><span>
+</span><span id="line-32"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">gSiteVerifyKey :: String
+</span><a href="Config.Site.html#gSiteVerifyKey"><span class="hs-identifier hs-var">gSiteVerifyKey</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;13X5cycw11yFEsfZrhsQ0m_cSI90r7HucdErNDQ8Za8&quot;</span></span><span>
+</span><span id="line-33"></span><span>  </span><span class="hs-special">}</span><span>
+</span><span id="line-34"></span></pre></body></html>

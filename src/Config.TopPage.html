@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Config.TopPage</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-2"></span><span>    </span><span class="annot"><a href="Config.TopPage.html#TopPageConfig"><span class="hs-identifier">TopPageConfig</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><span id="line-3"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.TopPage.html#topPageConfig"><span class="hs-identifier">topPageConfig</span></a></span><span>
+</span><span id="line-4"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-5"></span><span>
+</span><span id="line-6"></span><span class="hs-keyword">data</span><span> </span><span id="TopPageConfig"><span class="annot"><a href="Config.TopPage.html#TopPageConfig"><span class="hs-identifier hs-var">TopPageConfig</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="TopPageConfig"><span class="annot"><a href="Config.TopPage.html#TopPageConfig"><span class="hs-identifier hs-var">TopPageConfig</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-7"></span><span>    </span><span id="maxTitleNum"><span class="annot"><span class="annottext">TopPageConfig -&gt; Int
+</span><a href="Config.TopPage.html#maxTitleNum"><span class="hs-identifier hs-var hs-var">maxTitleNum</span></a></span></span><span>    </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
+</span><span id="line-8"></span><span>  </span><span class="hs-special">,</span><span> </span><span id="postDateFormat"><span class="annot"><span class="annottext">TopPageConfig -&gt; String
+</span><a href="Config.TopPage.html#postDateFormat"><span class="hs-identifier hs-var hs-var">postDateFormat</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-9"></span><span>  </span><span class="hs-special">,</span><span> </span><span id="noPostsAlt"><span class="annot"><span class="annottext">TopPageConfig -&gt; String
+</span><a href="Config.TopPage.html#noPostsAlt"><span class="hs-identifier hs-var hs-var">noPostsAlt</span></a></span></span><span>     </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-10"></span><span>  </span><span class="hs-special">}</span><span>
+</span><span id="line-11"></span><span>
+</span><span id="line-12"></span><span class="annot"><a href="Config.TopPage.html#topPageConfig"><span class="hs-identifier hs-type">topPageConfig</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Config.TopPage.html#TopPageConfig"><span class="hs-identifier hs-type">TopPageConfig</span></a></span><span>
+</span><span id="line-13"></span><span id="topPageConfig"><span class="annot"><span class="annottext">topPageConfig :: TopPageConfig
+</span><a href="Config.TopPage.html#topPageConfig"><span class="hs-identifier hs-var hs-var">topPageConfig</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="Config.TopPage.html#TopPageConfig"><span class="hs-identifier hs-type">TopPageConfig</span></a></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-14"></span><span>    </span><span class="annot"><span class="annottext">maxTitleNum :: Int
+</span><a href="Config.TopPage.html#maxTitleNum"><span class="hs-identifier hs-var">maxTitleNum</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Int
+</span><span class="hs-number">4</span></span><span>
+</span><span id="line-15"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">postDateFormat :: String
+</span><a href="Config.TopPage.html#postDateFormat"><span class="hs-identifier hs-var">postDateFormat</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;%Y%%2F%m%%2F%d&quot;</span></span><span> </span><span class="hs-comment">-- &quot;%%2F&quot; is URL encoded slash</span><span>
+</span><span id="line-16"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">noPostsAlt :: String
+</span><a href="Config.TopPage.html#noPostsAlt"><span class="hs-identifier hs-var">noPostsAlt</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;not yet&quot;</span></span><span>
+</span><span id="line-17"></span><span>  </span><span class="hs-special">}</span><span>
+</span><span id="line-18"></span></pre></body></html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Vendor.FontAwesome.Compiler</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-2"></span><span>    </span><span class="annot"><a href="Vendor.FontAwesome.Compiler.html#render"><span class="hs-identifier">render</span></a></span><span>
+</span><span id="line-3"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-4"></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.HashMap.Strict</span></span><span>     </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">M</span></span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Maybe</span></span><span>              </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">fromMaybe</span></span><span class="hs-special">)</span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Text.HTML.TagSoup.Tree</span></span><span>  </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">TT</span></span><span>
+</span><span id="line-9"></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.html"><span class="hs-identifier">Config</span></a></span><span>                  </span><span class="hs-special">(</span><span class="annot"><a href="Config.Program.html#tagSoupOption"><span class="hs-identifier">tagSoupOption</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Vendor.FontAwesome.Core.html"><span class="hs-identifier">Vendor.FontAwesome.Core</span></a></span><span>
+</span><span id="line-12"></span><span>
+</span><span id="line-13"></span><span class="annot"><a href="Vendor.FontAwesome.Compiler.html#render"><span class="hs-identifier hs-type">render</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#FontAwesomeIcons"><span class="hs-identifier hs-type">FontAwesomeIcons</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Compiler</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span>
+</span><span id="line-14"></span><span id="render"><span class="annot"><span class="annottext">render :: FontAwesomeIcons -&gt; Item String -&gt; Compiler (Item String)
+</span><a href="Vendor.FontAwesome.Compiler.html#render"><span class="hs-identifier hs-var hs-var">render</span></a></span></span><span> </span><span id="local-6989586621679288866"><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679288866"><span class="hs-identifier hs-var">icons</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Item String -&gt; Compiler (Item String)
+forall a. a -&gt; Compiler a
+forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
+</span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">(Item String -&gt; Compiler (Item String))
+-&gt; (Item String -&gt; Item String)
+-&gt; Item String
+-&gt; Compiler (Item String)
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; String) -&gt; Item String -&gt; Item String
+forall a b. (a -&gt; b) -&gt; Item a -&gt; Item b
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span>
+</span><span id="line-15"></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="annottext">RenderOptions String -&gt; [TagTree String] -&gt; String
+forall str.
+StringLike str =&gt;
+RenderOptions str -&gt; [TagTree str] -&gt; str
+</span><span class="hs-identifier hs-var">TT.renderTreeOptions</span></span><span> </span><span class="annot"><span class="annottext">RenderOptions String
+</span><a href="Config.Program.html#tagSoupOption"><span class="hs-identifier hs-var">tagSoupOption</span></a></span><span> </span><span class="annot"><span class="annottext">([TagTree String] -&gt; String)
+-&gt; (String -&gt; [TagTree String]) -&gt; String -&gt; String
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(TagTree String -&gt; [TagTree String])
+-&gt; [TagTree String] -&gt; [TagTree String]
+forall str.
+(TagTree str -&gt; [TagTree str]) -&gt; [TagTree str] -&gt; [TagTree str]
+</span><span class="hs-identifier hs-var">TT.transformTree</span></span><span> </span><span class="annot"><span class="annottext">TagTree String -&gt; [TagTree String]
+</span><a href="#local-6989586621679288870"><span class="hs-identifier hs-var">render'</span></a></span><span> </span><span class="annot"><span class="annottext">([TagTree String] -&gt; [TagTree String])
+-&gt; (String -&gt; [TagTree String]) -&gt; String -&gt; [TagTree String]
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; [TagTree String]
+forall str. StringLike str =&gt; str -&gt; [TagTree str]
+</span><span class="hs-identifier hs-var">TT.parseTree</span></span><span class="hs-special">)</span><span>
+</span><span id="line-16"></span><span>    </span><span class="hs-keyword">where</span><span>
+</span><span id="line-17"></span><span>        </span><span id="local-6989586621679288870"><span class="annot"><span class="annottext">render' :: TagTree String -&gt; [TagTree String]
+</span><a href="#local-6989586621679288870"><span class="hs-identifier hs-var hs-var">render'</span></a></span></span><span> </span><span id="local-6989586621679288872"><span class="annot"><span class="annottext">tag :: TagTree String
+</span><a href="#local-6989586621679288872"><span class="hs-identifier hs-var">tag</span></a></span></span><span class="hs-glyph">@</span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">TT.TagBranch</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;i&quot;</span></span><span> </span><span id="local-6989586621679288874"><span class="annot"><span class="annottext">[Attribute String]
+</span><a href="#local-6989586621679288874"><span class="hs-keyword hs-var">as</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">[String] -&gt; Maybe (TagTree String)
+</span><a href="#local-6989586621679288875"><span class="hs-identifier hs-var">toFontAwesome</span></a></span><span> </span><span class="annot"><span class="annottext">([String] -&gt; Maybe (TagTree String))
+-&gt; [String] -&gt; Maybe (TagTree String)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Attribute String] -&gt; [String]
+</span><a href="#local-6989586621679288876"><span class="hs-identifier hs-var">classes</span></a></span><span> </span><span class="annot"><span class="annottext">[Attribute String]
+</span><a href="#local-6989586621679288874"><span class="hs-keyword hs-var">as</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-18"></span><span>            </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679288877"><span class="annot"><span class="annottext">TagTree String
+</span><a href="#local-6989586621679288877"><span class="hs-identifier hs-var">tree</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">TagTree String
+</span><a href="#local-6989586621679288877"><span class="hs-identifier hs-var">tree</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-19"></span><span>            </span><span class="annot"><span class="annottext">Maybe (TagTree String)
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>   </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">TagTree String
+</span><a href="#local-6989586621679288872"><span class="hs-identifier hs-var">tag</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-20"></span><span>        </span><span class="annot"><a href="#local-6989586621679288870"><span class="hs-identifier hs-var">render'</span></a></span><span> </span><span id="local-6989586621679288878"><span class="annot"><span class="annottext">TagTree String
+</span><a href="#local-6989586621679288878"><span class="hs-identifier hs-var">tag</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">TagTree String
+</span><a href="#local-6989586621679288878"><span class="hs-identifier hs-var">tag</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-21"></span><span>
+</span><span id="line-22"></span><span>        </span><span id="local-6989586621679288875"><span class="annot"><span class="annottext">toFontAwesome :: [String] -&gt; Maybe (TagTree String)
+</span><a href="#local-6989586621679288875"><span class="hs-identifier hs-var hs-var">toFontAwesome</span></a></span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679288881"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288881"><span class="hs-identifier hs-var">p</span></a></span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span class="hs-special">(</span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'f'</span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'a'</span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'-'</span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span id="local-6989586621679288882"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288882"><span class="hs-identifier hs-var">name</span></a></span></span><span class="hs-special">)</span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span id="local-6989586621679288883"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679288883"><span class="hs-identifier hs-var">cs</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">TagTree String -&gt; [String] -&gt; TagTree String
+</span><a href="#local-6989586621679288884"><span class="hs-operator hs-var">`appendClasses`</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679288883"><span class="hs-identifier hs-var">cs</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(TagTree String -&gt; TagTree String)
+-&gt; Maybe (TagTree String) -&gt; Maybe (TagTree String)
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons -&gt; String -&gt; String -&gt; Maybe (TagTree String)
+</span><a href="Vendor.FontAwesome.Core.html#fontAwesome"><span class="hs-identifier hs-var">fontAwesome</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679288866"><span class="hs-identifier hs-var">icons</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288881"><span class="hs-identifier hs-var">p</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288882"><span class="hs-identifier hs-var">name</span></a></span><span>
+</span><span id="line-23"></span><span>        </span><span class="annot"><a href="#local-6989586621679288875"><span class="hs-identifier hs-var">toFontAwesome</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe (TagTree String)
+forall a. Maybe a
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>
+</span><span id="line-24"></span><span>
+</span><span id="line-25"></span><span>        </span><span id="local-6989586621679288884"><span class="annot"><span class="annottext">appendClasses :: TagTree String -&gt; [String] -&gt; TagTree String
+</span><a href="#local-6989586621679288884"><span class="hs-identifier hs-var hs-var">appendClasses</span></a></span></span><span> </span><span id="local-6989586621679288887"><span class="annot"><span class="annottext">TagTree String
+</span><a href="#local-6989586621679288887"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">TagTree String
+</span><a href="#local-6989586621679288887"><span class="hs-identifier hs-var">t</span></a></span><span>
+</span><span id="line-26"></span><span>        </span><span class="annot"><a href="#local-6989586621679288884"><span class="hs-identifier hs-var">appendClasses</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">TT.TagBranch</span></span><span> </span><span id="local-6989586621679288888"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288888"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span id="local-6989586621679288889"><span class="annot"><span class="annottext">[Attribute String]
+</span><a href="#local-6989586621679288889"><span class="hs-identifier hs-var">y</span></a></span></span><span> </span><span id="local-6989586621679288890"><span class="annot"><span class="annottext">[TagTree String]
+</span><a href="#local-6989586621679288890"><span class="hs-identifier hs-var">z</span></a></span></span><span class="hs-special">)</span><span> </span><span id="local-6989586621679288891"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679288891"><span class="hs-identifier hs-var">cs</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-27"></span><span>            </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679288901"><span class="annot"><span class="annottext">as1 :: HashMap String String
+</span><a href="#local-6989586621679288901"><span class="hs-identifier hs-var hs-var">as1</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Attribute String] -&gt; HashMap String String
+forall k v. (Eq k, Hashable k) =&gt; [(k, v)] -&gt; HashMap k v
+</span><span class="hs-identifier hs-var">M.fromList</span></span><span> </span><span class="annot"><span class="annottext">[Attribute String]
+</span><a href="#local-6989586621679288889"><span class="hs-identifier hs-var">y</span></a></span><span>
+</span><span id="line-28"></span><span>                </span><span id="local-6989586621679288905"><span class="annot"><span class="annottext">as2 :: HashMap String String
+</span><a href="#local-6989586621679288905"><span class="hs-identifier hs-var hs-var">as2</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; HashMap String String
+forall k v. Hashable k =&gt; k -&gt; v -&gt; HashMap k v
+</span><span class="hs-identifier hs-var">M.singleton</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;class&quot;</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; HashMap String String)
+-&gt; String -&gt; HashMap String String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
+</span><span class="hs-identifier hs-var">unwords</span></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679288891"><span class="hs-identifier hs-var">cs</span></a></span><span>
+</span><span id="line-29"></span><span>                </span><span id="local-6989586621679288913"><span class="annot"><span class="annottext">y' :: [Attribute String]
+</span><a href="#local-6989586621679288913"><span class="hs-identifier hs-var hs-var">y'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HashMap String String -&gt; [Attribute String]
+forall k v. HashMap k v -&gt; [(k, v)]
+</span><span class="hs-identifier hs-var">M.toList</span></span><span> </span><span class="annot"><span class="annottext">(HashMap String String -&gt; [Attribute String])
+-&gt; HashMap String String -&gt; [Attribute String]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; String -&gt; String)
+-&gt; HashMap String String
+-&gt; HashMap String String
+-&gt; HashMap String String
+forall k v.
+Eq k =&gt;
+(v -&gt; v -&gt; v) -&gt; HashMap k v -&gt; HashMap k v -&gt; HashMap k v
+</span><span class="hs-identifier hs-var">M.unionWith</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679288916"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288916"><span class="hs-identifier hs-var">l</span></a></span></span><span> </span><span id="local-6989586621679288917"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288917"><span class="hs-identifier hs-var">r</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288916"><span class="hs-identifier hs-var">l</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288917"><span class="hs-identifier hs-var">r</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">HashMap String String
+</span><a href="#local-6989586621679288901"><span class="hs-identifier hs-var">as1</span></a></span><span> </span><span class="annot"><span class="annottext">HashMap String String
+</span><a href="#local-6989586621679288905"><span class="hs-identifier hs-var">as2</span></a></span><span>
+</span><span id="line-30"></span><span>            </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">String -&gt; [Attribute String] -&gt; [TagTree String] -&gt; TagTree String
+forall str. str -&gt; [Attribute str] -&gt; [TagTree str] -&gt; TagTree str
+</span><span class="hs-identifier hs-var">TT.TagBranch</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288888"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">[Attribute String]
+</span><a href="#local-6989586621679288913"><span class="hs-identifier hs-var">y'</span></a></span><span> </span><span class="annot"><span class="annottext">[TagTree String]
+</span><a href="#local-6989586621679288890"><span class="hs-identifier hs-var">z</span></a></span><span>
+</span><span id="line-31"></span><span>        </span><span class="annot"><a href="#local-6989586621679288884"><span class="hs-identifier hs-var">appendClasses</span></a></span><span> </span><span id="local-6989586621679288918"><span class="annot"><span class="annottext">TagTree String
+</span><a href="#local-6989586621679288918"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">TagTree String
+</span><a href="#local-6989586621679288918"><span class="hs-identifier hs-var">t</span></a></span><span>
+</span><span id="line-32"></span><span>
+</span><span id="line-33"></span><span>        </span><span id="local-6989586621679288876"><span class="annot"><span class="annottext">classes :: [Attribute String] -&gt; [String]
+</span><a href="#local-6989586621679288876"><span class="hs-identifier hs-var hs-var">classes</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; [String]
+</span><span class="hs-identifier hs-var">words</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; [String])
+-&gt; ([Attribute String] -&gt; String) -&gt; [Attribute String] -&gt; [String]
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Maybe String -&gt; String
+forall a. a -&gt; Maybe a -&gt; a
+</span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;&quot;</span></span><span> </span><span class="annot"><span class="annottext">(Maybe String -&gt; String)
+-&gt; ([Attribute String] -&gt; Maybe String)
+-&gt; [Attribute String]
+-&gt; String
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; [Attribute String] -&gt; Maybe String
+forall a b. Eq a =&gt; a -&gt; [(a, b)] -&gt; Maybe b
+</span><span class="hs-identifier hs-var">lookup</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;class&quot;</span></span><span>
+</span><span id="line-34"></span></pre></body></html>

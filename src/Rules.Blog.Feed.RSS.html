@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Rules.Blog.Feed.RSS</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-2"></span><span>    </span><span class="annot"><a href="Rules.Blog.Feed.RSS.html#build"><span class="hs-identifier">build</span></a></span><span>
+</span><span id="line-3"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-4"></span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html"><span class="hs-identifier">Hakyll.Web.Feed.Extra</span></a></span><span> </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">FE</span></span><span>
+</span><span id="line-7"></span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Feed.Utils.html"><span class="hs-identifier">Rules.Blog.Feed.Utils</span></a></span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Type.html"><span class="hs-identifier">Rules.Blog.Type</span></a></span><span>
+</span><span id="line-10"></span><span>
+</span><span id="line-11"></span><span id="local-6989586621679284938"><span class="annot"><a href="Rules.Blog.Feed.RSS.html#build"><span class="hs-identifier hs-type">build</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Snapshot</span></span><span>
+</span><span id="line-12"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-13"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679284938"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span><span>
+</span><span id="line-14"></span><span id="build"><span class="annot"><span class="annottext">build :: forall (n :: * -&gt; *).
+Snapshot -&gt; Context Snapshot -&gt; BlogConfReader n Rules ()
+</span><a href="Rules.Blog.Feed.RSS.html#build"><span class="hs-identifier hs-var hs-var">build</span></a></span></span><span> </span><span id="local-6989586621679284945"><span class="annot"><span class="annottext">Snapshot
+</span><a href="#local-6989586621679284945"><span class="hs-identifier hs-var">feedSSName</span></a></span></span><span> </span><span id="local-6989586621679284946"><span class="annot"><span class="annottext">Context Snapshot
+</span><a href="#local-6989586621679284946"><span class="hs-identifier hs-var">ctx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Snapshot
+-&gt; Snapshot
+-&gt; Context Snapshot
+-&gt; Render
+-&gt; BlogConfReader n Rules ()
+forall (n :: * -&gt; *).
+Snapshot
+-&gt; Snapshot
+-&gt; Context Snapshot
+-&gt; Render
+-&gt; BlogConfReader n Rules ()
+</span><a href="Rules.Blog.Feed.Utils.html#buildFeed"><span class="hs-identifier hs-var">buildFeed</span></a></span><span> </span><span class="annot"><span class="annottext">Snapshot
+</span><a href="#local-6989586621679284945"><span class="hs-identifier hs-var">feedSSName</span></a></span><span> </span><span class="annot"><span class="annottext">Snapshot
+</span><span class="hs-string">&quot;-rss.xml&quot;</span></span><span> </span><span class="annot"><span class="annottext">Context Snapshot
+</span><a href="#local-6989586621679284946"><span class="hs-identifier hs-var">ctx</span></a></span><span> </span><span class="annot"><span class="annottext">Render
+</span><a href="Hakyll.Web.Feed.Extra.html#renderRss"><span class="hs-identifier hs-var">FE.renderRss</span></a></span><span>
+</span><span id="line-15"></span></pre></body></html>

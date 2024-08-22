@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
+</span><span id="line-2"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Rules.TopPage</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Rules.TopPage.html#rules"><span class="hs-identifier">rules</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-3"></span><span>
+</span><span id="line-4"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Extra</span></span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">mconcatMapM</span></span><span class="hs-special">)</span><span>
+</span><span id="line-5"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Reader</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">ReaderT</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">asks</span></span><span class="hs-special">)</span><span>
+</span><span id="line-6"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Trans</span></span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">MonadTrans</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.List.Extra</span></span><span>      </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">mconcatMap</span></span><span class="hs-special">)</span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Time.Format</span></span><span>     </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">formatTime</span></span><span class="hs-special">)</span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">System.FilePath</span></span><span>      </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">joinPath</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-operator">(&lt;/&gt;)</span></span><span class="hs-special">)</span><span>
+</span><span id="line-11"></span><span>
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.html"><span class="hs-identifier">Config</span></a></span><span>               </span><span class="hs-special">(</span><span class="annot"><a href="Config.Program.html#contentsRoot"><span class="hs-identifier">contentsRoot</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Site.html#defaultTimeLocale%27"><span class="hs-identifier">defaultTimeLocale'</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-13"></span><span>                                       </span><span class="annot"><a href="Config.Site.html#siteName"><span class="hs-identifier">siteName</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-14"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.Blog.html"><span class="hs-identifier">Config.Blog</span></a></span><span>
+</span><span id="line-15"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.Contributions.html"><span class="hs-identifier">Config.Contributions</span></a></span><span>
+</span><span id="line-16"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.TopPage.html"><span class="hs-identifier">Config.TopPage</span></a></span><span>
+</span><span id="line-17"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Contexts.html"><span class="hs-identifier">Contexts</span></a></span><span>             </span><span class="hs-special">(</span><span class="annot"><a href="Contexts.Core.html#siteCtx"><span class="hs-identifier">siteCtx</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Contexts.Blog.html"><span class="hs-identifier">Contexts.Blog</span></a></span><span>        </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">CtxBlog</span></span><span>
+</span><span id="line-19"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Type.html"><span class="hs-identifier">Rules.Blog.Type</span></a></span><span>
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.PageType.html"><span class="hs-identifier">Rules.PageType</span></a></span><span>
+</span><span id="line-21"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Utils.html"><span class="hs-identifier">Utils</span></a></span><span>                </span><span class="hs-special">(</span><span class="annot"><a href="Utils.Base.html#mconcatM"><span class="hs-identifier">mconcatM</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Utils.Hakyll.html#modifyExternalLinkAttr"><span class="hs-identifier">modifyExternalLinkAttr</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.html"><span class="hs-identifier">Vendor.FontAwesome</span></a></span><span>   </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">FA</span></span><span>
+</span><span id="line-23"></span><span>
+</span><span id="line-24"></span><span id="local-6989586621679289687"><span id="local-6989586621679289689"><span class="annot"><a href="Rules.TopPage.html#lastUpdate"><span class="hs-identifier hs-type">lastUpdate</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">MonadMetadata</span></span><span> </span><span class="annot"><a href="#local-6989586621679289687"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadFail</span></span><span> </span><span class="annot"><a href="#local-6989586621679289687"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><a href="#local-6989586621679289689"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679289687"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span></span></span><span>
+</span><span id="line-25"></span><span id="lastUpdate"><span class="annot"><span class="annottext">lastUpdate :: forall (m :: * -&gt; *) a.
+(MonadMetadata m, MonadFail m) =&gt;
+[Item a] -&gt; m String
+</span><a href="Rules.TopPage.html#lastUpdate"><span class="hs-identifier hs-var hs-var">lastUpdate</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; m String
+forall a. a -&gt; m a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; m String) -&gt; String -&gt; m String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">TopPageConfig -&gt; String
+</span><a href="Config.TopPage.html#noPostsAlt"><span class="hs-identifier hs-var">noPostsAlt</span></a></span><span> </span><span class="annot"><span class="annottext">TopPageConfig
+</span><a href="Config.TopPage.html#topPageConfig"><span class="hs-identifier hs-var">topPageConfig</span></a></span><span>
+</span><span id="line-26"></span><span class="annot"><a href="Rules.TopPage.html#lastUpdate"><span class="hs-identifier hs-var">lastUpdate</span></a></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679289835"><span class="annot"><span class="annottext">Item a
+</span><a href="#local-6989586621679289835"><span class="hs-identifier hs-var">x</span></a></span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span class="annot"><span class="annottext">[Item a]
+</span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">TimeLocale -&gt; String -&gt; UTCTime -&gt; String
+forall t. FormatTime t =&gt; TimeLocale -&gt; String -&gt; t -&gt; String
+</span><span class="hs-identifier hs-var">formatTime</span></span><span> </span><span class="annot"><span class="annottext">TimeLocale
+</span><a href="Config.Site.html#defaultTimeLocale%27"><span class="hs-identifier hs-var">defaultTimeLocale'</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">TopPageConfig -&gt; String
+</span><a href="Config.TopPage.html#postDateFormat"><span class="hs-identifier hs-var">postDateFormat</span></a></span><span> </span><span class="annot"><span class="annottext">TopPageConfig
+</span><a href="Config.TopPage.html#topPageConfig"><span class="hs-identifier hs-var">topPageConfig</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-27"></span><span>    </span><span class="annot"><span class="annottext">(UTCTime -&gt; String) -&gt; m UTCTime -&gt; m String
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">TimeLocale -&gt; Identifier -&gt; m UTCTime
+forall (m :: * -&gt; *).
+(MonadMetadata m, MonadFail m) =&gt;
+TimeLocale -&gt; Identifier -&gt; m UTCTime
+</span><span class="hs-identifier hs-var">getItemUTC</span></span><span> </span><span class="annot"><span class="annottext">TimeLocale
+</span><a href="Config.Site.html#defaultTimeLocale%27"><span class="hs-identifier hs-var">defaultTimeLocale'</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Item a -&gt; Identifier
+forall a. Item a -&gt; Identifier
+</span><span class="hs-identifier hs-var">itemIdentifier</span></span><span> </span><span class="annot"><span class="annottext">Item a
+</span><a href="#local-6989586621679289835"><span class="hs-identifier hs-var">x</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-28"></span><span>
+</span><span id="line-29"></span><span id="local-6989586621679289711"><span id="local-6989586621679289712"><span class="annot"><a href="Rules.TopPage.html#introDateCtx"><span class="hs-identifier hs-type">introDateCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><a href="#local-6989586621679289711"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679289712"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Compiler</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-30"></span><span id="introDateCtx"><span class="annot"><span class="annottext">introDateCtx :: forall a (m :: * -&gt; *).
+[Item a] -&gt; BlogConfReader m Compiler (Context String)
+</span><a href="Rules.TopPage.html#introDateCtx"><span class="hs-identifier hs-var hs-var">introDateCtx</span></a></span></span><span> </span><span id="local-6989586621679289865"><span class="annot"><span class="annottext">[Item a]
+</span><a href="#local-6989586621679289865"><span class="hs-identifier hs-var">posts</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
+forall a. String -&gt; String -&gt; Context a
+</span><span class="hs-identifier hs-var">constField</span></span><span>
+</span><span id="line-31"></span><span>    </span><span class="annot"><span class="annottext">(String -&gt; String -&gt; Context String)
+-&gt; ReaderT (BlogConfig m) Compiler String
+-&gt; ReaderT (BlogConfig m) Compiler (String -&gt; Context String)
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; String) -&gt; ReaderT (BlogConfig m) Compiler String
+forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
+</span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;-intro-date&quot;</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(String -&gt; String)
+-&gt; (BlogConfig m -&gt; String) -&gt; BlogConfig m -&gt; String
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; String
+forall (m :: * -&gt; *). BlogConfig m -&gt; String
+</span><a href="Config.Blog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-32"></span><span>    </span><span class="annot"><span class="annottext">ReaderT (BlogConfig m) Compiler (String -&gt; Context String)
+-&gt; ReaderT (BlogConfig m) Compiler String
+-&gt; ReaderT (BlogConfig m) Compiler (Context String)
+forall a b.
+ReaderT (BlogConfig m) Compiler (a -&gt; b)
+-&gt; ReaderT (BlogConfig m) Compiler a
+-&gt; ReaderT (BlogConfig m) Compiler b
+forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Compiler String -&gt; ReaderT (BlogConfig m) Compiler String
+forall (m :: * -&gt; *) a.
+Monad m =&gt;
+m a -&gt; ReaderT (BlogConfig m) m a
+forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
+(MonadTrans t, Monad m) =&gt;
+m a -&gt; t m a
+</span><span class="hs-identifier hs-var">lift</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Item a] -&gt; Compiler String
+forall (m :: * -&gt; *) a.
+(MonadMetadata m, MonadFail m) =&gt;
+[Item a] -&gt; m String
+</span><a href="Rules.TopPage.html#lastUpdate"><span class="hs-identifier hs-var">lastUpdate</span></a></span><span> </span><span class="annot"><span class="annottext">[Item a]
+</span><a href="#local-6989586621679289865"><span class="hs-identifier hs-var">posts</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-33"></span><span>
+</span><span id="line-34"></span><span id="local-6989586621679289748"><span class="annot"><a href="Rules.TopPage.html#listPostsCtx"><span class="hs-identifier hs-type">listPostsCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679289748"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Compiler</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span><span>
+</span><span id="line-35"></span><span id="listPostsCtx"><span class="annot"><span class="annottext">listPostsCtx :: forall (m :: * -&gt; *).
+[Item String] -&gt; BlogConfReader m Compiler (Context String)
+</span><a href="Rules.TopPage.html#listPostsCtx"><span class="hs-identifier hs-var hs-var">listPostsCtx</span></a></span></span><span> </span><span id="local-6989586621679289883"><span class="annot"><span class="annottext">[Item String]
+</span><a href="#local-6989586621679289883"><span class="hs-identifier hs-var">posts</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-36"></span><span>    </span><span id="local-6989586621679289884"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289884"><span class="hs-identifier hs-var">name</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; String) -&gt; ReaderT (BlogConfig m) Compiler String
+forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
+</span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;-posts&quot;</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(String -&gt; String)
+-&gt; (BlogConfig m -&gt; String) -&gt; BlogConfig m -&gt; String
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; String
+forall (m :: * -&gt; *). BlogConfig m -&gt; String
+</span><a href="Config.Blog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-37"></span><span>    </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader m Compiler (Context String)
+forall a. a -&gt; ReaderT (BlogConfig m) Compiler a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; BlogConfReader m Compiler (Context String))
+-&gt; Context String -&gt; BlogConfReader m Compiler (Context String)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
+-&gt; Context String -&gt; Compiler [Item String] -&gt; Context String
+forall a b. String -&gt; Context a -&gt; Compiler [Item a] -&gt; Context b
+</span><span class="hs-identifier hs-var">listField</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289884"><span class="hs-identifier hs-var">name</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Context String
+</span><a href="Contexts.Core.html#siteCtx"><span class="hs-identifier hs-var">siteCtx</span></a></span><span> </span><span class="annot"><span class="annottext">Context String -&gt; Context String -&gt; Context String
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Context String
+</span><span class="hs-identifier hs-var">defaultContext</span></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Item String] -&gt; Compiler [Item String]
+forall a. a -&gt; Compiler a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">[Item String]
+</span><a href="#local-6989586621679289883"><span class="hs-identifier hs-var">posts</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-38"></span><span>
+</span><span id="line-39"></span><span id="local-6989586621679289755"><span class="annot"><a href="Rules.TopPage.html#mkBlogCtx"><span class="hs-identifier hs-type">mkBlogCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679289755"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Compiler</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span><span>
+</span><span id="line-40"></span><span id="mkBlogCtx"><span class="annot"><span class="annottext">mkBlogCtx :: forall (m :: * -&gt; *). BlogConfReader m Compiler (Context String)
+</span><a href="Rules.TopPage.html#mkBlogCtx"><span class="hs-identifier hs-var hs-var">mkBlogCtx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-41"></span><span>    </span><span id="local-6989586621679289915"><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679289915"><span class="hs-identifier hs-var">ep</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; Pattern)
+-&gt; ReaderT (BlogConfig m) Compiler Pattern
+forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
+</span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; Pattern
+forall (m :: * -&gt; *). BlogConfig m -&gt; Pattern
+</span><a href="Config.Blog.html#blogEntryPattern"><span class="hs-identifier hs-var">blogEntryPattern</span></a></span><span>
+</span><span id="line-42"></span><span>    </span><span id="local-6989586621679289917"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289917"><span class="hs-identifier hs-var">cs</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; String) -&gt; ReaderT (BlogConfig m) Compiler String
+forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
+</span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; String
+forall (m :: * -&gt; *). BlogConfig m -&gt; String
+</span><a href="Config.Blog.html#blogContentSnapshot"><span class="hs-identifier hs-var">blogContentSnapshot</span></a></span><span>
+</span><span id="line-43"></span><span>    </span><span id="local-6989586621679289919"><span class="annot"><span class="annottext">[Item String]
+</span><a href="#local-6989586621679289919"><span class="hs-identifier hs-var">posts</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Compiler [Item String]
+-&gt; ReaderT (BlogConfig m) Compiler [Item String]
+forall (m :: * -&gt; *) a.
+Monad m =&gt;
+m a -&gt; ReaderT (BlogConfig m) m a
+forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
+(MonadTrans t, Monad m) =&gt;
+m a -&gt; t m a
+</span><span class="hs-identifier hs-var">lift</span></span><span> </span><span class="annot"><span class="annottext">(Compiler [Item String]
+ -&gt; ReaderT (BlogConfig m) Compiler [Item String])
+-&gt; Compiler [Item String]
+-&gt; ReaderT (BlogConfig m) Compiler [Item String]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">([Item String] -&gt; [Item String])
+-&gt; Compiler [Item String] -&gt; Compiler [Item String]
+forall a b. (a -&gt; b) -&gt; Compiler a -&gt; Compiler b
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int -&gt; [Item String] -&gt; [Item String]
+forall a. Int -&gt; [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">take</span></span><span> </span><span class="annot"><span class="annottext">(Int -&gt; [Item String] -&gt; [Item String])
+-&gt; Int -&gt; [Item String] -&gt; [Item String]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">TopPageConfig -&gt; Int
+</span><a href="Config.TopPage.html#maxTitleNum"><span class="hs-identifier hs-var">maxTitleNum</span></a></span><span> </span><span class="annot"><span class="annottext">TopPageConfig
+</span><a href="Config.TopPage.html#topPageConfig"><span class="hs-identifier hs-var">topPageConfig</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Compiler [Item String] -&gt; Compiler [Item String])
+-&gt; ([Item String] -&gt; Compiler [Item String])
+-&gt; [Item String]
+-&gt; Compiler [Item String]
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">[Item String] -&gt; Compiler [Item String]
+forall (m :: * -&gt; *) a.
+(MonadMetadata m, MonadFail m) =&gt;
+[Item a] -&gt; m [Item a]
+</span><span class="hs-identifier hs-var">recentFirst</span></span><span> </span><span class="annot"><span class="annottext">([Item String] -&gt; Compiler [Item String])
+-&gt; Compiler [Item String] -&gt; Compiler [Item String]
+forall (m :: * -&gt; *) a b. Monad m =&gt; (a -&gt; m b) -&gt; m a -&gt; m b
+</span><span class="hs-operator hs-var">=&lt;&lt;</span></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; String -&gt; Compiler [Item String]
+forall a.
+(Binary a, Typeable a) =&gt;
+Pattern -&gt; String -&gt; Compiler [Item a]
+</span><span class="hs-identifier hs-var">loadAllSnapshots</span></span><span> </span><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679289915"><span class="hs-identifier hs-var">ep</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289917"><span class="hs-identifier hs-var">cs</span></a></span><span>
+</span><span id="line-44"></span><span>    </span><span class="annot"><span class="annottext">[BlogConfReader m Compiler (Context String)]
+-&gt; BlogConfReader m Compiler (Context String)
+forall (m :: * -&gt; *) b. (Monad m, Monoid b) =&gt; [m b] -&gt; m b
+</span><a href="Utils.Base.html#mconcatM"><span class="hs-identifier hs-var">mconcatM</span></a></span><span> </span><span class="hs-special">[</span><span>
+</span><span id="line-45"></span><span>        </span><span class="annot"><span class="annottext">[Item String] -&gt; BlogConfReader m Compiler (Context String)
+forall (m :: * -&gt; *).
+[Item String] -&gt; BlogConfReader m Compiler (Context String)
+</span><a href="Rules.TopPage.html#listPostsCtx"><span class="hs-identifier hs-var">listPostsCtx</span></a></span><span> </span><span class="annot"><span class="annottext">[Item String]
+</span><a href="#local-6989586621679289919"><span class="hs-identifier hs-var">posts</span></a></span><span>
+</span><span id="line-46"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">BlogConfReader m Compiler (Context String)
+forall (m :: * -&gt; *) (n :: * -&gt; *).
+Monad m =&gt;
+BlogConfReader n m (Context String)
+</span><a href="Contexts.Blog.html#title"><span class="hs-identifier hs-var">CtxBlog.title</span></a></span><span>
+</span><span id="line-47"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">BlogConfReader m Compiler (Context String)
+forall (m :: * -&gt; *) (n :: * -&gt; *).
+Monad m =&gt;
+BlogConfReader n m (Context String)
+</span><a href="Contexts.Blog.html#description"><span class="hs-identifier hs-var">CtxBlog.description</span></a></span><span>
+</span><span id="line-48"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Item String] -&gt; BlogConfReader m Compiler (Context String)
+forall a (m :: * -&gt; *).
+[Item a] -&gt; BlogConfReader m Compiler (Context String)
+</span><a href="Rules.TopPage.html#introDateCtx"><span class="hs-identifier hs-var">introDateCtx</span></a></span><span> </span><span class="annot"><span class="annottext">[Item String]
+</span><a href="#local-6989586621679289919"><span class="hs-identifier hs-var">posts</span></a></span><span>
+</span><span id="line-49"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader m Compiler (Context String)
+forall a. a -&gt; ReaderT (BlogConfig m) Compiler a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">Context String
+</span><a href="Contexts.Core.html#siteCtx"><span class="hs-identifier hs-var">siteCtx</span></a></span><span>
+</span><span id="line-50"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader m Compiler (Context String)
+forall a. a -&gt; ReaderT (BlogConfig m) Compiler a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">Context String
+</span><span class="hs-identifier hs-var">defaultContext</span></span><span>
+</span><span id="line-51"></span><span>      </span><span class="hs-special">]</span><span>
+</span><span id="line-52"></span><span>
+</span><span id="line-53"></span><span id="local-6989586621679289776"><span class="annot"><a href="Rules.TopPage.html#rules"><span class="hs-identifier hs-type">rules</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Config.Blog.html#BlogConfig"><span class="hs-identifier hs-type">BlogConfig</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679289776"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.PageType.html#PageConfReader"><span class="hs-identifier hs-type">PageConfReader</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span><span>
+</span><span id="line-54"></span><span id="rules"><span class="annot"><span class="annottext">rules :: forall (m :: * -&gt; *). [BlogConfig m] -&gt; PageConfReader Rules ()
+</span><a href="Rules.TopPage.html#rules"><span class="hs-identifier hs-var hs-var">rules</span></a></span></span><span> </span><span id="local-6989586621679289959"><span class="annot"><span class="annottext">[BlogConfig m]
+</span><a href="#local-6989586621679289959"><span class="hs-identifier hs-var">bcs</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-55"></span><span>    </span><span id="local-6989586621679289960"><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679289960"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(PageConf -&gt; FontAwesomeIcons)
+-&gt; ReaderT PageConf Rules FontAwesomeIcons
+forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
+</span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">PageConf -&gt; FontAwesomeIcons
+</span><a href="Rules.PageType.html#pcFaIcons"><span class="hs-identifier hs-var">pcFaIcons</span></a></span><span>
+</span><span id="line-56"></span><span>    </span><span id="local-6989586621679289962"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289962"><span class="hs-identifier hs-var">projs</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Rules String -&gt; ReaderT PageConf Rules String
+forall (m :: * -&gt; *) a. Monad m =&gt; m a -&gt; ReaderT PageConf m a
+forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
+(MonadTrans t, Monad m) =&gt;
+m a -&gt; t m a
+</span><span class="hs-identifier hs-var">lift</span></span><span> </span><span class="annot"><span class="annottext">(Rules String -&gt; ReaderT PageConf Rules String)
+-&gt; Rules String -&gt; ReaderT PageConf Rules String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IO String -&gt; Rules String
+forall a. IO a -&gt; Rules a
+</span><span class="hs-identifier hs-var">preprocess</span></span><span> </span><span class="annot"><span class="annottext">IO String
+</span><a href="Config.Contributions.html#renderProjectsList"><span class="hs-identifier hs-var">renderProjectsList</span></a></span><span>
+</span><span id="line-57"></span><span>    </span><span id="local-6989586621679289965"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289965"><span class="hs-identifier hs-var">conts</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Rules String -&gt; ReaderT PageConf Rules String
+forall (m :: * -&gt; *) a. Monad m =&gt; m a -&gt; ReaderT PageConf m a
+forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
+(MonadTrans t, Monad m) =&gt;
+m a -&gt; t m a
+</span><span class="hs-identifier hs-var">lift</span></span><span> </span><span class="annot"><span class="annottext">(Rules String -&gt; ReaderT PageConf Rules String)
+-&gt; Rules String -&gt; ReaderT PageConf Rules String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IO String -&gt; Rules String
+forall a. IO a -&gt; Rules a
+</span><span class="hs-identifier hs-var">preprocess</span></span><span> </span><span class="annot"><span class="annottext">IO String
+</span><a href="Config.Contributions.html#renderContributionsTable"><span class="hs-identifier hs-var">renderContributionsTable</span></a></span><span>
+</span><span id="line-58"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679289972"><span class="annot"><span class="annottext">baseCtx :: Context a
+</span><a href="#local-6989586621679289972"><span class="hs-identifier hs-var hs-var">baseCtx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">((String, String) -&gt; Context a) -&gt; [(String, String)] -&gt; Context a
+forall b a. Monoid b =&gt; (a -&gt; b) -&gt; [a] -&gt; b
+</span><span class="hs-identifier hs-var">mconcatMap</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(String -&gt; String -&gt; Context a) -&gt; (String, String) -&gt; Context a
+forall a b c. (a -&gt; b -&gt; c) -&gt; (a, b) -&gt; c
+</span><span class="hs-identifier hs-var">uncurry</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context a
+forall a. String -&gt; String -&gt; Context a
+</span><span class="hs-identifier hs-var">constField</span></span><span class="hs-special">)</span><span> </span><span class="hs-special">[</span><span>
+</span><span id="line-59"></span><span>            </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;title&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Site.html#siteName"><span class="hs-identifier hs-var">siteName</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-60"></span><span>          </span><span class="hs-special">,</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;projs&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289962"><span class="hs-identifier hs-var">projs</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-61"></span><span>          </span><span class="hs-special">,</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;contable&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289965"><span class="hs-identifier hs-var">conts</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-62"></span><span>          </span><span class="hs-special">]</span><span>
+</span><span id="line-63"></span><span>    </span><span class="annot"><span class="annottext">Rules () -&gt; PageConfReader Rules ()
+forall (m :: * -&gt; *) a. Monad m =&gt; m a -&gt; ReaderT PageConf m a
+forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
+(MonadTrans t, Monad m) =&gt;
+m a -&gt; t m a
+</span><span class="hs-identifier hs-var">lift</span></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; PageConfReader Rules ())
+-&gt; Rules () -&gt; PageConfReader Rules ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
+</span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679289975"><span class="hs-identifier hs-var">indexPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-64"></span><span>        </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
+</span><span class="hs-identifier hs-var">route</span></span><span> </span><span class="annot"><span class="annottext">(Routes -&gt; Rules ()) -&gt; Routes -&gt; Rules ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; (String -&gt; String) -&gt; Routes
+</span><span class="hs-identifier hs-var">gsubRoute</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String
+</span><a href="Config.Program.html#contentsRoot"><span class="hs-identifier hs-var">contentsRoot</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;pages/&quot;</span></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+forall a b. a -&gt; b -&gt; a
+</span><span class="hs-identifier hs-var">const</span></span><span> </span><span class="annot"><span class="annottext">String
+forall a. Monoid a =&gt; a
+</span><span class="hs-identifier hs-var">mempty</span></span><span class="hs-special">)</span><span>
+</span><span id="line-65"></span><span>        </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; Rules ()
+forall a.
+(Binary a, Typeable a, Writable a) =&gt;
+Compiler (Item a) -&gt; Rules ()
+</span><span class="hs-identifier hs-var">compile</span></span><span> </span><span class="annot"><span class="annottext">(Compiler (Item String) -&gt; Rules ())
+-&gt; Compiler (Item String) -&gt; Rules ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-66"></span><span>            </span><span id="local-6989586621679289980"><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679289980"><span class="hs-identifier hs-var">topCtx</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; Context String -&gt; Context String
+forall a. Monoid a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-identifier hs-var">mappend</span></span><span> </span><span class="annot"><span class="annottext">Context String
+forall {a}. Context a
+</span><a href="#local-6989586621679289972"><span class="hs-identifier hs-var">baseCtx</span></a></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; Context String)
+-&gt; Compiler (Context String) -&gt; Compiler (Context String)
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; Compiler (Context String))
+-&gt; [BlogConfig m] -&gt; Compiler (Context String)
+forall (m :: * -&gt; *) b a.
+(Monad m, Monoid b) =&gt;
+(a -&gt; m b) -&gt; [a] -&gt; m b
+</span><span class="hs-identifier hs-var">mconcatMapM</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ReaderT (BlogConfig m) Compiler (Context String)
+-&gt; BlogConfig m -&gt; Compiler (Context String)
+forall r (m :: * -&gt; *) a. ReaderT r m a -&gt; r -&gt; m a
+</span><span class="hs-identifier hs-var">runReaderT</span></span><span> </span><span class="annot"><span class="annottext">ReaderT (BlogConfig m) Compiler (Context String)
+forall (m :: * -&gt; *). BlogConfReader m Compiler (Context String)
+</span><a href="Rules.TopPage.html#mkBlogCtx"><span class="hs-identifier hs-var">mkBlogCtx</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[BlogConfig m]
+</span><a href="#local-6989586621679289959"><span class="hs-identifier hs-var">bcs</span></a></span><span>
+</span><span id="line-67"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String)
+</span><span class="hs-identifier hs-var">getResourceBody</span></span><span>
+</span><span id="line-68"></span><span>                </span><span class="annot"><span class="annottext">Compiler (Item String)
+-&gt; (Item String -&gt; Compiler (Item String))
+-&gt; Compiler (Item String)
+forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">Context String -&gt; Item String -&gt; Compiler (Item String)
+</span><span class="hs-identifier hs-var">applyAsTemplate</span></span><span> </span><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679289980"><span class="hs-identifier hs-var">topCtx</span></a></span><span>
+</span><span id="line-69"></span><span>                </span><span class="annot"><span class="annottext">Compiler (Item String)
+-&gt; (Item String -&gt; Compiler (Item String))
+-&gt; Compiler (Item String)
+forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">Identifier
+-&gt; Context String -&gt; Item String -&gt; Compiler (Item String)
+forall a.
+Identifier -&gt; Context a -&gt; Item a -&gt; Compiler (Item String)
+</span><span class="hs-identifier hs-var">loadAndApplyTemplate</span></span><span> </span><span class="annot"><span class="annottext">Identifier
+</span><a href="#local-6989586621679289985"><span class="hs-identifier hs-var">rootTemplate</span></a></span><span> </span><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679289980"><span class="hs-identifier hs-var">topCtx</span></a></span><span>
+</span><span id="line-70"></span><span>                </span><span class="annot"><span class="annottext">Compiler (Item String)
+-&gt; (Item String -&gt; Compiler (Item String))
+-&gt; Compiler (Item String)
+forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">Item String -&gt; Compiler (Item String)
+</span><a href="Utils.Hakyll.html#modifyExternalLinkAttr"><span class="hs-identifier hs-var">modifyExternalLinkAttr</span></a></span><span>
+</span><span id="line-71"></span><span>                </span><span class="annot"><span class="annottext">Compiler (Item String)
+-&gt; (Item String -&gt; Compiler (Item String))
+-&gt; Compiler (Item String)
+forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">Item String -&gt; Compiler (Item String)
+</span><span class="hs-identifier hs-var">relativizeUrls</span></span><span>
+</span><span id="line-72"></span><span>                </span><span class="annot"><span class="annottext">Compiler (Item String)
+-&gt; (Item String -&gt; Compiler (Item String))
+-&gt; Compiler (Item String)
+forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons -&gt; Item String -&gt; Compiler (Item String)
+</span><a href="Vendor.FontAwesome.Compiler.html#render"><span class="hs-identifier hs-var">FA.render</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679289960"><span class="hs-identifier hs-var">faIcons</span></a></span><span>
+</span><span id="line-73"></span><span>    </span><span class="hs-keyword">where</span><span>
+</span><span id="line-74"></span><span>        </span><span id="local-6989586621679289975"><span class="annot"><span class="annottext">indexPath :: Pattern
+</span><a href="#local-6989586621679289975"><span class="hs-identifier hs-var hs-var">indexPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span class="hs-identifier hs-var">fromGlob</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Pattern) -&gt; String -&gt; Pattern
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
+</span><span class="hs-identifier hs-var">joinPath</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String
+</span><a href="Config.Program.html#contentsRoot"><span class="hs-identifier hs-var">contentsRoot</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;pages&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;index.html&quot;</span></span><span class="hs-special">]</span><span>
+</span><span id="line-75"></span><span>        </span><span id="local-6989586621679289985"><span class="annot"><span class="annottext">rootTemplate :: Identifier
+</span><a href="#local-6989586621679289985"><span class="hs-identifier hs-var hs-var">rootTemplate</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Identifier
+</span><span class="hs-identifier hs-var">fromFilePath</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Identifier) -&gt; String -&gt; Identifier
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
+</span><span class="hs-identifier hs-var">joinPath</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String
+</span><a href="Config.Program.html#contentsRoot"><span class="hs-identifier hs-var">contentsRoot</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;templates&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;site&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;default.html&quot;</span></span><span class="hs-special">]</span><span>
+</span><span id="line-76"></span><span>
+</span><span id="line-77"></span><span>
+</span><span id="line-78"></span></pre></body></html>

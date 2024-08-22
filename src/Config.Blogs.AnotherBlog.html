@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
+</span><span id="line-2"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Config.Blogs.AnotherBlog</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-3"></span><span>    </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier">blogName</span></a></span><span>
+</span><span id="line-4"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#blogDesc"><span class="hs-identifier">blogDesc</span></a></span><span>
+</span><span id="line-5"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#entryPattern"><span class="hs-identifier">entryPattern</span></a></span><span>
+</span><span id="line-6"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#entryFilesPattern"><span class="hs-identifier">entryFilesPattern</span></a></span><span>
+</span><span id="line-7"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#feedConfig"><span class="hs-identifier">feedConfig</span></a></span><span>
+</span><span id="line-8"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#contentSnapshot"><span class="hs-identifier">contentSnapshot</span></a></span><span>
+</span><span id="line-9"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#tagPagesPath"><span class="hs-identifier">tagPagesPath</span></a></span><span>
+</span><span id="line-10"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#buildTags"><span class="hs-identifier">buildTags</span></a></span><span>
+</span><span id="line-11"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#yearlyPagePath"><span class="hs-identifier">yearlyPagePath</span></a></span><span>
+</span><span id="line-12"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#buildYearlyArchives"><span class="hs-identifier">buildYearlyArchives</span></a></span><span>
+</span><span id="line-13"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#monthlyPagePath"><span class="hs-identifier">monthlyPagePath</span></a></span><span>
+</span><span id="line-14"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#buildMonthlyArchives"><span class="hs-identifier">buildMonthlyArchives</span></a></span><span>
+</span><span id="line-15"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-16"></span><span>
+</span><span id="line-17"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.String</span></span><span>           </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">fromString</span></span><span class="hs-special">)</span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span>             </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
+</span><span id="line-19"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text.Lazy</span></span><span>        </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">TL</span></span><span>
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>                </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">H</span></span><span>
+</span><span id="line-21"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html"><span class="hs-identifier">Hakyll.Web.Feed.Extra</span></a></span><span> </span><span class="hs-keyword">hiding</span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#renderAtom"><span class="hs-identifier">renderAtom</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Lucid.Base</span></span><span>            </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">renderText</span></span><span class="hs-special">)</span><span>
+</span><span id="line-23"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Lucid.Html5</span></span><span>
+</span><span id="line-24"></span><span>
+</span><span id="line-25"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Archives.html"><span class="hs-identifier">Archives</span></a></span><span>              </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">A</span></span><span>
+</span><span id="line-26"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Config.Blogs.Utils.html"><span class="hs-identifier">Config.Blogs.Utils</span></a></span><span>    </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">BU</span></span><span>
+</span><span id="line-27"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.Site.html"><span class="hs-identifier">Config.Site</span></a></span><span>           </span><span class="hs-special">(</span><span class="annot"><a href="Config.Site.html#siteName"><span class="hs-identifier">siteName</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-28"></span><span>
+</span><span id="line-29"></span><span class="hs-pragma">{-# INLINE</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-pragma hs-type">blogName</span></a></span><span> </span><span class="hs-pragma">#-}</span><span>
+</span><span id="line-30"></span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-type">blogName</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-31"></span><span id="blogName"><span class="annot"><span class="annottext">blogName :: String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var hs-var">blogName</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;roki.diary&quot;</span></span><span>
+</span><span id="line-32"></span><span>
+</span><span id="line-33"></span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#blogDesc"><span class="hs-identifier hs-type">blogDesc</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-34"></span><span id="blogDesc"><span class="annot"><span class="annottext">blogDesc :: String
+</span><a href="Config.Blogs.AnotherBlog.html#blogDesc"><span class="hs-identifier hs-var hs-var">blogDesc</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text -&gt; String
+</span><span class="hs-identifier hs-var">TL.unpack</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; String) -&gt; Text -&gt; String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">HtmlT Identity () -&gt; Text
+forall a. Html a -&gt; Text
+</span><span class="hs-identifier hs-var">renderText</span></span><span> </span><span class="annot"><span class="annottext">(HtmlT Identity () -&gt; Text) -&gt; HtmlT Identity () -&gt; Text
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-35"></span><span>    </span><span class="annot"><span class="annottext">[Attribute] -&gt; HtmlT Identity () -&gt; HtmlT Identity ()
+forall arg result. Term arg result =&gt; arg -&gt; result
+</span><span class="hs-identifier hs-var">a_</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Attribute
+</span><span class="hs-identifier hs-var">href_</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Attribute) -&gt; Text -&gt; Attribute
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Text
+</span><span class="hs-identifier hs-var">T.pack</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Text) -&gt; String -&gt; Text
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;/&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(HtmlT Identity () -&gt; HtmlT Identity ())
+-&gt; HtmlT Identity () -&gt; HtmlT Identity ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; HtmlT Identity ()
+forall a. IsString a =&gt; String -&gt; a
+</span><span class="hs-identifier hs-var">fromString</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-36"></span><span>    </span><span class="annot"><span class="annottext">[Attribute] -&gt; HtmlT Identity () -&gt; HtmlT Identity ()
+forall arg result. Term arg result =&gt; arg -&gt; result
+</span><span class="hs-identifier hs-var">p_</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Attribute
+</span><span class="hs-identifier hs-var">class_</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;is-inline&quot;</span></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(HtmlT Identity () -&gt; HtmlT Identity ())
+-&gt; HtmlT Identity () -&gt; HtmlT Identity ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span>
+</span><span id="line-37"></span><span>        </span><span class="annot"><span class="annottext">HtmlT Identity ()
+</span><span class="hs-string">&quot; is just a diary. I write about my daily events and thoughts &quot;</span></span><span>
+</span><span id="line-38"></span><span>            </span><span class="annot"><span class="annottext">HtmlT Identity () -&gt; HtmlT Identity () -&gt; HtmlT Identity ()
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">HtmlT Identity ()
+</span><span class="hs-string">&quot;(Most of the content of the article is written in Japanese).&quot;</span></span><span>
+</span><span id="line-39"></span><span>
+</span><span id="line-40"></span><span class="hs-comment">-- contents/roki.log/year/month/day/title/index.md</span><span>
+</span><span id="line-41"></span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#entryPattern"><span class="hs-identifier hs-type">entryPattern</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">H.Pattern</span></span><span>
+</span><span id="line-42"></span><span id="entryPattern"><span class="annot"><span class="annottext">entryPattern :: Pattern
+</span><a href="Config.Blogs.AnotherBlog.html#entryPattern"><span class="hs-identifier hs-var hs-var">entryPattern</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><a href="Config.Blogs.Utils.html#entryPattern"><span class="hs-identifier hs-var">BU.entryPattern</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-43"></span><span>
+</span><span id="line-44"></span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#entryFilesPattern"><span class="hs-identifier hs-type">entryFilesPattern</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">H.Pattern</span></span><span>
+</span><span id="line-45"></span><span id="entryFilesPattern"><span class="annot"><span class="annottext">entryFilesPattern :: Pattern
+</span><a href="Config.Blogs.AnotherBlog.html#entryFilesPattern"><span class="hs-identifier hs-var hs-var">entryFilesPattern</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><a href="Config.Blogs.Utils.html#entryFilesPattern"><span class="hs-identifier hs-var">BU.entryFilesPattern</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-46"></span><span>
+</span><span id="line-47"></span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#feedConfig"><span class="hs-identifier hs-type">feedConfig</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#FeedConfiguration"><span class="hs-identifier hs-type">FeedConfiguration</span></a></span><span>
+</span><span id="line-48"></span><span id="feedConfig"><span class="annot"><span class="annottext">feedConfig :: FeedConfiguration
+</span><a href="Config.Blogs.AnotherBlog.html#feedConfig"><span class="hs-identifier hs-var hs-var">feedConfig</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#FeedConfiguration"><span class="hs-identifier hs-type">FeedConfiguration</span></a></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-49"></span><span>    </span><span class="annot"><span class="annottext">feedTitle :: String
+</span><a href="Hakyll.Web.Feed.Extra.html#feedTitle"><span class="hs-identifier hs-var">feedTitle</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-50"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">feedWebRoot :: String
+</span><a href="Hakyll.Web.Feed.Extra.html#feedWebRoot"><span class="hs-identifier hs-var">feedWebRoot</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;https://&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Site.html#siteName"><span class="hs-identifier hs-var">siteName</span></a></span><span>
+</span><span id="line-51"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">feedBlogName :: String
+</span><a href="Hakyll.Web.Feed.Extra.html#feedBlogName"><span class="hs-identifier hs-var">feedBlogName</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-52"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">feedDescription :: String
+</span><a href="Hakyll.Web.Feed.Extra.html#feedDescription"><span class="hs-identifier hs-var">feedDescription</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;Roki Diary&quot;</span></span><span>
+</span><span id="line-53"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">feedAuthorName :: String
+</span><a href="Hakyll.Web.Feed.Extra.html#feedAuthorName"><span class="hs-identifier hs-var">feedAuthorName</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;Roki&quot;</span></span><span>
+</span><span id="line-54"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">feedAuthorEmail :: String
+</span><a href="#local-6989586621679286169"><span class="hs-identifier hs-var">feedAuthorEmail</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;falgon53@yahoo.co.jp&quot;</span></span><span>
+</span><span id="line-55"></span><span>  </span><span class="hs-special">}</span><span>
+</span><span id="line-56"></span><span>
+</span><span id="line-57"></span><span class="hs-pragma">{-# INLINE</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#contentSnapshot"><span class="hs-pragma hs-type">contentSnapshot</span></a></span><span> </span><span class="hs-pragma">#-}</span><span>
+</span><span id="line-58"></span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#contentSnapshot"><span class="hs-identifier hs-type">contentSnapshot</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">H.Snapshot</span></span><span>
+</span><span id="line-59"></span><span id="contentSnapshot"><span class="annot"><span class="annottext">contentSnapshot :: String
+</span><a href="Config.Blogs.AnotherBlog.html#contentSnapshot"><span class="hs-identifier hs-var hs-var">contentSnapshot</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String
+</span><a href="Config.Blogs.Utils.html#contentSnapshot"><span class="hs-identifier hs-var">BU.contentSnapshot</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-60"></span><span>
+</span><span id="line-61"></span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#tagPagesPath"><span class="hs-identifier hs-type">tagPagesPath</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-62"></span><span id="tagPagesPath"><span class="annot"><span class="annottext">tagPagesPath :: String -&gt; String
+</span><a href="Config.Blogs.AnotherBlog.html#tagPagesPath"><span class="hs-identifier hs-var hs-var">tagPagesPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="Config.Blogs.Utils.html#tagPagesPath"><span class="hs-identifier hs-var">BU.tagPagesPath</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-63"></span><span>
+</span><span id="line-64"></span><span id="local-6989586621679286097"><span class="annot"><a href="Config.Blogs.AnotherBlog.html#buildTags"><span class="hs-identifier hs-type">buildTags</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">H.MonadMetadata</span></span><span> </span><span class="annot"><a href="#local-6989586621679286097"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679286097"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">H.Tags</span></span></span><span>
+</span><span id="line-65"></span><span id="buildTags"><span class="annot"><span class="annottext">buildTags :: forall (m :: * -&gt; *). MonadMetadata m =&gt; m Tags
+</span><a href="Config.Blogs.AnotherBlog.html#buildTags"><span class="hs-identifier hs-var hs-var">buildTags</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; m Tags
+forall (m :: * -&gt; *). MonadMetadata m =&gt; String -&gt; m Tags
+</span><a href="Config.Blogs.Utils.html#buildTags"><span class="hs-identifier hs-var">BU.buildTags</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-66"></span><span>
+</span><span id="line-67"></span><span class="hs-pragma">{-# INLINE</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#yearlyPagePath"><span class="hs-pragma hs-type">yearlyPagePath</span></a></span><span> </span><span class="hs-pragma">#-}</span><span>
+</span><span id="line-68"></span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#yearlyPagePath"><span class="hs-identifier hs-type">yearlyPagePath</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-69"></span><span id="yearlyPagePath"><span class="annot"><span class="annottext">yearlyPagePath :: String -&gt; String
+</span><a href="Config.Blogs.AnotherBlog.html#yearlyPagePath"><span class="hs-identifier hs-var hs-var">yearlyPagePath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="Config.Blogs.Utils.html#yearlyPagePath"><span class="hs-identifier hs-var">BU.yearlyPagePath</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-70"></span><span>
+</span><span id="line-71"></span><span id="local-6989586621679286102"><span class="annot"><a href="Config.Blogs.AnotherBlog.html#buildYearlyArchives"><span class="hs-identifier hs-type">buildYearlyArchives</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">H.MonadMetadata</span></span><span> </span><span class="annot"><a href="#local-6989586621679286102"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadFail</span></span><span> </span><span class="annot"><a href="#local-6989586621679286102"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679286102"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="Archives.html#YearlyArchives"><span class="hs-identifier hs-type">A.YearlyArchives</span></a></span></span><span>
+</span><span id="line-72"></span><span id="buildYearlyArchives"><span class="annot"><span class="annottext">buildYearlyArchives :: forall (m :: * -&gt; *).
+(MonadMetadata m, MonadFail m) =&gt;
+m YearlyArchives
+</span><a href="Config.Blogs.AnotherBlog.html#buildYearlyArchives"><span class="hs-identifier hs-var hs-var">buildYearlyArchives</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; m YearlyArchives
+forall (m :: * -&gt; *).
+(MonadMetadata m, MonadFail m) =&gt;
+String -&gt; m YearlyArchives
+</span><a href="Config.Blogs.Utils.html#buildYearlyArchives"><span class="hs-identifier hs-var">BU.buildYearlyArchives</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-73"></span><span>
+</span><span id="line-74"></span><span class="hs-pragma">{-# INLINE</span><span> </span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#monthlyPagePath"><span class="hs-pragma hs-type">monthlyPagePath</span></a></span><span> </span><span class="hs-pragma">#-}</span><span>
+</span><span id="line-75"></span><span class="annot"><a href="Config.Blogs.AnotherBlog.html#monthlyPagePath"><span class="hs-identifier hs-type">monthlyPagePath</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-76"></span><span id="monthlyPagePath"><span class="annot"><span class="annottext">monthlyPagePath :: (String, String) -&gt; String
+</span><a href="Config.Blogs.AnotherBlog.html#monthlyPagePath"><span class="hs-identifier hs-var hs-var">monthlyPagePath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (String, String) -&gt; String
+</span><a href="Config.Blogs.Utils.html#monthlyPagePath"><span class="hs-identifier hs-var">BU.monthlyPagePath</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-77"></span><span>
+</span><span id="line-78"></span><span id="local-6989586621679286106"><span class="annot"><a href="Config.Blogs.AnotherBlog.html#buildMonthlyArchives"><span class="hs-identifier hs-type">buildMonthlyArchives</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">H.MonadMetadata</span></span><span> </span><span class="annot"><a href="#local-6989586621679286106"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadFail</span></span><span> </span><span class="annot"><a href="#local-6989586621679286106"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679286106"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="Archives.html#MonthlyArchives"><span class="hs-identifier hs-type">A.MonthlyArchives</span></a></span></span><span>
+</span><span id="line-79"></span><span id="buildMonthlyArchives"><span class="annot"><span class="annottext">buildMonthlyArchives :: forall (m :: * -&gt; *).
+(MonadMetadata m, MonadFail m) =&gt;
+m MonthlyArchives
+</span><a href="Config.Blogs.AnotherBlog.html#buildMonthlyArchives"><span class="hs-identifier hs-var hs-var">buildMonthlyArchives</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; m MonthlyArchives
+forall (m :: * -&gt; *).
+(MonadMetadata m, MonadFail m) =&gt;
+String -&gt; m MonthlyArchives
+</span><a href="Config.Blogs.Utils.html#buildMonthlyArchives"><span class="hs-identifier hs-var">BU.buildMonthlyArchives</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Blogs.AnotherBlog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
+</span><span id="line-80"></span><span>
+</span><span id="line-81"></span></pre></body></html>

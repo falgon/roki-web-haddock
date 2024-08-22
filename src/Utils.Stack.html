@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE LambdaCase #-}</span><span>
+</span><span id="line-2"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Utils.Stack</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-3"></span><span>    </span><span class="annot"><a href="Utils.Stack.html#getStackYaml"><span class="hs-identifier">getStackYaml</span></a></span><span>
+</span><span id="line-4"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Utils.Stack.html#getPackageConfig"><span class="hs-identifier">getPackageConfig</span></a></span><span>
+</span><span id="line-5"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Utils.Stack.html#getProgNameV"><span class="hs-identifier">getProgNameV</span></a></span><span>
+</span><span id="line-6"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-7"></span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Arrow</span></span><span>                </span><span class="hs-special">(</span><span class="annot"><span class="hs-operator">(&amp;&amp;&amp;)</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-operator">(|||)</span></span><span class="hs-special">)</span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Functor</span></span><span>                 </span><span class="hs-special">(</span><span class="annot"><span class="hs-operator">(&lt;&amp;&gt;)</span></span><span class="hs-special">)</span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.HashMap.Strict</span></span><span>          </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">HM</span></span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span>                    </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Yaml</span></span><span>                    </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Value</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">decodeFileThrow</span></span><span class="hs-special">)</span><span>
+</span><span id="line-13"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hpack.Config</span></span><span>                 </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">DecodeResult</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">Package</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-14"></span><span>                                               </span><span class="annot"><span class="hs-identifier">defaultDecodeOptions</span></span><span class="hs-special">,</span><span>
+</span><span id="line-15"></span><span>                                               </span><span class="annot"><span class="hs-identifier">readPackageConfig</span></span><span class="hs-special">)</span><span>
+</span><span id="line-16"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">RIO.Process</span></span><span>                  </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">mkDefaultProcessContext</span></span><span class="hs-special">)</span><span>
+</span><span id="line-17"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Stack.Config</span></span><span>                 </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">getProjectConfig</span></span><span class="hs-special">)</span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Stack.Prelude</span></span><span>                </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Abs</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">File</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">LogLevel</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">LevelInfo</span></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-19"></span><span>                                               </span><span class="annot"><span class="hs-identifier">MonadIO</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">Path</span></span><span class="hs-special">,</span><span>
+</span><span id="line-20"></span><span>                                               </span><span class="annot"><span class="hs-identifier">StylesUpdate</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">StylesUpdate</span></span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-21"></span><span>                                               </span><span class="annot"><span class="hs-identifier">newMVar</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">runRIO</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">throwString</span></span><span class="hs-special">,</span><span>
+</span><span id="line-22"></span><span>                                               </span><span class="annot"><span class="hs-identifier">toFilePath</span></span><span class="hs-special">)</span><span>
+</span><span id="line-23"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Stack.Types.GlobalOpts</span></span><span>       </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">GlobalOpts</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-24"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Stack.Types.LockFileBehavior</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">LockFileBehavior</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">LFBReadOnly</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-25"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Stack.Types.ProjectConfig</span></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">ProjectConfig</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">PCProject</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-26"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Stack.Types.Runner</span></span><span>           </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Runner</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-27"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Stack.Types.StackYamlLoc</span></span><span>     </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">StackYamlLoc</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">SYLDefault</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-28"></span><span>
+</span><span id="line-29"></span><span class="annot"><a href="Utils.Stack.html#gops"><span class="hs-identifier hs-type">gops</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">GlobalOpts</span></span><span>
+</span><span id="line-30"></span><span id="gops"><span class="annot"><span class="annottext">gops :: GlobalOpts
+</span><a href="Utils.Stack.html#gops"><span class="hs-identifier hs-var hs-var">gops</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">GlobalOpts</span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-31"></span><span>    </span><span class="annot"><span class="annottext">$sel:reExecVersion:GlobalOpts :: Maybe String
+</span><span class="hs-identifier hs-var">reExecVersion</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe String
+forall a. Maybe a
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>
+</span><span id="line-32"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:dockerEntrypoint:GlobalOpts :: Maybe DockerEntrypoint
+</span><span class="hs-identifier hs-var">dockerEntrypoint</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe DockerEntrypoint
+forall a. Maybe a
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>
+</span><span id="line-33"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:logLevel:GlobalOpts :: LogLevel
+</span><span class="hs-identifier hs-var">logLevel</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">LogLevel
+</span><span class="hs-identifier hs-var">LevelInfo</span></span><span>
+</span><span id="line-34"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:timeInLog:GlobalOpts :: Bool
+</span><span class="hs-identifier hs-var">timeInLog</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">False</span></span><span>
+</span><span id="line-35"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:rslInLog:GlobalOpts :: Bool
+</span><span class="hs-identifier hs-var">rslInLog</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">False</span></span><span>
+</span><span id="line-36"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:planInLog:GlobalOpts :: Bool
+</span><span class="hs-identifier hs-var">planInLog</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">False</span></span><span>
+</span><span id="line-37"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:configMonoid:GlobalOpts :: ConfigMonoid
+</span><span class="hs-identifier hs-var">configMonoid</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ConfigMonoid
+forall a. Monoid a =&gt; a
+</span><span class="hs-identifier hs-var">mempty</span></span><span>
+</span><span id="line-38"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:snapshot:GlobalOpts :: Maybe AbstractSnapshot
+</span><span class="hs-identifier hs-var">snapshot</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe AbstractSnapshot
+forall a. Maybe a
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>
+</span><span id="line-39"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:compiler:GlobalOpts :: Maybe WantedCompiler
+</span><span class="hs-identifier hs-var">compiler</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe WantedCompiler
+forall a. Maybe a
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>
+</span><span id="line-40"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:terminal:GlobalOpts :: Bool
+</span><span class="hs-identifier hs-var">terminal</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">False</span></span><span>
+</span><span id="line-41"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:stylesUpdate:GlobalOpts :: StylesUpdate
+</span><span class="hs-identifier hs-var">stylesUpdate</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[(Style, StyleSpec)] -&gt; StylesUpdate
+</span><span class="hs-identifier hs-var">StylesUpdate</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span>
+</span><span id="line-42"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:termWidthOpt:GlobalOpts :: Maybe Int
+</span><span class="hs-identifier hs-var">termWidthOpt</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe Int
+forall a. Maybe a
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>
+</span><span id="line-43"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:stackYaml:GlobalOpts :: StackYamlLoc
+</span><span class="hs-identifier hs-var">stackYaml</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">StackYamlLoc
+</span><span class="hs-identifier hs-var">SYLDefault</span></span><span>
+</span><span id="line-44"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">$sel:lockFileBehavior:GlobalOpts :: LockFileBehavior
+</span><span class="hs-identifier hs-var">lockFileBehavior</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">LockFileBehavior
+</span><span class="hs-identifier hs-var">LFBReadOnly</span></span><span>
+</span><span id="line-45"></span><span>  </span><span class="hs-special">}</span><span>
+</span><span id="line-46"></span><span>
+</span><span id="line-47"></span><span id="local-6989586621679286216"><span class="annot"><a href="Utils.Stack.html#mkRunner"><span class="hs-identifier hs-type">mkRunner</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679286216"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679286216"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Runner</span></span></span><span>
+</span><span id="line-48"></span><span id="mkRunner"><span class="annot"><span class="annottext">mkRunner :: forall (m :: * -&gt; *). MonadIO m =&gt; m Runner
+</span><a href="Utils.Stack.html#mkRunner"><span class="hs-identifier hs-var hs-var">mkRunner</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">GlobalOpts
+-&gt; Bool -&gt; LogFunc -&gt; Int -&gt; ProcessContext -&gt; MVar Bool -&gt; Runner
+</span><span class="hs-identifier hs-var">Runner</span></span><span> </span><span class="annot"><span class="annottext">GlobalOpts
+</span><a href="Utils.Stack.html#gops"><span class="hs-identifier hs-var">gops</span></a></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">False</span></span><span> </span><span class="annot"><span class="annottext">LogFunc
+forall a. Monoid a =&gt; a
+</span><span class="hs-identifier hs-var">mempty</span></span><span> </span><span class="annot"><span class="annottext">Int
+</span><span class="hs-number">0</span></span><span>
+</span><span id="line-49"></span><span>    </span><span class="annot"><span class="annottext">(ProcessContext -&gt; MVar Bool -&gt; Runner)
+-&gt; m ProcessContext -&gt; m (MVar Bool -&gt; Runner)
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">m ProcessContext
+forall (m :: * -&gt; *). MonadIO m =&gt; m ProcessContext
+</span><span class="hs-identifier hs-var">mkDefaultProcessContext</span></span><span>
+</span><span id="line-50"></span><span>    </span><span class="annot"><span class="annottext">m (MVar Bool -&gt; Runner) -&gt; m (MVar Bool) -&gt; m Runner
+forall a b. m (a -&gt; b) -&gt; m a -&gt; m b
+forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; m (MVar Bool)
+forall (m :: * -&gt; *) a. MonadIO m =&gt; a -&gt; m (MVar a)
+</span><span class="hs-identifier hs-var">newMVar</span></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">False</span></span><span>
+</span><span id="line-51"></span><span>
+</span><span id="line-52"></span><span class="annot"><a href="Utils.Stack.html#getStackYamlPath"><span class="hs-identifier hs-type">getStackYamlPath</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Path</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Abs</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">File</span></span><span class="hs-special">)</span><span>
+</span><span id="line-53"></span><span id="getStackYamlPath"><span class="annot"><span class="annottext">getStackYamlPath :: IO (Path Abs File)
+</span><a href="Utils.Stack.html#getStackYamlPath"><span class="hs-identifier hs-var hs-var">getStackYamlPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO Runner
+forall (m :: * -&gt; *). MonadIO m =&gt; m Runner
+</span><a href="Utils.Stack.html#mkRunner"><span class="hs-identifier hs-var">mkRunner</span></a></span><span>
+</span><span id="line-54"></span><span>    </span><span class="annot"><span class="annottext">IO Runner
+-&gt; (Runner -&gt; IO (ProjectConfig (Path Abs File)))
+-&gt; IO (ProjectConfig (Path Abs File))
+forall a b. IO a -&gt; (a -&gt; IO b) -&gt; IO b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">(Runner
+ -&gt; RIO Runner (ProjectConfig (Path Abs File))
+ -&gt; IO (ProjectConfig (Path Abs File)))
+-&gt; RIO Runner (ProjectConfig (Path Abs File))
+-&gt; Runner
+-&gt; IO (ProjectConfig (Path Abs File))
+forall a b c. (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c
+</span><span class="hs-identifier hs-var">flip</span></span><span> </span><span class="annot"><span class="annottext">Runner
+-&gt; RIO Runner (ProjectConfig (Path Abs File))
+-&gt; IO (ProjectConfig (Path Abs File))
+forall (m :: * -&gt; *) env a. MonadIO m =&gt; env -&gt; RIO env a -&gt; m a
+</span><span class="hs-identifier hs-var">runRIO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">StackYamlLoc -&gt; RIO Runner (ProjectConfig (Path Abs File))
+forall env.
+HasTerm env =&gt;
+StackYamlLoc -&gt; RIO env (ProjectConfig (Path Abs File))
+</span><span class="hs-identifier hs-var">getProjectConfig</span></span><span> </span><span class="annot"><span class="annottext">StackYamlLoc
+</span><span class="hs-identifier hs-var">SYLDefault</span></span><span class="hs-special">)</span><span>
+</span><span id="line-55"></span><span>    </span><span class="annot"><span class="annottext">IO (ProjectConfig (Path Abs File))
+-&gt; (ProjectConfig (Path Abs File) -&gt; IO (Path Abs File))
+-&gt; IO (Path Abs File)
+forall a b. IO a -&gt; (a -&gt; IO b) -&gt; IO b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
+</span><span id="line-56"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">PCProject</span></span><span> </span><span id="local-6989586621679286369"><span class="annot"><span class="annottext">Path Abs File
+</span><a href="#local-6989586621679286369"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Path Abs File -&gt; IO (Path Abs File)
+forall a. a -&gt; IO a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">Path Abs File
+</span><a href="#local-6989586621679286369"><span class="hs-identifier hs-var">a</span></a></span><span>
+</span><span id="line-57"></span><span>        </span><span class="annot"><span class="annottext">ProjectConfig (Path Abs File)
+</span><span class="hs-identifier">_</span></span><span>           </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO (Path Abs File)
+forall a. String -&gt; IO a
+forall (m :: * -&gt; *) a. MonadFail m =&gt; String -&gt; m a
+</span><span class="hs-identifier hs-var">fail</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;Could not find stack location&quot;</span></span><span>
+</span><span id="line-58"></span><span>
+</span><span id="line-59"></span><span class="annot"><a href="Utils.Stack.html#getStackYaml"><span class="hs-identifier hs-type">getStackYaml</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">HM.HashMap</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Value</span></span><span class="hs-special">)</span><span>
+</span><span id="line-60"></span><span id="getStackYaml"><span class="annot"><span class="annottext">getStackYaml :: IO (HashMap Text Value)
+</span><a href="Utils.Stack.html#getStackYaml"><span class="hs-identifier hs-var hs-var">getStackYaml</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO (Path Abs File)
+</span><a href="Utils.Stack.html#getStackYamlPath"><span class="hs-identifier hs-var">getStackYamlPath</span></a></span><span>
+</span><span id="line-61"></span><span>    </span><span class="annot"><span class="annottext">IO (Path Abs File)
+-&gt; (Path Abs File -&gt; IO (HashMap Text Value))
+-&gt; IO (HashMap Text Value)
+forall a b. IO a -&gt; (a -&gt; IO b) -&gt; IO b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; IO (HashMap Text Value)
+forall (m :: * -&gt; *) a. (MonadIO m, FromJSON a) =&gt; String -&gt; m a
+</span><span class="hs-identifier hs-var">decodeFileThrow</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO (HashMap Text Value))
+-&gt; (Path Abs File -&gt; String)
+-&gt; Path Abs File
+-&gt; IO (HashMap Text Value)
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Path Abs File -&gt; String
+forall b t. Path b t -&gt; String
+</span><span class="hs-identifier hs-var">toFilePath</span></span><span>
+</span><span id="line-62"></span><span>
+</span><span id="line-63"></span><span class="annot"><a href="Utils.Stack.html#getPackageConfig"><span class="hs-identifier hs-type">getPackageConfig</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">DecodeResult</span></span><span>
+</span><span id="line-64"></span><span id="getPackageConfig"><span class="annot"><span class="annottext">getPackageConfig :: IO DecodeResult
+</span><a href="Utils.Stack.html#getPackageConfig"><span class="hs-identifier hs-var hs-var">getPackageConfig</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">DecodeOptions -&gt; IO (Either String DecodeResult)
+</span><span class="hs-identifier hs-var">readPackageConfig</span></span><span> </span><span class="annot"><span class="annottext">DecodeOptions
+</span><span class="hs-identifier hs-var">defaultDecodeOptions</span></span><span> </span><span class="annot"><span class="annottext">IO (Either String DecodeResult)
+-&gt; (Either String DecodeResult -&gt; IO DecodeResult)
+-&gt; IO DecodeResult
+forall a b. IO a -&gt; (a -&gt; IO b) -&gt; IO b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; IO DecodeResult
+forall (m :: * -&gt; *) a. (MonadIO m, HasCallStack) =&gt; String -&gt; m a
+</span><span class="hs-identifier hs-var">throwString</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO DecodeResult)
+-&gt; (DecodeResult -&gt; IO DecodeResult)
+-&gt; Either String DecodeResult
+-&gt; IO DecodeResult
+forall b d c. (b -&gt; d) -&gt; (c -&gt; d) -&gt; Either b c -&gt; d
+forall (a :: * -&gt; * -&gt; *) b d c.
+ArrowChoice a =&gt;
+a b d -&gt; a c d -&gt; a (Either b c) d
+</span><span class="hs-operator hs-var">|||</span></span><span> </span><span class="annot"><span class="annottext">DecodeResult -&gt; IO DecodeResult
+forall a. a -&gt; IO a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span>
+</span><span id="line-65"></span><span>
+</span><span id="line-66"></span><span class="annot"><a href="Utils.Stack.html#getProgNameV"><span class="hs-identifier hs-type">getProgNameV</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-67"></span><span id="getProgNameV"><span class="annot"><span class="annottext">getProgNameV :: IO String
+</span><a href="Utils.Stack.html#getProgNameV"><span class="hs-identifier hs-var hs-var">getProgNameV</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO DecodeResult
+</span><a href="Utils.Stack.html#getPackageConfig"><span class="hs-identifier hs-var">getPackageConfig</span></a></span><span>
+</span><span id="line-68"></span><span>    </span><span class="annot"><span class="annottext">IO DecodeResult -&gt; (DecodeResult -&gt; String) -&gt; IO String
+forall (f :: * -&gt; *) a b. Functor f =&gt; f a -&gt; (a -&gt; b) -&gt; f b
+</span><span class="hs-operator hs-var">&lt;&amp;&gt;</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; String -&gt; String) -&gt; (String, String) -&gt; String
+forall a b c. (a -&gt; b -&gt; c) -&gt; (a, b) -&gt; c
+</span><span class="hs-identifier hs-var">uncurry</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">(&lt;&gt;)</span></span><span> </span><span class="annot"><span class="annottext">((String, String) -&gt; String)
+-&gt; (DecodeResult -&gt; (String, String)) -&gt; DecodeResult -&gt; String
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Package -&gt; String
+</span><span class="hs-identifier hs-var">packageName</span></span><span> </span><span class="annot"><span class="annottext">(Package -&gt; String)
+-&gt; (Package -&gt; String) -&gt; Package -&gt; (String, String)
+forall b c c'. (b -&gt; c) -&gt; (b -&gt; c') -&gt; b -&gt; (c, c')
+forall (a :: * -&gt; * -&gt; *) b c c'.
+Arrow a =&gt;
+a b c -&gt; a b c' -&gt; a b (c, c')
+</span><span class="hs-operator hs-var">&amp;&amp;&amp;</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;/&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(String -&gt; String) -&gt; (Package -&gt; String) -&gt; Package -&gt; String
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Package -&gt; String
+</span><span class="hs-identifier hs-var">packageVersion</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Package -&gt; (String, String))
+-&gt; (DecodeResult -&gt; Package) -&gt; DecodeResult -&gt; (String, String)
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">DecodeResult -&gt; Package
+</span><span class="hs-identifier hs-var">decodeResultPackage</span></span><span>
+</span><span id="line-69"></span></pre></body></html>
