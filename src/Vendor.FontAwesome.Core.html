@@ -17,7 +17,7 @@
 </span><span id="line-17"></span><span class="hs-keyword">data</span><span> </span><span id="Elem"><span class="annot"><a href="Vendor.FontAwesome.Core.html#Elem"><span class="hs-identifier hs-var">Elem</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Elem"><span class="annot"><a href="Vendor.FontAwesome.Core.html#Elem"><span class="hs-identifier hs-var">Elem</span></a></span></span><span> </span><span class="hs-special">{</span><span> </span><span id="tag"><span class="annot"><span class="annottext">Elem -&gt; String
 </span><a href="Vendor.FontAwesome.Core.html#tag"><span class="hs-identifier hs-var hs-var">tag</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span> </span><span id="attr"><span class="annot"><span class="annottext">Elem -&gt; [Attribute String]
 </span><a href="Vendor.FontAwesome.Core.html#attr"><span class="hs-identifier hs-var hs-var">attr</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Attribute</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span class="hs-special">,</span><span> </span><span id="child"><span class="annot"><span class="annottext">Elem -&gt; [Elem]
-</span><a href="Vendor.FontAwesome.Core.html#child"><span class="hs-identifier hs-var hs-var">child</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Vendor.FontAwesome.Core.html#Elem"><span class="hs-identifier hs-type">Elem</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span id="local-6989586621679288753"><span id="local-6989586621679288764"><span id="local-6989586621679288768"><span class="annot"><span class="annottext">Int -&gt; Elem -&gt; ShowS
+</span><a href="Vendor.FontAwesome.Core.html#child"><span class="hs-identifier hs-var hs-var">child</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Vendor.FontAwesome.Core.html#Elem"><span class="hs-identifier hs-type">Elem</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span id="local-6989586621679288754"><span id="local-6989586621679288765"><span id="local-6989586621679288769"><span class="annot"><span class="annottext">Int -&gt; Elem -&gt; ShowS
 [Elem] -&gt; ShowS
 Elem -&gt; String
 (Int -&gt; Elem -&gt; ShowS)
@@ -32,30 +32,30 @@ $cshowList :: [Elem] -&gt; ShowS
 showList :: [Elem] -&gt; ShowS
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span>
 </span><span id="line-18"></span><span>
-</span><span id="line-19"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679288775"><span id="local-6989586621679288778"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#Elem"><span class="hs-identifier hs-type">Elem</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-20"></span><span>    </span><span id="local-6989586621679288796"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser Elem
-</span><a href="#local-6989586621679288796"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (Object -&gt; Parser Elem) -&gt; Value -&gt; Parser Elem
+</span><span id="line-19"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679288776"><span id="local-6989586621679288779"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#Elem"><span class="hs-identifier hs-type">Elem</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-20"></span><span>    </span><span id="local-6989586621679288797"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser Elem
+</span><a href="#local-6989586621679288797"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (Object -&gt; Parser Elem) -&gt; Value -&gt; Parser Elem
 forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 </span><span class="hs-identifier hs-var">withObject</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Element&quot;</span></span><span> </span><span class="annot"><span class="annottext">((Object -&gt; Parser Elem) -&gt; Value -&gt; Parser Elem)
 -&gt; (Object -&gt; Parser Elem) -&gt; Value -&gt; Parser Elem
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679288798"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679288798"><span class="hs-identifier hs-var">obj</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-21"></span><span>        </span><span id="local-6989586621679288799"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679288799"><span class="hs-identifier hs-var">tag</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679288798"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser String
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679288799"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679288799"><span class="hs-identifier hs-var">obj</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-21"></span><span>        </span><span id="local-6989586621679288800"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288800"><span class="hs-identifier hs-var">tag</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679288799"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser String
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;tag&quot;</span></span><span>
-</span><span id="line-22"></span><span>        </span><span id="local-6989586621679288800"><span class="annot"><span class="annottext">[Attribute String]
-</span><a href="#local-6989586621679288800"><span class="hs-identifier hs-var">attr</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">HashMap String String -&gt; [Attribute String]
+</span><span id="line-22"></span><span>        </span><span id="local-6989586621679288801"><span class="annot"><span class="annottext">[Attribute String]
+</span><a href="#local-6989586621679288801"><span class="hs-identifier hs-var">attr</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">HashMap String String -&gt; [Attribute String]
 forall k v. HashMap k v -&gt; [(k, v)]
 </span><span class="hs-identifier hs-var">M.toList</span></span><span> </span><span class="annot"><span class="annottext">(HashMap String String -&gt; [Attribute String])
 -&gt; Parser (HashMap String String) -&gt; Parser [Attribute String]
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679288798"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser (Maybe (HashMap String String))
+</span><a href="#local-6989586621679288799"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser (Maybe (HashMap String String))
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser (Maybe a)
 </span><span class="hs-operator hs-var">.:?</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;attributes&quot;</span></span><span> </span><span class="annot"><span class="annottext">Parser (Maybe (HashMap String String))
@@ -64,9 +64,9 @@ forall a. Parser (Maybe a) -&gt; a -&gt; Parser a
 </span><span class="hs-operator hs-var">.!=</span></span><span> </span><span class="annot"><span class="annottext">HashMap String String
 forall k v. HashMap k v
 </span><span class="hs-identifier hs-var">M.empty</span></span><span>
-</span><span id="line-23"></span><span>        </span><span id="local-6989586621679288804"><span class="annot"><span class="annottext">[Elem]
-</span><a href="#local-6989586621679288804"><span class="hs-identifier hs-var">child</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679288798"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser (Maybe [Elem])
+</span><span id="line-23"></span><span>        </span><span id="local-6989586621679288805"><span class="annot"><span class="annottext">[Elem]
+</span><a href="#local-6989586621679288805"><span class="hs-identifier hs-var">child</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679288799"><span class="hs-identifier hs-var">obj</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser (Maybe [Elem])
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser (Maybe a)
 </span><span class="hs-operator hs-var">.:?</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;children&quot;</span></span><span> </span><span class="annot"><span class="annottext">Parser (Maybe [Elem]) -&gt; [Elem] -&gt; Parser [Elem]
@@ -106,24 +106,24 @@ forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span id="line-30"></span><span>
 </span><span id="line-31"></span><span class="annot"><a href="Vendor.FontAwesome.Core.html#fontAwesome"><span class="hs-identifier hs-type">fontAwesome</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#FontAwesomeIcons"><span class="hs-identifier hs-type">FontAwesomeIcons</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">TagTree</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span>
 </span><span id="line-32"></span><span id="fontAwesome"><span class="annot"><span class="annottext">fontAwesome :: FontAwesomeIcons -&gt; String -&gt; String -&gt; Maybe (TagTree String)
-</span><a href="Vendor.FontAwesome.Core.html#fontAwesome"><span class="hs-identifier hs-var hs-var">fontAwesome</span></a></span></span><span> </span><span id="local-6989586621679288807"><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679288807"><span class="hs-identifier hs-var">db</span></a></span></span><span> </span><span id="local-6989586621679288808"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679288808"><span class="hs-identifier hs-var">prefix</span></a></span></span><span> </span><span id="local-6989586621679288809"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679288809"><span class="hs-identifier hs-var">name</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Elem -&gt; TagTree String
+</span><a href="Vendor.FontAwesome.Core.html#fontAwesome"><span class="hs-identifier hs-var hs-var">fontAwesome</span></a></span></span><span> </span><span id="local-6989586621679288808"><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679288808"><span class="hs-identifier hs-var">db</span></a></span></span><span> </span><span id="local-6989586621679288809"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288809"><span class="hs-identifier hs-var">prefix</span></a></span></span><span> </span><span id="local-6989586621679288810"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679288810"><span class="hs-identifier hs-var">name</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Elem -&gt; TagTree String
 </span><a href="Vendor.FontAwesome.Core.html#toTagTree"><span class="hs-identifier hs-var">toTagTree</span></a></span><span> </span><span class="annot"><span class="annottext">(Elem -&gt; TagTree String) -&gt; Maybe Elem -&gt; Maybe (TagTree String)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; FontAwesomeIcons -&gt; Maybe (HashMap String Elem)
 forall k v. (Eq k, Hashable k) =&gt; k -&gt; HashMap k v -&gt; Maybe v
 </span><span class="hs-identifier hs-var">M.lookup</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679288808"><span class="hs-identifier hs-var">prefix</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679288807"><span class="hs-identifier hs-var">db</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe (HashMap String Elem)
+</span><a href="#local-6989586621679288809"><span class="hs-identifier hs-var">prefix</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679288808"><span class="hs-identifier hs-var">db</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe (HashMap String Elem)
 -&gt; (HashMap String Elem -&gt; Maybe Elem) -&gt; Maybe Elem
 forall a b. Maybe a -&gt; (a -&gt; Maybe b) -&gt; Maybe b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; HashMap String Elem -&gt; Maybe Elem
 forall k v. (Eq k, Hashable k) =&gt; k -&gt; HashMap k v -&gt; Maybe v
 </span><span class="hs-identifier hs-var">M.lookup</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679288809"><span class="hs-identifier hs-var">name</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679288810"><span class="hs-identifier hs-var">name</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-33"></span><span>
 </span><span id="line-34"></span><span class="annot"><a href="Vendor.FontAwesome.Core.html#toTagTree"><span class="hs-identifier hs-type">toTagTree</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#Elem"><span class="hs-identifier hs-type">Elem</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">TagTree</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
 </span><span id="line-35"></span><span id="toTagTree"><span class="annot"><span class="annottext">toTagTree :: Elem -&gt; TagTree String

@@ -12,7 +12,7 @@
 </span><a href="Rules.Src.Style.html#rules"><span class="hs-identifier hs-var hs-var">rules</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-12"></span><span>    </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679287652"><span class="hs-identifier hs-var">css</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679287653"><span class="hs-identifier hs-var">css</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-13"></span><span>        </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
@@ -33,14 +33,14 @@ Compiler (Item a) -&gt; Rules ()
 </span><span class="hs-identifier hs-var">compile</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item String)
 </span><span class="hs-identifier hs-var">compressCssCompiler</span></span><span>
 </span><span id="line-15"></span><span>
-</span><span id="line-16"></span><span>    </span><span id="local-6989586621679287658"><span class="annot"><span class="annottext">Dependency
-</span><a href="#local-6989586621679287658"><span class="hs-identifier hs-var">scssDepend</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Rules Dependency
+</span><span id="line-16"></span><span>    </span><span id="local-6989586621679287659"><span class="annot"><span class="annottext">Dependency
+</span><a href="#local-6989586621679287659"><span class="hs-identifier hs-var">scssDepend</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Rules Dependency
 forall (m :: * -&gt; *). MonadMetadata m =&gt; Pattern -&gt; m Dependency
 </span><span class="hs-identifier hs-var">makePatternDependency</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679287660"><span class="hs-identifier hs-var">scssDep</span></a></span><span>
+</span><a href="#local-6989586621679287661"><span class="hs-identifier hs-var">scssDep</span></a></span><span>
 </span><span id="line-17"></span><span>    </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679287660"><span class="hs-identifier hs-var">scssDep</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679287661"><span class="hs-identifier hs-var">scssDep</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; Rules ()
 forall a.
@@ -51,12 +51,12 @@ Compiler (Item a) -&gt; Rules ()
 </span><span id="line-18"></span><span>    </span><span class="annot"><span class="annottext">[Dependency] -&gt; Rules () -&gt; Rules ()
 forall a. [Dependency] -&gt; Rules a -&gt; Rules a
 </span><span class="hs-identifier hs-var">rulesExtraDependencies</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Dependency
-</span><a href="#local-6989586621679287658"><span class="hs-identifier hs-var">scssDepend</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679287659"><span class="hs-identifier hs-var">scssDepend</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
 </span><span id="line-19"></span><span>        </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679287663"><span class="hs-identifier hs-var">scss</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679287664"><span class="hs-identifier hs-var">scss</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-20"></span><span>            </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
@@ -85,10 +85,10 @@ forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 -&gt; Compiler (Item String) -&gt; Compiler (Item String)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item String)
-</span><a href="#local-6989586621679287668"><span class="hs-identifier hs-var">sassCompiler</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679287669"><span class="hs-identifier hs-var">sassCompiler</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-24"></span><span>    </span><span class="hs-keyword">where</span><span>
-</span><span id="line-25"></span><span>        </span><span id="local-6989586621679287652"><span class="annot"><span class="annottext">css :: Pattern
-</span><a href="#local-6989586621679287652"><span class="hs-identifier hs-var hs-var">css</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-25"></span><span>        </span><span id="local-6989586621679287653"><span class="annot"><span class="annottext">css :: Pattern
+</span><a href="#local-6989586621679287653"><span class="hs-identifier hs-var hs-var">css</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromGlob</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Pattern) -&gt; String -&gt; Pattern
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
@@ -96,8 +96,8 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><a href="Config.Program.html#contentsRoot"><span class="hs-identifier hs-var">contentsRoot</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;css&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;**&quot;</span></span><span class="hs-special">]</span><span>
-</span><span id="line-26"></span><span>        </span><span id="local-6989586621679287660"><span class="annot"><span class="annottext">scssDep :: Pattern
-</span><a href="#local-6989586621679287660"><span class="hs-identifier hs-var hs-var">scssDep</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-26"></span><span>        </span><span id="local-6989586621679287661"><span class="annot"><span class="annottext">scssDep :: Pattern
+</span><a href="#local-6989586621679287661"><span class="hs-identifier hs-var hs-var">scssDep</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromGlob</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Pattern) -&gt; String -&gt; Pattern
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
@@ -106,8 +106,8 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-string">&quot;scss&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;*&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;**.scss&quot;</span></span><span class="hs-special">]</span><span>
-</span><span id="line-27"></span><span>        </span><span id="local-6989586621679287663"><span class="annot"><span class="annottext">scss :: Pattern
-</span><a href="#local-6989586621679287663"><span class="hs-identifier hs-var hs-var">scss</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-27"></span><span>        </span><span id="local-6989586621679287664"><span class="annot"><span class="annottext">scss :: Pattern
+</span><a href="#local-6989586621679287664"><span class="hs-identifier hs-var hs-var">scss</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromGlob</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Pattern) -&gt; String -&gt; Pattern
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
@@ -115,8 +115,8 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><a href="Config.Program.html#contentsRoot"><span class="hs-identifier hs-var">contentsRoot</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;scss&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;*.scss&quot;</span></span><span class="hs-special">]</span><span>
-</span><span id="line-28"></span><span>        </span><span id="local-6989586621679287668"><span class="annot"><span class="annottext">sassCompiler :: Compiler (Item String)
-</span><a href="#local-6989586621679287668"><span class="hs-identifier hs-var hs-var">sassCompiler</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Compiler (Item String)
+</span><span id="line-28"></span><span>        </span><span id="local-6989586621679287669"><span class="annot"><span class="annottext">sassCompiler :: Compiler (Item String)
+</span><a href="#local-6989586621679287669"><span class="hs-identifier hs-var hs-var">sassCompiler</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Compiler (Item String)
 </span><span class="hs-identifier hs-var">getResourceString</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item String)
 -&gt; (Item String -&gt; Compiler (Item String))
 -&gt; Compiler (Item String)

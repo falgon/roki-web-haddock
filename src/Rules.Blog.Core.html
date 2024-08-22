@@ -29,10 +29,10 @@
 </span><span id="line-29"></span><span>
 </span><span id="line-30"></span><span class="annot"><a href="Rules.Blog.Core.html#rules"><span class="hs-identifier hs-type">rules</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#FontAwesomeIcons"><span class="hs-identifier hs-type">FA.FontAwesomeIcons</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
 </span><span id="line-31"></span><span id="rules"><span class="annot"><span class="annottext">rules :: FontAwesomeIcons -&gt; BlogConfReader Rules Rules ()
-</span><a href="Rules.Blog.Core.html#rules"><span class="hs-identifier hs-var hs-var">rules</span></a></span></span><span> </span><span id="local-6989586621679290640"><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679290640"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-32"></span><span>    </span><span id="local-6989586621679290641"><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig Rules -&gt; Rules Tags)
+</span><a href="Rules.Blog.Core.html#rules"><span class="hs-identifier hs-var hs-var">rules</span></a></span></span><span> </span><span id="local-6989586621679290641"><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-32"></span><span>    </span><span id="local-6989586621679290642"><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679290642"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig Rules -&gt; Rules Tags)
 -&gt; ReaderT (BlogConfig Rules) Rules (Rules Tags)
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig Rules -&gt; Rules Tags
@@ -53,8 +53,8 @@ forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
 (MonadTrans t, Monad m) =&gt;
 m a -&gt; t m a
 </span><span class="hs-identifier hs-var">lift</span></span><span>
-</span><span id="line-33"></span><span>    </span><span id="local-6989586621679290644"><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679290644"><span class="hs-identifier hs-var">postCtx'</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[ReaderT (BlogConfig Rules) Rules (Context String)]
+</span><span id="line-33"></span><span>    </span><span id="local-6989586621679290645"><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679290645"><span class="hs-identifier hs-var">postCtx'</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[ReaderT (BlogConfig Rules) Rules (Context String)]
 -&gt; ReaderT (BlogConfig Rules) Rules (Context String)
 forall (m :: * -&gt; *) b. (Monad m, Monoid b) =&gt; [m b] -&gt; m b
 </span><a href="Utils.Base.html#mconcatM"><span class="hs-identifier hs-var">mconcatM</span></a></span><span> </span><span class="hs-special">[</span><span>
@@ -63,7 +63,7 @@ forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 Tags -&gt; BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#postCtx"><span class="hs-identifier hs-var">BlogCtx.postCtx</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">tags</span></a></span><span>
+</span><a href="#local-6989586621679290642"><span class="hs-identifier hs-var">tags</span></a></span><span>
 </span><span id="line-35"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ReaderT (BlogConfig Rules) Rules (Context String)
 forall (m :: * -&gt; *) a. Monad m =&gt; BlogConfReader m m (Context a)
 </span><a href="Contexts.Blog.html#tagCloud"><span class="hs-identifier hs-var">BlogCtx.tagCloud</span></a></span><span>
@@ -100,17 +100,17 @@ BlogConfReader n m (Context String)
 </span><span id="line-42"></span><span>      </span><span class="hs-special">]</span><span>
 </span><span id="line-43"></span><span>
 </span><span id="line-44"></span><span>    </span><span class="hs-comment">-- each posts</span><span>
-</span><span id="line-45"></span><span>    </span><span id="local-6989586621679290653"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679290653"><span class="hs-identifier hs-var">feedContent</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><span id="line-45"></span><span>    </span><span id="local-6989586621679290654"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679290654"><span class="hs-identifier hs-var">feedContent</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
 -&gt; Context String -&gt; BlogConfReader Rules Rules String
 forall (m :: * -&gt; *).
 FontAwesomeIcons -&gt; Context String -&gt; BlogConfReader m Rules String
 </span><a href="Rules.Blog.EachPosts.html#build"><span class="hs-identifier hs-var">EachPosts.build</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679290640"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679290644"><span class="hs-identifier hs-var">postCtx'</span></a></span><span>
+</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679290645"><span class="hs-identifier hs-var">postCtx'</span></a></span><span>
 </span><span id="line-46"></span><span>
-</span><span id="line-47"></span><span>    </span><span id="local-6989586621679290655"><span class="annot"><span class="annottext">ListPageOpts
-</span><a href="#local-6989586621679290655"><span class="hs-identifier hs-var">listPageOpts</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Context String
+</span><span id="line-47"></span><span>    </span><span id="local-6989586621679290656"><span class="annot"><span class="annottext">ListPageOpts
+</span><a href="#local-6989586621679290656"><span class="hs-identifier hs-var">listPageOpts</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Context String
 -&gt; String
 -&gt; Context String
 -&gt; Context String
@@ -387,7 +387,7 @@ forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 Tags -&gt; BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#postCtx"><span class="hs-identifier hs-var">BlogCtx.postCtx</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">tags</span></a></span><span>
+</span><a href="#local-6989586621679290642"><span class="hs-identifier hs-var">tags</span></a></span><span>
 </span><span id="line-58"></span><span>
 </span><span id="line-59"></span><span>    </span><span class="hs-comment">-- tagged paginate</span><span>
 </span><span id="line-60"></span><span>    </span><span class="annot"><span class="annottext">FontAwesomeIcons
@@ -396,31 +396,31 @@ forall (n :: * -&gt; *).
 FontAwesomeIcons
 -&gt; Tags -&gt; ListPageOpts -&gt; BlogConfReader n Rules ()
 </span><a href="Rules.Blog.Paginate.TaggedPosts.html#build"><span class="hs-identifier hs-var">TaggedPosts.build</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679290640"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
-</span><a href="#local-6989586621679290655"><span class="hs-identifier hs-var">listPageOpts</span></a></span><span>
+</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679290642"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
+</span><a href="#local-6989586621679290656"><span class="hs-identifier hs-var">listPageOpts</span></a></span><span>
 </span><span id="line-61"></span><span>
 </span><span id="line-62"></span><span>    </span><span class="hs-comment">-- yearly paginate</span><span>
-</span><span id="line-63"></span><span>    </span><span id="local-6989586621679290662"><span class="annot"><span class="annottext">YearlyArchives
-</span><a href="#local-6989586621679290662"><span class="hs-identifier hs-var">yearlyArchives</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><span id="line-63"></span><span>    </span><span id="local-6989586621679290663"><span class="annot"><span class="annottext">YearlyArchives
+</span><a href="#local-6989586621679290663"><span class="hs-identifier hs-var">yearlyArchives</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
 -&gt; Tags
 -&gt; ListPageOpts
 -&gt; BlogConfReader Rules Rules YearlyArchives
 </span><a href="Rules.Blog.Paginate.YearlyPosts.html#build"><span class="hs-identifier hs-var">YearlyPosts.build</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679290640"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
-</span><a href="#local-6989586621679290655"><span class="hs-identifier hs-var">listPageOpts</span></a></span><span>
+</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679290642"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
+</span><a href="#local-6989586621679290656"><span class="hs-identifier hs-var">listPageOpts</span></a></span><span>
 </span><span id="line-64"></span><span>
 </span><span id="line-65"></span><span>    </span><span class="hs-comment">-- monthly paginate</span><span>
-</span><span id="line-66"></span><span>    </span><span id="local-6989586621679290664"><span class="annot"><span class="annottext">MonthlyArchives
-</span><a href="#local-6989586621679290664"><span class="hs-identifier hs-var">monthlyArchives</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><span id="line-66"></span><span>    </span><span id="local-6989586621679290665"><span class="annot"><span class="annottext">MonthlyArchives
+</span><a href="#local-6989586621679290665"><span class="hs-identifier hs-var">monthlyArchives</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
 -&gt; Tags
 -&gt; ListPageOpts
 -&gt; BlogConfReader Rules Rules MonthlyArchives
 </span><a href="Rules.Blog.Paginate.MonthlyPosts.html#build"><span class="hs-identifier hs-var">MonthlyPosts.build</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679290640"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
-</span><a href="#local-6989586621679290655"><span class="hs-identifier hs-var">listPageOpts</span></a></span><span>
+</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679290642"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
+</span><a href="#local-6989586621679290656"><span class="hs-identifier hs-var">listPageOpts</span></a></span><span>
 </span><span id="line-67"></span><span>
 </span><span id="line-68"></span><span>    </span><span class="hs-comment">-- the index page of blog</span><span>
 </span><span id="line-69"></span><span>    </span><span class="annot"><span class="annottext">FontAwesomeIcons
@@ -429,9 +429,9 @@ forall (n :: * -&gt; *).
 FontAwesomeIcons
 -&gt; Tags -&gt; ListPageOpts -&gt; BlogConfReader n Rules ()
 </span><a href="Rules.Blog.Index.html#build"><span class="hs-identifier hs-var">Index.build</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679290640"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
-</span><a href="#local-6989586621679290655"><span class="hs-identifier hs-var">listPageOpts</span></a></span><span>
+</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679290642"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
+</span><a href="#local-6989586621679290656"><span class="hs-identifier hs-var">listPageOpts</span></a></span><span>
 </span><span id="line-70"></span><span>
 </span><span id="line-71"></span><span>    </span><span class="hs-comment">-- footer</span><span>
 </span><span id="line-72"></span><span>    </span><span class="annot"><span class="annottext">Tags
@@ -442,9 +442,9 @@ forall (m :: * -&gt; *).
 Tags
 -&gt; YearlyArchives -&gt; MonthlyArchives -&gt; BlogConfReader m Rules ()
 </span><a href="Rules.Blog.Footer.html#build"><span class="hs-identifier hs-var">Footer.build</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">YearlyArchives
-</span><a href="#local-6989586621679290662"><span class="hs-identifier hs-var">yearlyArchives</span></a></span><span> </span><span class="annot"><span class="annottext">MonthlyArchives
-</span><a href="#local-6989586621679290664"><span class="hs-identifier hs-var">monthlyArchives</span></a></span><span>
+</span><a href="#local-6989586621679290642"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">YearlyArchives
+</span><a href="#local-6989586621679290663"><span class="hs-identifier hs-var">yearlyArchives</span></a></span><span> </span><span class="annot"><span class="annottext">MonthlyArchives
+</span><a href="#local-6989586621679290665"><span class="hs-identifier hs-var">monthlyArchives</span></a></span><span>
 </span><span id="line-73"></span><span>
 </span><span id="line-74"></span><span>    </span><span class="hs-comment">-- Atom and RSS Feed</span><span>
 </span><span id="line-75"></span><span>    </span><span class="annot"><span class="annottext">((String -&gt; Context String -&gt; BlogConfReader Rules Rules ())
@@ -464,7 +464,7 @@ forall a b c. (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c
 -&gt; Context String -&gt; BlogConfReader Rules Rules ()
 forall a. a -&gt; a
 </span><span class="hs-identifier hs-var">id</span></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679290644"><span class="hs-identifier hs-var">postCtx'</span></a></span><span> </span><span class="annot"><span class="annottext">((Context String -&gt; BlogConfReader Rules Rules ())
+</span><a href="#local-6989586621679290645"><span class="hs-identifier hs-var">postCtx'</span></a></span><span> </span><span class="annot"><span class="annottext">((Context String -&gt; BlogConfReader Rules Rules ())
  -&gt; BlogConfReader Rules Rules ())
 -&gt; ((String -&gt; Context String -&gt; BlogConfReader Rules Rules ())
     -&gt; Context String -&gt; BlogConfReader Rules Rules ())
@@ -482,7 +482,7 @@ forall a b c. (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c
 -&gt; String -&gt; Context String -&gt; BlogConfReader Rules Rules ()
 forall a. a -&gt; a
 </span><span class="hs-identifier hs-var">id</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679290653"><span class="hs-identifier hs-var">feedContent</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String -&gt; Context String -&gt; BlogConfReader Rules Rules ()
+</span><a href="#local-6989586621679290654"><span class="hs-identifier hs-var">feedContent</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String -&gt; Context String -&gt; BlogConfReader Rules Rules ()
 forall (n :: * -&gt; *).
 String -&gt; Context String -&gt; BlogConfReader n Rules ()
 </span><a href="Rules.Blog.Feed.Atom.html#build"><span class="hs-identifier hs-var">Atom.build</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; Context String -&gt; BlogConfReader Rules Rules ()
@@ -495,12 +495,12 @@ String -&gt; Context String -&gt; BlogConfReader n Rules ()
 forall (m :: * -&gt; *).
 FontAwesomeIcons -&gt; Context String -&gt; BlogConfReader m Rules ()
 </span><a href="Rules.Blog.Search.html#build"><span class="hs-identifier hs-var">Search.build</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679290640"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679290644"><span class="hs-identifier hs-var">postCtx'</span></a></span><span>
+</span><a href="#local-6989586621679290641"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679290645"><span class="hs-identifier hs-var">postCtx'</span></a></span><span>
 </span><span id="line-79"></span><span>
 </span><span id="line-80"></span><span>    </span><span class="hs-comment">-- Site map</span><span>
 </span><span id="line-81"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; BlogConfReader Rules Rules ()
 forall (m :: * -&gt; *). String -&gt; BlogConfReader m Rules ()
 </span><a href="Rules.Blog.Sitemap.html#build"><span class="hs-identifier hs-var">Sitemap.build</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679290653"><span class="hs-identifier hs-var">feedContent</span></a></span><span>
+</span><a href="#local-6989586621679290654"><span class="hs-identifier hs-var">feedContent</span></a></span><span>
 </span><span id="line-82"></span></pre></body></html>

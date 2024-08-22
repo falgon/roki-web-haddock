@@ -221,8 +221,24 @@ getPackageConfig :: IO DecodeResult
 getProgNameV :: IO String
 
 module Config.Contributions
+
+-- | Returns the html of your favorite projects list as a <a>String</a>.
 renderProjectsList :: IO String
+
+-- | Returns the contribution list in html tabular format as a
+--   <a>String</a>.
 renderContributionsTable :: IO String
+
+-- | Use the token to retrieve pinned repositories using the GitHub GraphQL
+--   API.
+reqGitHubPinnedRepo :: ByteString -> IO [Project]
+
+-- | Returns the contribution list in html tabular format as a
+--   <a>String</a>.
+renderContributionsTable :: IO String
+
+-- | Returns the html of your favorite projects list as a <a>String</a>.
+renderProjectsList :: IO String
 data GetPinnedRepos
 GetPinnedRepos :: Maybe GetPinnedReposUser -> GetPinnedRepos
 [$sel:user:GetPinnedRepos] :: GetPinnedRepos -> Maybe GetPinnedReposUser

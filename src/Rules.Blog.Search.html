@@ -15,16 +15,16 @@
 </span><span id="line-15"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Utils.html"><span class="hs-identifier">Utils</span></a></span><span>                </span><span class="hs-special">(</span><span class="annot"><a href="Utils.Hakyll.html#absolutizeUrls"><span class="hs-identifier">absolutizeUrls</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Utils.Hakyll.html#modifyExternalLinkAttr"><span class="hs-identifier">modifyExternalLinkAttr</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-16"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.html"><span class="hs-identifier">Vendor.FontAwesome</span></a></span><span>   </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">FA</span></span><span>
 </span><span id="line-17"></span><span>
-</span><span id="line-18"></span><span id="local-6989586621679288929"><span class="annot"><a href="Rules.Blog.Search.html#build"><span class="hs-identifier hs-type">build</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#FontAwesomeIcons"><span class="hs-identifier hs-type">FA.FontAwesomeIcons</span></a></span><span>
+</span><span id="line-18"></span><span id="local-6989586621679288930"><span class="annot"><a href="Rules.Blog.Search.html#build"><span class="hs-identifier hs-type">build</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#FontAwesomeIcons"><span class="hs-identifier hs-type">FA.FontAwesomeIcons</span></a></span><span>
 </span><span id="line-19"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-20"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679288929"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span><span>
+</span><span id="line-20"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679288930"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span><span>
 </span><span id="line-21"></span><span id="build"><span class="annot"><span class="annottext">build :: forall (m :: * -&gt; *).
 FontAwesomeIcons -&gt; Context String -&gt; BlogConfReader m Rules ()
-</span><a href="Rules.Blog.Search.html#build"><span class="hs-identifier hs-var hs-var">build</span></a></span></span><span> </span><span id="local-6989586621679289018"><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679289018"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span id="local-6989586621679289019"><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679289019"><span class="hs-identifier hs-var">ctx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-22"></span><span>    </span><span id="local-6989586621679289020"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289020"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; String) -&gt; ReaderT (BlogConfig m) Rules String
+</span><a href="Rules.Blog.Search.html#build"><span class="hs-identifier hs-var hs-var">build</span></a></span></span><span> </span><span id="local-6989586621679289019"><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679289019"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span id="local-6989586621679289020"><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679289020"><span class="hs-identifier hs-var">ctx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-22"></span><span>    </span><span id="local-6989586621679289021"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679289021"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; String) -&gt; ReaderT (BlogConfig m) Rules String
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; String
 forall (m :: * -&gt; *). BlogConfig m -&gt; String
@@ -42,7 +42,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Identifier] -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">create</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String -&gt; Identifier
 </span><span class="hs-identifier hs-var">fromFilePath</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289020"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="#local-6989586621679289021"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 </span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;search.html&quot;</span></span><span class="hs-special">)</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
@@ -82,7 +82,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><a href="Contexts.Field.html#searchBoxResultField"><span class="hs-identifier hs-var">searchBoxResultField</span></a></span><span> </span><span class="annot"><span class="annottext">Context String -&gt; Context String -&gt; Context String
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679289019"><span class="hs-identifier hs-var">ctx</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679289020"><span class="hs-identifier hs-var">ctx</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-28"></span><span>                </span><span class="annot"><span class="annottext">Compiler (Item String)
 -&gt; (Item String -&gt; Compiler (Item String))
 -&gt; Compiler (Item String)
@@ -101,7 +101,7 @@ forall a.
 (Binary a, Typeable a, Semigroup a) =&gt;
 String -&gt; TimeLocale -&gt; TimeZone -&gt; Item a -&gt; Compiler (Item a)
 </span><a href="Rules.Blog.Utils.html#appendFooter"><span class="hs-identifier hs-var">appendFooter</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289020"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="annot"><span class="annottext">TimeLocale
+</span><a href="#local-6989586621679289021"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="annot"><span class="annottext">TimeLocale
 </span><a href="Config.Site.html#defaultTimeLocale%27"><span class="hs-identifier hs-var">defaultTimeLocale'</span></a></span><span> </span><span class="annot"><span class="annottext">TimeZone
 </span><a href="Config.Site.html#timeZoneJST"><span class="hs-identifier hs-var">timeZoneJST</span></a></span><span>
 </span><span id="line-30"></span><span>                </span><span class="annot"><span class="annottext">Compiler (Item String)
@@ -125,5 +125,5 @@ forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons -&gt; Item String -&gt; Compiler (Item String)
 </span><a href="Vendor.FontAwesome.Compiler.html#render"><span class="hs-identifier hs-var">FA.render</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679289018"><span class="hs-identifier hs-var">faIcons</span></a></span><span>
+</span><a href="#local-6989586621679289019"><span class="hs-identifier hs-var">faIcons</span></a></span><span>
 </span><span id="line-33"></span></pre></body></html>

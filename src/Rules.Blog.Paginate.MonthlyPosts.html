@@ -22,12 +22,12 @@
 -&gt; Tags
 -&gt; ListPageOpts
 -&gt; BlogConfReader Rules Rules MonthlyArchives
-</span><a href="Rules.Blog.Paginate.MonthlyPosts.html#build"><span class="hs-identifier hs-var hs-var">build</span></a></span></span><span> </span><span id="local-6989586621679289473"><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679289473"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span id="local-6989586621679289474"><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679289474"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span id="local-6989586621679289475"><span class="annot"><span class="annottext">ListPageOpts
-</span><a href="#local-6989586621679289475"><span class="hs-identifier hs-var">listPageOpts</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-22"></span><span>    </span><span id="local-6989586621679289476"><span class="annot"><span class="annottext">MonthlyArchives
-</span><a href="#local-6989586621679289476"><span class="hs-identifier hs-var">monthlyArchives</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig Rules -&gt; Rules MonthlyArchives)
+</span><a href="Rules.Blog.Paginate.MonthlyPosts.html#build"><span class="hs-identifier hs-var hs-var">build</span></a></span></span><span> </span><span id="local-6989586621679289474"><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679289474"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span id="local-6989586621679289475"><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679289475"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span id="local-6989586621679289476"><span class="annot"><span class="annottext">ListPageOpts
+</span><a href="#local-6989586621679289476"><span class="hs-identifier hs-var">listPageOpts</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-22"></span><span>    </span><span id="local-6989586621679289477"><span class="annot"><span class="annottext">MonthlyArchives
+</span><a href="#local-6989586621679289477"><span class="hs-identifier hs-var">monthlyArchives</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig Rules -&gt; Rules MonthlyArchives)
 -&gt; ReaderT (BlogConfig Rules) Rules (Rules MonthlyArchives)
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig Rules -&gt; Rules MonthlyArchives
@@ -49,14 +49,14 @@ forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
 (MonadTrans t, Monad m) =&gt;
 m a -&gt; t m a
 </span><span class="hs-identifier hs-var">lift</span></span><span>
-</span><span id="line-23"></span><span>    </span><span id="local-6989586621679289479"><span class="annot"><span class="annottext">[Identifier] -&gt; Rules [[Identifier]]
-</span><a href="#local-6989586621679289479"><span class="hs-identifier hs-var">grouper'</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">BlogConfReader Rules Rules ([Identifier] -&gt; Rules [[Identifier]])
+</span><span id="line-23"></span><span>    </span><span id="local-6989586621679289480"><span class="annot"><span class="annottext">[Identifier] -&gt; Rules [[Identifier]]
+</span><a href="#local-6989586621679289480"><span class="hs-identifier hs-var">grouper'</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">BlogConfReader Rules Rules ([Identifier] -&gt; Rules [[Identifier]])
 forall (m :: * -&gt; *) (f :: * -&gt; *) (n :: * -&gt; *).
 (Monad m, MonadMetadata f, MonadFail f) =&gt;
 BlogConfReader n m ([Identifier] -&gt; f [[Identifier]])
 </span><a href="Rules.Blog.Paginate.Utils.html#grouper"><span class="hs-identifier hs-var">grouper</span></a></span><span>
-</span><span id="line-24"></span><span>    </span><span id="local-6989586621679289481"><span class="annot"><span class="annottext">(FilePath, FilePath) -&gt; PageNumber -&gt; Identifier
-</span><a href="#local-6989586621679289481"><span class="hs-identifier hs-var">makeId'</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig Rules -&gt; (FilePath, FilePath) -&gt; FilePath)
+</span><span id="line-24"></span><span>    </span><span id="local-6989586621679289482"><span class="annot"><span class="annottext">(FilePath, FilePath) -&gt; PageNumber -&gt; Identifier
+</span><a href="#local-6989586621679289482"><span class="hs-identifier hs-var">makeId'</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig Rules -&gt; (FilePath, FilePath) -&gt; FilePath)
 -&gt; BlogConfReader
      Rules Rules ((FilePath, FilePath) -&gt; PageNumber -&gt; Identifier)
 forall (n :: * -&gt; *) (m :: * -&gt; *) a.
@@ -81,23 +81,23 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 -&gt; ((FilePath, FilePath) -&gt; Pattern -&gt; Rules ()) -&gt; Rules ()
 forall a. Archives a -&gt; (a -&gt; Pattern -&gt; Rules ()) -&gt; Rules ()
 </span><a href="Archives.html#archivesRules"><span class="hs-identifier hs-var">archivesRules</span></a></span><span> </span><span class="annot"><span class="annottext">MonthlyArchives
-</span><a href="#local-6989586621679289476"><span class="hs-identifier hs-var">monthlyArchives</span></a></span><span> </span><span class="annot"><span class="annottext">(((FilePath, FilePath) -&gt; Pattern -&gt; Rules ()) -&gt; Rules ())
+</span><a href="#local-6989586621679289477"><span class="hs-identifier hs-var">monthlyArchives</span></a></span><span> </span><span class="annot"><span class="annottext">(((FilePath, FilePath) -&gt; Pattern -&gt; Rules ()) -&gt; Rules ())
 -&gt; ((FilePath, FilePath) -&gt; Pattern -&gt; Rules ()) -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679289484"><span class="annot"><span class="annottext">key :: (FilePath, FilePath)
-</span><a href="#local-6989586621679289484"><span class="hs-identifier hs-var">key</span></a></span></span><span class="hs-glyph">@</span><span class="hs-special">(</span><span id="local-6989586621679289485"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679289485"><span class="hs-identifier hs-var">year</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679289486"><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679289486"><span class="hs-identifier hs-var">month</span></a></span></span><span class="hs-special">)</span><span> </span><span id="local-6989586621679289487"><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679289487"><span class="hs-identifier hs-var">pat</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
-</span><span id="line-26"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679289488"><span class="annot"><span class="annottext">title' :: FilePath
-</span><a href="#local-6989586621679289488"><span class="hs-identifier hs-var hs-var">title'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679289485"><span class="annot"><span class="annottext">key :: (FilePath, FilePath)
+</span><a href="#local-6989586621679289485"><span class="hs-identifier hs-var">key</span></a></span></span><span class="hs-glyph">@</span><span class="hs-special">(</span><span id="local-6989586621679289486"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679289486"><span class="hs-identifier hs-var">year</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679289487"><span class="annot"><span class="annottext">FilePath
+</span><a href="#local-6989586621679289487"><span class="hs-identifier hs-var">month</span></a></span></span><span class="hs-special">)</span><span> </span><span id="local-6989586621679289488"><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679289488"><span class="hs-identifier hs-var">pat</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-26"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679289489"><span class="annot"><span class="annottext">title' :: FilePath
+</span><a href="#local-6989586621679289489"><span class="hs-identifier hs-var hs-var">title'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
 </span><a href="Rules.Blog.Paginate.Utils.html#title"><span class="hs-identifier hs-var">title</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath
 </span><span class="hs-string">&quot;Monthly&quot;</span></span><span> </span><span class="annot"><span class="annottext">(FilePath -&gt; FilePath) -&gt; FilePath -&gt; FilePath
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679289485"><span class="hs-identifier hs-var">year</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
+</span><a href="#local-6989586621679289486"><span class="hs-identifier hs-var">year</span></a></span><span> </span><span class="annot"><span class="annottext">FilePath -&gt; FilePath -&gt; FilePath
 </span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679289486"><span class="hs-identifier hs-var">month</span></a></span><span>
+</span><a href="#local-6989586621679289487"><span class="hs-identifier hs-var">month</span></a></span><span>
 </span><span id="line-27"></span><span>        </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">([Identifier] -&gt; Rules [[Identifier]])
 -&gt; Pattern -&gt; (PageNumber -&gt; Identifier) -&gt; Rules Paginate
 forall (m :: * -&gt; *).
@@ -105,10 +105,10 @@ MonadMetadata m =&gt;
 ([Identifier] -&gt; m [[Identifier]])
 -&gt; Pattern -&gt; (PageNumber -&gt; Identifier) -&gt; m Paginate
 </span><span class="hs-identifier hs-var">buildPaginateWith</span></span><span> </span><span class="annot"><span class="annottext">[Identifier] -&gt; Rules [[Identifier]]
-</span><a href="#local-6989586621679289479"><span class="hs-identifier hs-var">grouper'</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679289487"><span class="hs-identifier hs-var">pat</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(FilePath, FilePath) -&gt; PageNumber -&gt; Identifier
-</span><a href="#local-6989586621679289481"><span class="hs-identifier hs-var">makeId'</span></a></span><span> </span><span class="annot"><span class="annottext">(FilePath, FilePath)
-</span><a href="#local-6989586621679289484"><span class="hs-identifier hs-var">key</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679289480"><span class="hs-identifier hs-var">grouper'</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679289488"><span class="hs-identifier hs-var">pat</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(FilePath, FilePath) -&gt; PageNumber -&gt; Identifier
+</span><a href="#local-6989586621679289482"><span class="hs-identifier hs-var">makeId'</span></a></span><span> </span><span class="annot"><span class="annottext">(FilePath, FilePath)
+</span><a href="#local-6989586621679289485"><span class="hs-identifier hs-var">key</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-28"></span><span>            </span><span class="annot"><span class="annottext">Rules Paginate -&gt; (Paginate -&gt; Rules ()) -&gt; Rules ()
 forall a b. Rules a -&gt; (a -&gt; Rules b) -&gt; Rules b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
@@ -117,13 +117,13 @@ forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><a href="Rules.Blog.ListPage.html#listPage"><span class="hs-identifier hs-var">listPage</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FilePath -&gt; Maybe FilePath
 forall a. a -&gt; Maybe a
 </span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="annot"><span class="annottext">FilePath
-</span><a href="#local-6989586621679289488"><span class="hs-identifier hs-var">title'</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679289473"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679289474"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
-</span><a href="#local-6989586621679289475"><span class="hs-identifier hs-var">listPageOpts</span></a></span><span>
+</span><a href="#local-6989586621679289489"><span class="hs-identifier hs-var">title'</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679289474"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679289475"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
+</span><a href="#local-6989586621679289476"><span class="hs-identifier hs-var">listPageOpts</span></a></span><span>
 </span><span id="line-29"></span><span>    </span><span class="annot"><span class="annottext">MonthlyArchives -&gt; BlogConfReader Rules Rules MonthlyArchives
 forall a. a -&gt; ReaderT (BlogConfig Rules) Rules a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">MonthlyArchives
-</span><a href="#local-6989586621679289476"><span class="hs-identifier hs-var">monthlyArchives</span></a></span><span>
+</span><a href="#local-6989586621679289477"><span class="hs-identifier hs-var">monthlyArchives</span></a></span><span>
 </span><span id="line-30"></span></pre></body></html>
