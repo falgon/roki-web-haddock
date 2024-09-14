@@ -16,30 +16,30 @@
 </span><span id="line-16"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
 </span><span id="line-17"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Compiler</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span>
 </span><span id="line-18"></span><span>
-</span><span id="line-19"></span><span id="local-6989586621679284817"><span class="annot"><a href="Rules.Blog.Feed.Utils.html#buildFeed"><span class="hs-identifier hs-type">buildFeed</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Snapshot</span></span><span>
+</span><span id="line-19"></span><span id="local-6989586621679285925"><span class="annot"><a href="Rules.Blog.Feed.Utils.html#buildFeed"><span class="hs-identifier hs-type">buildFeed</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Snapshot</span></span><span>
 </span><span id="line-20"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
 </span><span id="line-21"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
 </span><span id="line-22"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Feed.Utils.html#Render"><span class="hs-identifier hs-type">Render</span></a></span><span>
-</span><span id="line-23"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679284817"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span><span>
+</span><span id="line-23"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679285925"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span><span>
 </span><span id="line-24"></span><span id="buildFeed"><span class="annot"><span class="annottext">buildFeed :: forall (n :: * -&gt; *).
 Snapshot
 -&gt; Snapshot
 -&gt; Context Snapshot
 -&gt; Render
 -&gt; BlogConfReader n Rules ()
-</span><a href="Rules.Blog.Feed.Utils.html#buildFeed"><span class="hs-identifier hs-var hs-var">buildFeed</span></a></span></span><span> </span><span id="local-6989586621679284913"><span class="annot"><span class="annottext">Snapshot
-</span><a href="#local-6989586621679284913"><span class="hs-identifier hs-var">feedSSName</span></a></span></span><span> </span><span id="local-6989586621679284914"><span class="annot"><span class="annottext">Snapshot
-</span><a href="#local-6989586621679284914"><span class="hs-identifier hs-var">suffix</span></a></span></span><span> </span><span id="local-6989586621679284915"><span class="annot"><span class="annottext">Context Snapshot
-</span><a href="#local-6989586621679284915"><span class="hs-identifier hs-var">ctx</span></a></span></span><span> </span><span id="local-6989586621679284916"><span class="annot"><span class="annottext">Render
-</span><a href="#local-6989586621679284916"><span class="hs-identifier hs-var">render</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-25"></span><span>    </span><span id="local-6989586621679284917"><span class="annot"><span class="annottext">Snapshot
-</span><a href="#local-6989586621679284917"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; Snapshot) -&gt; ReaderT (BlogConfig n) Rules Snapshot
+</span><a href="Rules.Blog.Feed.Utils.html#buildFeed"><span class="hs-identifier hs-var hs-var">buildFeed</span></a></span></span><span> </span><span id="local-6989586621679286021"><span class="annot"><span class="annottext">Snapshot
+</span><a href="#local-6989586621679286021"><span class="hs-identifier hs-var">feedSSName</span></a></span></span><span> </span><span id="local-6989586621679286022"><span class="annot"><span class="annottext">Snapshot
+</span><a href="#local-6989586621679286022"><span class="hs-identifier hs-var">suffix</span></a></span></span><span> </span><span id="local-6989586621679286023"><span class="annot"><span class="annottext">Context Snapshot
+</span><a href="#local-6989586621679286023"><span class="hs-identifier hs-var">ctx</span></a></span></span><span> </span><span id="local-6989586621679286024"><span class="annot"><span class="annottext">Render
+</span><a href="#local-6989586621679286024"><span class="hs-identifier hs-var">render</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-25"></span><span>    </span><span id="local-6989586621679286025"><span class="annot"><span class="annottext">Snapshot
+</span><a href="#local-6989586621679286025"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; Snapshot) -&gt; ReaderT (BlogConfig n) Rules Snapshot
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; Snapshot
 forall (m :: * -&gt; *). BlogConfig m -&gt; Snapshot
 </span><a href="Config.Blog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
-</span><span id="line-26"></span><span>    </span><span id="local-6989586621679284919"><span class="annot"><span class="annottext">[Item Snapshot] -&gt; [Item Snapshot]
-</span><a href="#local-6989586621679284919"><span class="hs-identifier hs-var">feedTake</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; [Item Snapshot] -&gt; [Item Snapshot])
+</span><span id="line-26"></span><span>    </span><span id="local-6989586621679286027"><span class="annot"><span class="annottext">[Item Snapshot] -&gt; [Item Snapshot]
+</span><a href="#local-6989586621679286027"><span class="hs-identifier hs-var">feedTake</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; [Item Snapshot] -&gt; [Item Snapshot])
 -&gt; ReaderT
      (BlogConfig n) Rules ([Item Snapshot] -&gt; [Item Snapshot])
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
@@ -61,14 +61,14 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; Int
 forall (m :: * -&gt; *). BlogConfig m -&gt; Int
 </span><a href="Config.Blog.html#blogFeedRecentNum"><span class="hs-identifier hs-var">blogFeedRecentNum</span></a></span><span>
-</span><span id="line-27"></span><span>    </span><span id="local-6989586621679284923"><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679284923"><span class="hs-identifier hs-var">ep</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; Pattern) -&gt; ReaderT (BlogConfig n) Rules Pattern
+</span><span id="line-27"></span><span>    </span><span id="local-6989586621679286031"><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679286031"><span class="hs-identifier hs-var">ep</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; Pattern) -&gt; ReaderT (BlogConfig n) Rules Pattern
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; Pattern
 forall (m :: * -&gt; *). BlogConfig m -&gt; Pattern
 </span><a href="Config.Blog.html#blogEntryPattern"><span class="hs-identifier hs-var">blogEntryPattern</span></a></span><span>
-</span><span id="line-28"></span><span>    </span><span id="local-6989586621679284925"><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284925"><span class="hs-identifier hs-var">fc</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; FeedConfiguration)
+</span><span id="line-28"></span><span>    </span><span id="local-6989586621679286033"><span class="annot"><span class="annottext">FeedConfiguration
+</span><a href="#local-6989586621679286033"><span class="hs-identifier hs-var">fc</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; FeedConfiguration)
 -&gt; ReaderT (BlogConfig n) Rules FeedConfiguration
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; FeedConfiguration
@@ -88,12 +88,12 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-identifier hs-var">create</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Snapshot -&gt; Identifier
 </span><span class="hs-identifier hs-var">fromFilePath</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Snapshot] -&gt; Snapshot
 </span><span class="hs-identifier hs-var">joinPath</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Snapshot
-</span><a href="#local-6989586621679284917"><span class="hs-identifier hs-var">t</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Snapshot
+</span><a href="#local-6989586621679286025"><span class="hs-identifier hs-var">t</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Snapshot
 </span><span class="hs-string">&quot;feed&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Snapshot
-</span><a href="#local-6989586621679284917"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="annot"><span class="annottext">Snapshot -&gt; Snapshot -&gt; Snapshot
+</span><a href="#local-6989586621679286025"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="annot"><span class="annottext">Snapshot -&gt; Snapshot -&gt; Snapshot
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Snapshot
-</span><a href="#local-6989586621679284914"><span class="hs-identifier hs-var">suffix</span></a></span><span class="hs-special">]</span><span class="hs-special">)</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679286022"><span class="hs-identifier hs-var">suffix</span></a></span><span class="hs-special">]</span><span class="hs-special">)</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-30"></span><span>        </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
@@ -112,8 +112,8 @@ forall a.
 (Binary a, Typeable a) =&gt;
 Pattern -&gt; Snapshot -&gt; Compiler [Item a]
 </span><span class="hs-identifier hs-var">loadAllSnapshots</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679284923"><span class="hs-identifier hs-var">ep</span></a></span><span> </span><span class="annot"><span class="annottext">Snapshot
-</span><a href="#local-6989586621679284913"><span class="hs-identifier hs-var">feedSSName</span></a></span><span>
+</span><a href="#local-6989586621679286031"><span class="hs-identifier hs-var">ep</span></a></span><span> </span><span class="annot"><span class="annottext">Snapshot
+</span><a href="#local-6989586621679286021"><span class="hs-identifier hs-var">feedSSName</span></a></span><span>
 </span><span id="line-33"></span><span>                </span><span class="annot"><span class="annottext">Compiler [Item Snapshot]
 -&gt; ([Item Snapshot] -&gt; Compiler [Item Snapshot])
 -&gt; Compiler [Item Snapshot]
@@ -124,7 +124,7 @@ forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 forall a b. (a -&gt; b) -&gt; Compiler a -&gt; Compiler b
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">[Item Snapshot] -&gt; [Item Snapshot]
-</span><a href="#local-6989586621679284919"><span class="hs-identifier hs-var">feedTake</span></a></span><span> </span><span class="annot"><span class="annottext">(Compiler [Item Snapshot] -&gt; Compiler [Item Snapshot])
+</span><a href="#local-6989586621679286027"><span class="hs-identifier hs-var">feedTake</span></a></span><span> </span><span class="annot"><span class="annottext">(Compiler [Item Snapshot] -&gt; Compiler [Item Snapshot])
 -&gt; ([Item Snapshot] -&gt; Compiler [Item Snapshot])
 -&gt; [Item Snapshot]
 -&gt; Compiler [Item Snapshot]
@@ -140,11 +140,11 @@ forall (m :: * -&gt; *) a.
 forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">Render
-</span><a href="#local-6989586621679284916"><span class="hs-identifier hs-var">render</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284925"><span class="hs-identifier hs-var">fc</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Snapshot -&gt; Context Snapshot
+</span><a href="#local-6989586621679286024"><span class="hs-identifier hs-var">render</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
+</span><a href="#local-6989586621679286033"><span class="hs-identifier hs-var">fc</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Snapshot -&gt; Context Snapshot
 </span><span class="hs-identifier hs-var">bodyField</span></span><span> </span><span class="annot"><span class="annottext">Snapshot
 </span><span class="hs-string">&quot;description&quot;</span></span><span> </span><span class="annot"><span class="annottext">Context Snapshot -&gt; Context Snapshot -&gt; Context Snapshot
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Context Snapshot
-</span><a href="#local-6989586621679284915"><span class="hs-identifier hs-var">ctx</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679286023"><span class="hs-identifier hs-var">ctx</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-35"></span></pre></body></html>

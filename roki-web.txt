@@ -129,6 +129,11 @@ compressJsCompiler :: Compiler (Item String)
 module Media.SVG
 optimizeSVGCompiler :: [String] -> Compiler (Item String)
 
+-- | When a code block starts in <tt>```{lang=mermaid}</tt>, convert its
+--   internal mermaid format to svg. Add the caption as follows:
+--   <tt>```{lang=mermaid caption=hoge}</tt>.
+mermaidTransform :: Block -> Compiler Block
+
 module Media
 
 module Rules.Blog.Type

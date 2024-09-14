@@ -1,20 +1,39 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Media.SVG</span><span> </span><span class="hs-special">(</span><span>
-</span><span id="line-2"></span><span>    </span><span class="annot"><a href="Media.SVG.html#optimizeSVGCompiler"><span class="hs-identifier">optimizeSVGCompiler</span></a></span><span>
-</span><span id="line-3"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-4"></span><span>
-</span><span id="line-5"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE LambdaCase, OverloadedStrings #-}</span><span>
+</span><span id="line-2"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Media.SVG</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-3"></span><span>    </span><span class="annot"><a href="Media.SVG.html#optimizeSVGCompiler"><span class="hs-identifier">optimizeSVGCompiler</span></a></span><span>
+</span><span id="line-4"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Media.SVG.html#mermaidTransform"><span class="hs-identifier">mermaidTransform</span></a></span><span>
+</span><span id="line-5"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
 </span><span id="line-6"></span><span>
-</span><span id="line-7"></span><span class="annot"><a href="Media.SVG.html#optimizeSVGCompiler"><span class="hs-identifier hs-type">optimizeSVGCompiler</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Compiler</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span>
-</span><span id="line-8"></span><span id="optimizeSVGCompiler"><span class="annot"><span class="annottext">optimizeSVGCompiler :: [String] -&gt; Compiler (Item String)
-</span><a href="Media.SVG.html#optimizeSVGCompiler"><span class="hs-identifier hs-var hs-var">optimizeSVGCompiler</span></a></span></span><span> </span><span id="local-6989586621679284744"><span class="annot"><span class="annottext">[String]
-</span><a href="#local-6989586621679284744"><span class="hs-identifier hs-var">opts</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Compiler (Item String)
-</span><span class="hs-identifier hs-var">getResourceString</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item String)
+</span><span id="line-7"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Arrow</span></span><span>             </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">first</span></span><span class="hs-special">)</span><span>
+</span><span id="line-8"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Exception.Safe</span></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">MonadThrow</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">throwString</span></span><span class="hs-special">)</span><span>
+</span><span id="line-9"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad</span></span><span>             </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">MonadPlus</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-operator">(&gt;=&gt;)</span></span><span class="hs-special">)</span><span>
+</span><span id="line-10"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Extra</span></span><span>       </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">ifM</span></span><span class="hs-special">)</span><span>
+</span><span id="line-11"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.IO.Class</span></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">MonadIO</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-12"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Trans</span></span><span>       </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">MonadTrans</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-13"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Trans.Maybe</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">hoistMaybe</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">runMaybeT</span></span><span class="hs-special">)</span><span>
+</span><span id="line-14"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Functor</span></span><span>              </span><span class="hs-special">(</span><span class="annot"><span class="hs-operator">(&lt;&amp;&gt;)</span></span><span class="hs-special">)</span><span>
+</span><span id="line-15"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Maybe</span></span><span>                </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">fromMaybe</span></span><span class="hs-special">)</span><span>
+</span><span id="line-16"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span>                 </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
+</span><span id="line-17"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text.Lazy</span></span><span>            </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">TL</span></span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>
+</span><span id="line-19"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Lucid.Base</span></span><span>                </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">HtmlT</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">renderText</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">toHtmlRaw</span></span><span class="hs-special">)</span><span>
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Lucid.Html5</span></span><span>
+</span><span id="line-21"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">System.Exit</span></span><span>               </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">ExitCode</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">System.Process</span></span><span>            </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">proc</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">readCreateProcessWithExitCode</span></span><span class="hs-special">)</span><span>
+</span><span id="line-23"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Text.Pandoc</span></span><span>               </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Block</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">Format</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-24"></span><span>                                            </span><span class="annot"><span class="hs-identifier">Inline</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-25"></span><span>
+</span><span id="line-26"></span><span class="annot"><a href="Media.SVG.html#optimizeSVGCompiler"><span class="hs-identifier hs-type">optimizeSVGCompiler</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Compiler</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span>
+</span><span id="line-27"></span><span id="optimizeSVGCompiler"><span class="annot"><span class="annottext">optimizeSVGCompiler :: [String] -&gt; Compiler (Item String)
+</span><a href="Media.SVG.html#optimizeSVGCompiler"><span class="hs-identifier hs-var hs-var">optimizeSVGCompiler</span></a></span></span><span> </span><span id="local-6989586621679285740"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679285740"><span class="hs-identifier hs-var">opts</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Compiler (Item String)
+</span><span class="hs-identifier hs-var">getResourceString</span></span><span>
+</span><span id="line-28"></span><span>    </span><span class="annot"><span class="annottext">Compiler (Item String)
 -&gt; (Item String -&gt; Compiler (Item String))
 -&gt; Compiler (Item String)
 forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
-</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span>
-</span><span id="line-9"></span><span>    </span><span class="annot"><span class="annottext">(String -&gt; Compiler String)
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Compiler String)
 -&gt; Item String -&gt; Compiler (Item String)
 forall a b. (a -&gt; Compiler b) -&gt; Item a -&gt; Compiler (Item b)
 </span><span class="hs-identifier hs-var">withItemBody</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String -&gt; Compiler String
@@ -30,5 +49,234 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-string">&quot;-&quot;</span></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">[String] -&gt; [String] -&gt; [String]
 forall a. [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[String]
-</span><a href="#local-6989586621679284744"><span class="hs-identifier hs-var">opts</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-10"></span></pre></body></html>
+</span><a href="#local-6989586621679285740"><span class="hs-identifier hs-var">opts</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-29"></span><span>
+</span><span id="line-30"></span><span class="hs-keyword">type</span><span> </span><span id="SVGHtml"><span class="annot"><a href="Media.SVG.html#SVGHtml"><span class="hs-identifier hs-var">SVGHtml</span></a></span></span><span> </span><span id="local-6989586621679285744"><span class="annot"><a href="#local-6989586621679285744"><span class="hs-identifier hs-type">n</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">HtmlT</span></span><span> </span><span class="annot"><a href="#local-6989586621679285744"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-31"></span><span>
+</span><span id="line-32"></span><span id="local-6989586621679285628"><span id="local-6989586621679285630"><span class="annot"><a href="Media.SVG.html#execMmdc"><span class="hs-identifier hs-type">execMmdc</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679285628"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679285630"><span class="hs-identifier hs-type">n</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadThrow</span></span><span> </span><span class="annot"><a href="#local-6989586621679285628"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679285628"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Media.SVG.html#SVGHtml"><span class="hs-identifier hs-type">SVGHtml</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679285630"><span class="hs-identifier hs-type">n</span></a></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-33"></span><span id="execMmdc"><span class="annot"><span class="annottext">execMmdc :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+(MonadIO m, Monad n, MonadThrow m) =&gt;
+Text -&gt; m (SVGHtml n)
+</span><a href="Media.SVG.html#execMmdc"><span class="hs-identifier hs-var hs-var">execMmdc</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">IO (ExitCode, String, String) -&gt; m (ExitCode, String, String)
+forall a. IO a -&gt; m a
+forall (m :: * -&gt; *) a. MonadIO m =&gt; IO a -&gt; m a
+</span><span class="hs-identifier hs-var">liftIO</span></span><span> </span><span class="annot"><span class="annottext">(IO (ExitCode, String, String) -&gt; m (ExitCode, String, String))
+-&gt; (Text -&gt; IO (ExitCode, String, String))
+-&gt; Text
+-&gt; m (ExitCode, String, String)
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">CreateProcess -&gt; String -&gt; IO (ExitCode, String, String)
+</span><span class="hs-identifier hs-var">readCreateProcessWithExitCode</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; CreateProcess
+</span><span class="hs-identifier hs-var">proc</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;npx&quot;</span></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679285764"><span class="hs-identifier hs-var">args</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(String -&gt; IO (ExitCode, String, String))
+-&gt; (Text -&gt; String) -&gt; Text -&gt; IO (ExitCode, String, String)
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; String
+</span><span class="hs-identifier hs-var">T.unpack</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; m (ExitCode, String, String))
+-&gt; ((ExitCode, String, String) -&gt; m (SVGHtml n))
+-&gt; Text
+-&gt; m (SVGHtml n)
+forall (m :: * -&gt; *) a b c.
+Monad m =&gt;
+(a -&gt; m b) -&gt; (b -&gt; m c) -&gt; a -&gt; m c
+</span><span class="hs-operator hs-var">&gt;=&gt;</span></span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
+</span><span id="line-34"></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">ExitFailure</span></span><span> </span><span class="annot"><span class="annottext">Int
+</span><span class="hs-identifier">_</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-identifier">_</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679285767"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679285767"><span class="hs-identifier hs-var">err</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; m (SVGHtml n)
+forall (m :: * -&gt; *) a.
+(MonadThrow m, HasCallStack) =&gt;
+String -&gt; m a
+</span><span class="hs-identifier hs-var">throwString</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679285767"><span class="hs-identifier hs-var">err</span></a></span><span>
+</span><span id="line-35"></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ExitCode
+</span><span class="hs-identifier hs-var">ExitSuccess</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679285769"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679285769"><span class="hs-identifier hs-var">out</span></a></span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span>   </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">SVGHtml n -&gt; m (SVGHtml n)
+forall a. a -&gt; m a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(SVGHtml n -&gt; m (SVGHtml n)) -&gt; SVGHtml n -&gt; m (SVGHtml n)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; SVGHtml n
+forall a (m :: * -&gt; *). (ToHtml a, Monad m) =&gt; a -&gt; HtmlT m ()
+forall (m :: * -&gt; *). Monad m =&gt; Text -&gt; HtmlT m ()
+</span><span class="hs-identifier hs-var">toHtmlRaw</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; SVGHtml n) -&gt; Text -&gt; SVGHtml n
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Text
+</span><span class="hs-identifier hs-var">T.pack</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679285769"><span class="hs-identifier hs-var">out</span></a></span><span>
+</span><span id="line-36"></span><span>    </span><span class="hs-keyword">where</span><span>
+</span><span id="line-37"></span><span>        </span><span id="local-6989586621679285764"><span class="annot"><span class="annottext">args :: [String]
+</span><a href="#local-6989586621679285764"><span class="hs-identifier hs-var hs-var">args</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;mmdc&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;-i&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;/dev/stdin&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;-e&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;svg&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;-o&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;-&quot;</span></span><span class="hs-special">]</span><span>
+</span><span id="line-38"></span><span>
+</span><span id="line-39"></span><span id="local-6989586621679285656"><span class="annot"><a href="Media.SVG.html#styledSvg"><span class="hs-identifier hs-type">styledSvg</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679285656"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.Text</span></span><span class="hs-special">)</span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Media.SVG.html#SVGHtml"><span class="hs-identifier hs-type">SVGHtml</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679285656"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Media.SVG.html#SVGHtml"><span class="hs-identifier hs-type">SVGHtml</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679285656"><span class="hs-identifier hs-type">m</span></a></span></span><span>
+</span><span id="line-40"></span><span id="styledSvg"><span class="annot"><span class="annottext">styledSvg :: forall (m :: * -&gt; *).
+Monad m =&gt;
+[(String, Text)] -&gt; SVGHtml m -&gt; SVGHtml m
+</span><a href="Media.SVG.html#styledSvg"><span class="hs-identifier hs-var hs-var">styledSvg</span></a></span></span><span> </span><span id="local-6989586621679285801"><span class="annot"><span class="annottext">[(String, Text)]
+</span><a href="#local-6989586621679285801"><span class="hs-identifier hs-var">args</span></a></span></span><span> </span><span id="local-6989586621679285802"><span class="annot"><span class="annottext">HtmlT m ()
+</span><a href="#local-6989586621679285802"><span class="hs-identifier hs-var">svgHtml</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Attribute] -&gt; HtmlT m () -&gt; HtmlT m ()
+forall arg result. Term arg result =&gt; arg -&gt; result
+</span><span class="hs-identifier hs-var">figure_</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Attribute
+</span><span class="hs-identifier hs-var">class_</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;has-text-centered image&quot;</span></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(HtmlT m () -&gt; HtmlT m ()) -&gt; HtmlT m () -&gt; HtmlT m ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-41"></span><span>    </span><span class="annot"><span class="annottext">HtmlT m ()
+</span><a href="#local-6989586621679285802"><span class="hs-identifier hs-var">svgHtml</span></a></span><span>
+</span><span id="line-42"></span><span>    </span><span class="annot"><span class="annottext">HtmlT m () -&gt; (Text -&gt; HtmlT m ()) -&gt; Maybe Text -&gt; HtmlT m ()
+forall b a. b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b
+</span><span class="hs-identifier hs-var">maybe</span></span><span> </span><span class="annot"><span class="annottext">HtmlT m ()
+forall a. Monoid a =&gt; a
+</span><span class="hs-identifier hs-var">mempty</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Attribute] -&gt; HtmlT m () -&gt; HtmlT m ()
+forall arg result. Term arg result =&gt; arg -&gt; result
+</span><span class="hs-identifier hs-var">figcaption_</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Attribute
+</span><span class="hs-identifier hs-var">class_</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;has-text-centered&quot;</span></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(HtmlT m () -&gt; HtmlT m ())
+-&gt; (Text -&gt; HtmlT m ()) -&gt; Text -&gt; HtmlT m ()
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; HtmlT m ()
+forall a (m :: * -&gt; *). (ToHtml a, Monad m) =&gt; a -&gt; HtmlT m ()
+forall (m :: * -&gt; *). Monad m =&gt; Text -&gt; HtmlT m ()
+</span><span class="hs-identifier hs-var">toHtmlRaw</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Maybe Text -&gt; HtmlT m ()) -&gt; Maybe Text -&gt; HtmlT m ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; [(String, Text)] -&gt; Maybe Text
+forall a b. Eq a =&gt; a -&gt; [(a, b)] -&gt; Maybe b
+</span><span class="hs-identifier hs-var">lookup</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;caption&quot;</span></span><span> </span><span class="annot"><span class="annottext">[(String, Text)]
+</span><a href="#local-6989586621679285801"><span class="hs-identifier hs-var">args</span></a></span><span>
+</span><span id="line-43"></span><span>
+</span><span id="line-44"></span><span class="hs-comment">-- | When a code block starts in @```{lang=mermaid}@,</span><span>
+</span><span id="line-45"></span><span class="hs-comment">-- convert its internal mermaid format to svg.</span><span>
+</span><span id="line-46"></span><span class="hs-comment">-- Add the caption as follows: @```{lang=mermaid caption=hoge}@.</span><span>
+</span><span id="line-47"></span><span class="annot"><a href="Media.SVG.html#mermaidTransform"><span class="hs-identifier hs-type">mermaidTransform</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Block</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Compiler</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Block</span></span><span>
+</span><span id="line-48"></span><span id="mermaidTransform"><span class="annot"><span class="annottext">mermaidTransform :: Block -&gt; Compiler Block
+</span><a href="Media.SVG.html#mermaidTransform"><span class="hs-identifier hs-var hs-var">mermaidTransform</span></a></span></span><span> </span><span id="local-6989586621679285808"><span class="annot"><span class="annottext">cb :: Block
+</span><a href="#local-6989586621679285808"><span class="hs-identifier hs-var">cb</span></a></span></span><span class="hs-glyph">@</span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">CodeBlock</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Text
+</span><span class="hs-identifier">_</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Text]
+</span><span class="hs-identifier">_</span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679285810"><span class="annot"><span class="annottext">[(Text, Text)]
+</span><a href="#local-6989586621679285810"><span class="hs-identifier hs-var">t</span></a></span></span><span class="hs-special">)</span><span> </span><span id="local-6989586621679285811"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679285811"><span class="hs-identifier hs-var">contents</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Block -&gt; Maybe Block -&gt; Block
+forall a. a -&gt; Maybe a -&gt; a
+</span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">Block
+</span><a href="#local-6989586621679285808"><span class="hs-identifier hs-var">cb</span></a></span><span> </span><span class="annot"><span class="annottext">(Maybe Block -&gt; Block) -&gt; Compiler (Maybe Block) -&gt; Compiler Block
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span>
+</span><span id="line-49"></span><span>    </span><span class="annot"><span class="annottext">MaybeT Compiler Block -&gt; Compiler (Maybe Block)
+forall (m :: * -&gt; *) a. MaybeT m a -&gt; m (Maybe a)
+</span><span class="hs-identifier hs-var">runMaybeT</span></span><span> </span><span class="annot"><span class="annottext">MaybeT Compiler Block
+</span><a href="#local-6989586621679285813"><span class="hs-identifier hs-var">mermaidTransform'</span></a></span><span>
+</span><span id="line-50"></span><span>    </span><span class="hs-keyword">where</span><span>
+</span><span id="line-51"></span><span>        </span><span id="local-6989586621679285813"><span class="annot"><span class="annottext">mermaidTransform' :: MaybeT Compiler Block
+</span><a href="#local-6989586621679285813"><span class="hs-identifier hs-var hs-var">mermaidTransform'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679285844"><span class="annot"><span class="annottext">args :: [(String, Text)]
+</span><a href="#local-6989586621679285844"><span class="hs-identifier hs-var hs-var">args</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">((Text, Text) -&gt; (String, Text))
+-&gt; [(Text, Text)] -&gt; [(String, Text)]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Text -&gt; String) -&gt; (Text, Text) -&gt; (String, Text)
+forall b c d. (b -&gt; c) -&gt; (b, d) -&gt; (c, d)
+forall (a :: * -&gt; * -&gt; *) b c d.
+Arrow a =&gt;
+a b c -&gt; a (b, d) (c, d)
+</span><span class="hs-identifier hs-var">first</span></span><span> </span><span class="annot"><span class="annottext">((Text -&gt; String) -&gt; (Text, Text) -&gt; (String, Text))
+-&gt; (Text -&gt; String) -&gt; (Text, Text) -&gt; (String, Text)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; String
+</span><span class="hs-identifier hs-var">T.unpack</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; String) -&gt; (Text -&gt; Text) -&gt; Text -&gt; String
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text
+</span><span class="hs-identifier hs-var">T.toLower</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[(Text, Text)]
+</span><a href="#local-6989586621679285810"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="hs-keyword">in</span><span>
+</span><span id="line-52"></span><span>            </span><span class="annot"><span class="annottext">MaybeT Compiler Bool
+-&gt; MaybeT Compiler Block
+-&gt; MaybeT Compiler Block
+-&gt; MaybeT Compiler Block
+forall (m :: * -&gt; *) a. Monad m =&gt; m Bool -&gt; m a -&gt; m a -&gt; m a
+</span><span class="hs-identifier hs-var">ifM</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">(</span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">/=</span></span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;mermaid&quot;</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Bool) -&gt; (Text -&gt; Text) -&gt; Text -&gt; Bool
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text
+</span><span class="hs-identifier hs-var">T.toLower</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Bool) -&gt; MaybeT Compiler Text -&gt; MaybeT Compiler Bool
+forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
+</span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Maybe Text -&gt; MaybeT Compiler Text
+forall (m :: * -&gt; *) b. Applicative m =&gt; Maybe b -&gt; MaybeT m b
+</span><span class="hs-identifier hs-var">hoistMaybe</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; [(String, Text)] -&gt; Maybe Text
+forall a b. Eq a =&gt; a -&gt; [(a, b)] -&gt; Maybe b
+</span><span class="hs-identifier hs-var">lookup</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;lang&quot;</span></span><span> </span><span class="annot"><span class="annottext">[(String, Text)]
+</span><a href="#local-6989586621679285844"><span class="hs-identifier hs-var">args</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-53"></span><span>                </span><span class="annot"><span class="annottext">MaybeT Compiler Block
+forall a. MaybeT Compiler a
+forall (m :: * -&gt; *) a. MonadPlus m =&gt; m a
+</span><span class="hs-identifier hs-var">mzero</span></span><span> </span><span class="annot"><span class="annottext">(MaybeT Compiler Block -&gt; MaybeT Compiler Block)
+-&gt; MaybeT Compiler Block -&gt; MaybeT Compiler Block
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span>
+</span><span id="line-54"></span><span>                </span><span class="annot"><span class="annottext">Compiler Block -&gt; MaybeT Compiler Block
+forall (m :: * -&gt; *) a. Monad m =&gt; m a -&gt; MaybeT m a
+forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
+(MonadTrans t, Monad m) =&gt;
+m a -&gt; t m a
+</span><span class="hs-identifier hs-var">lift</span></span><span> </span><span class="annot"><span class="annottext">(Compiler Block -&gt; MaybeT Compiler Block)
+-&gt; Compiler Block -&gt; MaybeT Compiler Block
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">IO (SVGHtml Identity) -&gt; Compiler (SVGHtml Identity)
+forall a. IO a -&gt; Compiler a
+</span><span class="hs-identifier hs-var">unsafeCompiler</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Text -&gt; IO (SVGHtml Identity)
+forall (m :: * -&gt; *) (n :: * -&gt; *).
+(MonadIO m, Monad n, MonadThrow m) =&gt;
+Text -&gt; m (SVGHtml n)
+</span><a href="Media.SVG.html#execMmdc"><span class="hs-identifier hs-var">execMmdc</span></a></span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679285811"><span class="hs-identifier hs-var">contents</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-55"></span><span>                    </span><span class="annot"><span class="annottext">Compiler (SVGHtml Identity)
+-&gt; (SVGHtml Identity -&gt; Block) -&gt; Compiler Block
+forall (f :: * -&gt; *) a b. Functor f =&gt; f a -&gt; (a -&gt; b) -&gt; f b
+</span><span class="hs-operator hs-var">&lt;&amp;&gt;</span></span><span> </span><span class="annot"><span class="annottext">[Inline] -&gt; Block
+</span><span class="hs-identifier hs-var">Plain</span></span><span> </span><span class="annot"><span class="annottext">([Inline] -&gt; Block)
+-&gt; (SVGHtml Identity -&gt; [Inline]) -&gt; SVGHtml Identity -&gt; Block
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Inline -&gt; [Inline] -&gt; [Inline]
+forall a. a -&gt; [a] -&gt; [a]
+</span><span class="hs-glyph hs-var">:</span></span><span class="hs-special">[</span><span class="hs-special">]</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Inline -&gt; [Inline])
+-&gt; (SVGHtml Identity -&gt; Inline) -&gt; SVGHtml Identity -&gt; [Inline]
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Format -&gt; Text -&gt; Inline
+</span><span class="hs-identifier hs-var">RawInline</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Text -&gt; Format
+</span><span class="hs-identifier hs-var">Format</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;html&quot;</span></span><span class="hs-special">)</span><span>
+</span><span id="line-56"></span><span>                        </span><span class="annot"><span class="annottext">(Text -&gt; Inline)
+-&gt; (SVGHtml Identity -&gt; Text) -&gt; SVGHtml Identity -&gt; Inline
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text
+</span><span class="hs-identifier hs-var">TL.toStrict</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Text)
+-&gt; (SVGHtml Identity -&gt; Text) -&gt; SVGHtml Identity -&gt; Text
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">SVGHtml Identity -&gt; Text
+forall a. Html a -&gt; Text
+</span><span class="hs-identifier hs-var">renderText</span></span><span> </span><span class="annot"><span class="annottext">(SVGHtml Identity -&gt; Text)
+-&gt; (SVGHtml Identity -&gt; SVGHtml Identity)
+-&gt; SVGHtml Identity
+-&gt; Text
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">[(String, Text)] -&gt; SVGHtml Identity -&gt; SVGHtml Identity
+forall (m :: * -&gt; *).
+Monad m =&gt;
+[(String, Text)] -&gt; SVGHtml m -&gt; SVGHtml m
+</span><a href="Media.SVG.html#styledSvg"><span class="hs-identifier hs-var">styledSvg</span></a></span><span> </span><span class="annot"><span class="annottext">[(String, Text)]
+</span><a href="#local-6989586621679285844"><span class="hs-identifier hs-var">args</span></a></span><span>
+</span><span id="line-57"></span><span class="annot"><a href="Media.SVG.html#mermaidTransform"><span class="hs-identifier hs-var">mermaidTransform</span></a></span><span> </span><span id="local-6989586621679285854"><span class="annot"><span class="annottext">Block
+</span><a href="#local-6989586621679285854"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Block -&gt; Compiler Block
+forall a. a -&gt; Compiler a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">Block
+</span><a href="#local-6989586621679285854"><span class="hs-identifier hs-var">x</span></a></span><span>
+</span><span id="line-58"></span></pre></body></html>

@@ -79,7 +79,7 @@ forall a. Maybe a
 </span><span class="hs-identifier hs-var">LFBReadOnly</span></span><span>
 </span><span id="line-45"></span><span>  </span><span class="hs-special">}</span><span>
 </span><span id="line-46"></span><span>
-</span><span id="line-47"></span><span id="local-6989586621679286216"><span class="annot"><a href="Utils.Stack.html#mkRunner"><span class="hs-identifier hs-type">mkRunner</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679286216"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679286216"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Runner</span></span></span><span>
+</span><span id="line-47"></span><span id="local-6989586621679287324"><span class="annot"><a href="Utils.Stack.html#mkRunner"><span class="hs-identifier hs-type">mkRunner</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MonadIO</span></span><span> </span><span class="annot"><a href="#local-6989586621679287324"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679287324"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Runner</span></span></span><span>
 </span><span id="line-48"></span><span id="mkRunner"><span class="annot"><span class="annottext">mkRunner :: forall (m :: * -&gt; *). MonadIO m =&gt; m Runner
 </span><a href="Utils.Stack.html#mkRunner"><span class="hs-identifier hs-var hs-var">mkRunner</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">GlobalOpts
 -&gt; Bool -&gt; LogFunc -&gt; Int -&gt; ProcessContext -&gt; MVar Bool -&gt; Runner
@@ -136,12 +136,12 @@ StackYamlLoc -&gt; RIO env (ProjectConfig (Path Abs File))
 forall a b. IO a -&gt; (a -&gt; IO b) -&gt; IO b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-56"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">PCProject</span></span><span> </span><span id="local-6989586621679286369"><span class="annot"><span class="annottext">Path Abs File
-</span><a href="#local-6989586621679286369"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Path Abs File -&gt; IO (Path Abs File)
+</span><span id="line-56"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">PCProject</span></span><span> </span><span id="local-6989586621679287477"><span class="annot"><span class="annottext">Path Abs File
+</span><a href="#local-6989586621679287477"><span class="hs-identifier hs-var">a</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Path Abs File -&gt; IO (Path Abs File)
 forall a. a -&gt; IO a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">Path Abs File
-</span><a href="#local-6989586621679286369"><span class="hs-identifier hs-var">a</span></a></span><span>
+</span><a href="#local-6989586621679287477"><span class="hs-identifier hs-var">a</span></a></span><span>
 </span><span id="line-57"></span><span>        </span><span class="annot"><span class="annottext">ProjectConfig (Path Abs File)
 </span><span class="hs-identifier">_</span></span><span>           </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO (Path Abs File)
 forall a. String -&gt; IO a

@@ -27,7 +27,7 @@
 </span><a href="Hakyll.Web.Feed.Extra.html#feedAuthorName"><span class="hs-identifier hs-var hs-var">feedAuthorName</span></a></span></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
 </span><span id="line-23"></span><span>  </span><span class="hs-special">,</span><span> </span><span id="feedAuthorEmail"><span class="annot"><span class="annottext">FeedConfiguration -&gt; String
 </span><a href="Hakyll.Web.Feed.Extra.html#feedAuthorEmail"><span class="hs-identifier hs-var hs-var">feedAuthorEmail</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-24"></span><span>  </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679284520"><span id="local-6989586621679284532"><span id="local-6989586621679284536"><span class="annot"><span class="annottext">Int -&gt; FeedConfiguration -&gt; ShowS
+</span><span id="line-24"></span><span>  </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679285403"><span id="local-6989586621679285415"><span id="local-6989586621679285419"><span class="annot"><span class="annottext">Int -&gt; FeedConfiguration -&gt; ShowS
 [FeedConfiguration] -&gt; ShowS
 FeedConfiguration -&gt; String
 (Int -&gt; FeedConfiguration -&gt; ShowS)
@@ -42,7 +42,7 @@ $cshow :: FeedConfiguration -&gt; String
 show :: FeedConfiguration -&gt; String
 $cshowList :: [FeedConfiguration] -&gt; ShowS
 showList :: [FeedConfiguration] -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679284541"><span id="local-6989586621679284551"><span class="annot"><span class="annottext">FeedConfiguration -&gt; FeedConfiguration -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679285424"><span id="local-6989586621679285434"><span class="annot"><span class="annottext">FeedConfiguration -&gt; FeedConfiguration -&gt; Bool
 (FeedConfiguration -&gt; FeedConfiguration -&gt; Bool)
 -&gt; (FeedConfiguration -&gt; FeedConfiguration -&gt; Bool)
 -&gt; Eq FeedConfiguration
@@ -56,25 +56,25 @@ $c/= :: FeedConfiguration -&gt; FeedConfiguration -&gt; Bool
 </span><span id="line-26"></span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#rssTemplate"><span class="hs-identifier hs-type">rssTemplate</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Template</span></span><span>
 </span><span id="line-27"></span><span id="rssTemplate"><span class="annot"><span class="annottext">rssTemplate :: Template
 </span><a href="Hakyll.Web.Feed.Extra.html#rssTemplate"><span class="hs-identifier hs-var hs-var">rssTemplate</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-28"></span><span>    </span><span class="hs-special">$</span><span id="local-6989586621679284557"><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">makeRelativeToProject</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-string">&quot;contents&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;templates&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;blog&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;rss&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;rss.xml&quot;</span></span><span class="hs-special">)</span><span>
+</span><span id="line-28"></span><span>    </span><span class="hs-special">$</span><span id="local-6989586621679285440"><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">makeRelativeToProject</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-string">&quot;contents&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;templates&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;blog&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;rss&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;rss.xml&quot;</span></span><span class="hs-special">)</span><span>
 </span><span id="line-29"></span><span>        </span><span class="annot"><span class="hs-operator hs-type">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">embedTemplate</span></span><span class="hs-special">)</span></span><span>
 </span><span id="line-30"></span><span>
 </span><span id="line-31"></span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#rssItemTemplate"><span class="hs-identifier hs-type">rssItemTemplate</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Template</span></span><span>
 </span><span id="line-32"></span><span id="rssItemTemplate"><span class="annot"><span class="annottext">rssItemTemplate :: Template
 </span><a href="Hakyll.Web.Feed.Extra.html#rssItemTemplate"><span class="hs-identifier hs-var hs-var">rssItemTemplate</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-33"></span><span>    </span><span class="hs-special">$</span><span id="local-6989586621679284569"><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">makeRelativeToProject</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-string">&quot;contents&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;templates&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;blog&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;rss&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;rss-item.xml&quot;</span></span><span class="hs-special">)</span><span>
+</span><span id="line-33"></span><span>    </span><span class="hs-special">$</span><span id="local-6989586621679285452"><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">makeRelativeToProject</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-string">&quot;contents&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;templates&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;blog&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;rss&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;rss-item.xml&quot;</span></span><span class="hs-special">)</span><span>
 </span><span id="line-34"></span><span>        </span><span class="annot"><span class="hs-operator hs-type">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">embedTemplate</span></span><span class="hs-special">)</span></span><span>
 </span><span id="line-35"></span><span>
 </span><span id="line-36"></span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#atomTemplate"><span class="hs-identifier hs-type">atomTemplate</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Template</span></span><span>
 </span><span id="line-37"></span><span id="atomTemplate"><span class="annot"><span class="annottext">atomTemplate :: Template
 </span><a href="Hakyll.Web.Feed.Extra.html#atomTemplate"><span class="hs-identifier hs-var hs-var">atomTemplate</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-38"></span><span>    </span><span class="hs-special">$</span><span id="local-6989586621679284573"><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">makeRelativeToProject</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-string">&quot;contents&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;templates&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;blog&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;atom&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;atom.xml&quot;</span></span><span class="hs-special">)</span><span>
+</span><span id="line-38"></span><span>    </span><span class="hs-special">$</span><span id="local-6989586621679285456"><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">makeRelativeToProject</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-string">&quot;contents&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;templates&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;blog&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;atom&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;atom.xml&quot;</span></span><span class="hs-special">)</span><span>
 </span><span id="line-39"></span><span>        </span><span class="annot"><span class="hs-operator hs-type">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">embedTemplate</span></span><span class="hs-special">)</span></span><span>
 </span><span id="line-40"></span><span>
 </span><span id="line-41"></span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#atomItemTemplate"><span class="hs-identifier hs-type">atomItemTemplate</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Template</span></span><span>
 </span><span id="line-42"></span><span id="atomItemTemplate"><span class="annot"><span class="annottext">atomItemTemplate :: Template
 </span><a href="Hakyll.Web.Feed.Extra.html#atomItemTemplate"><span class="hs-identifier hs-var hs-var">atomItemTemplate</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
-</span><span id="line-43"></span><span>    </span><span class="hs-special">$</span><span id="local-6989586621679284577"><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">makeRelativeToProject</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-string">&quot;contents&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;templates&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;blog&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;atom&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;atom-item.xml&quot;</span></span><span class="hs-special">)</span><span>
+</span><span id="line-43"></span><span>    </span><span class="hs-special">$</span><span id="local-6989586621679285460"><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">makeRelativeToProject</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-string">&quot;contents&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;templates&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;blog&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;atom&quot;</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="hs-string">&quot;atom-item.xml&quot;</span></span><span class="hs-special">)</span><span>
 </span><span id="line-44"></span><span>        </span><span class="annot"><span class="hs-operator hs-type">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">embedTemplate</span></span><span class="hs-special">)</span></span><span>
 </span><span id="line-45"></span><span>
 </span><span id="line-46"></span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#renderFeed"><span class="hs-identifier hs-type">renderFeed</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Template</span></span><span>
@@ -89,14 +89,14 @@ $c/= :: FeedConfiguration -&gt; FeedConfiguration -&gt; Bool
 -&gt; Context String
 -&gt; [Item String]
 -&gt; Compiler (Item String)
-</span><a href="Hakyll.Web.Feed.Extra.html#renderFeed"><span class="hs-identifier hs-var hs-var">renderFeed</span></a></span></span><span> </span><span id="local-6989586621679284581"><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284581"><span class="hs-identifier hs-var">feedTpl</span></a></span></span><span> </span><span id="local-6989586621679284582"><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284582"><span class="hs-identifier hs-var">itemTpl</span></a></span></span><span> </span><span id="local-6989586621679284583"><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284583"><span class="hs-identifier hs-var">config</span></a></span></span><span> </span><span id="local-6989586621679284584"><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679284584"><span class="hs-identifier hs-var">itemContext</span></a></span></span><span> </span><span id="local-6989586621679284585"><span class="annot"><span class="annottext">[Item String]
-</span><a href="#local-6989586621679284585"><span class="hs-identifier hs-var">items</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-53"></span><span>    </span><span id="local-6989586621679284586"><span class="annot"><span class="annottext">[Item String]
-</span><a href="#local-6989586621679284586"><span class="hs-identifier hs-var">protectedItems</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(Item String -&gt; Compiler (Item String))
+</span><a href="Hakyll.Web.Feed.Extra.html#renderFeed"><span class="hs-identifier hs-var hs-var">renderFeed</span></a></span></span><span> </span><span id="local-6989586621679285464"><span class="annot"><span class="annottext">Template
+</span><a href="#local-6989586621679285464"><span class="hs-identifier hs-var">feedTpl</span></a></span></span><span> </span><span id="local-6989586621679285465"><span class="annot"><span class="annottext">Template
+</span><a href="#local-6989586621679285465"><span class="hs-identifier hs-var">itemTpl</span></a></span></span><span> </span><span id="local-6989586621679285466"><span class="annot"><span class="annottext">FeedConfiguration
+</span><a href="#local-6989586621679285466"><span class="hs-identifier hs-var">config</span></a></span></span><span> </span><span id="local-6989586621679285467"><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679285467"><span class="hs-identifier hs-var">itemContext</span></a></span></span><span> </span><span id="local-6989586621679285468"><span class="annot"><span class="annottext">[Item String]
+</span><a href="#local-6989586621679285468"><span class="hs-identifier hs-var">items</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-53"></span><span>    </span><span id="local-6989586621679285469"><span class="annot"><span class="annottext">[Item String]
+</span><a href="#local-6989586621679285469"><span class="hs-identifier hs-var">protectedItems</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(Item String -&gt; Compiler (Item String))
 -&gt; [Item String] -&gt; Compiler [Item String]
 forall (t :: * -&gt; *) (m :: * -&gt; *) a b.
 (Traversable t, Monad m) =&gt;
@@ -106,11 +106,11 @@ forall (m :: * -&gt; *) a b. Monad m =&gt; (a -&gt; m b) -&gt; [a] -&gt; m [b]
 forall (m :: * -&gt; *) (f :: * -&gt; *).
 (Monad m, Functor f) =&gt;
 ShowS -&gt; f String -&gt; m (f String)
-</span><a href="#local-6989586621679284588"><span class="hs-identifier hs-var">applyFilter</span></a></span><span> </span><span class="annot"><span class="annottext">ShowS
-</span><a href="#local-6989586621679284589"><span class="hs-identifier hs-var">protectCDATA</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Item String]
-</span><a href="#local-6989586621679284585"><span class="hs-identifier hs-var">items</span></a></span><span>
-</span><span id="line-54"></span><span>    </span><span id="local-6989586621679284590"><span class="annot"><span class="annottext">Item String
-</span><a href="#local-6989586621679284590"><span class="hs-identifier hs-var">body</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">String -&gt; Compiler (Item String)
+</span><a href="#local-6989586621679285471"><span class="hs-identifier hs-var">applyFilter</span></a></span><span> </span><span class="annot"><span class="annottext">ShowS
+</span><a href="#local-6989586621679285472"><span class="hs-identifier hs-var">protectCDATA</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Item String]
+</span><a href="#local-6989586621679285468"><span class="hs-identifier hs-var">items</span></a></span><span>
+</span><span id="line-54"></span><span>    </span><span id="local-6989586621679285473"><span class="annot"><span class="annottext">Item String
+</span><a href="#local-6989586621679285473"><span class="hs-identifier hs-var">body</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">String -&gt; Compiler (Item String)
 forall a. a -&gt; Compiler (Item a)
 </span><span class="hs-identifier hs-var">makeItem</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Compiler (Item String))
 -&gt; Compiler String -&gt; Compiler (Item String)
@@ -118,23 +118,23 @@ forall (m :: * -&gt; *) a b. Monad m =&gt; (a -&gt; m b) -&gt; m a -&gt; m b
 </span><span class="hs-operator hs-var">=&lt;&lt;</span></span><span> </span><span class="annot"><span class="annottext">Template -&gt; Context String -&gt; [Item String] -&gt; Compiler String
 forall a. Template -&gt; Context a -&gt; [Item a] -&gt; Compiler String
 </span><span class="hs-identifier hs-var">applyTemplateList</span></span><span> </span><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284582"><span class="hs-identifier hs-var">itemTpl</span></a></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679284594"><span class="hs-identifier hs-var">itemContext'</span></a></span><span> </span><span class="annot"><span class="annottext">[Item String]
-</span><a href="#local-6989586621679284586"><span class="hs-identifier hs-var">protectedItems</span></a></span><span>
+</span><a href="#local-6989586621679285465"><span class="hs-identifier hs-var">itemTpl</span></a></span><span> </span><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679285477"><span class="hs-identifier hs-var">itemContext'</span></a></span><span> </span><span class="annot"><span class="annottext">[Item String]
+</span><a href="#local-6989586621679285469"><span class="hs-identifier hs-var">protectedItems</span></a></span><span>
 </span><span id="line-55"></span><span>    </span><span class="annot"><span class="annottext">Template -&gt; Context String -&gt; Item String -&gt; Compiler (Item String)
 forall a. Template -&gt; Context a -&gt; Item a -&gt; Compiler (Item String)
 </span><span class="hs-identifier hs-var">applyTemplate</span></span><span> </span><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284581"><span class="hs-identifier hs-var">feedTpl</span></a></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679284596"><span class="hs-identifier hs-var">feedContext</span></a></span><span> </span><span class="annot"><span class="annottext">Item String
-</span><a href="#local-6989586621679284590"><span class="hs-identifier hs-var">body</span></a></span><span>
+</span><a href="#local-6989586621679285464"><span class="hs-identifier hs-var">feedTpl</span></a></span><span> </span><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679285479"><span class="hs-identifier hs-var">feedContext</span></a></span><span> </span><span class="annot"><span class="annottext">Item String
+</span><a href="#local-6989586621679285473"><span class="hs-identifier hs-var">body</span></a></span><span>
 </span><span id="line-56"></span><span>    </span><span class="hs-keyword">where</span><span>
-</span><span id="line-57"></span><span>        </span><span id="local-6989586621679284455"><span id="local-6989586621679284456"><span class="annot"><a href="#local-6989586621679284588"><span class="hs-identifier hs-type">applyFilter</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679284455"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">,</span><span class="annot"><span class="hs-identifier hs-type">Functor</span></span><span> </span><span class="annot"><a href="#local-6989586621679284456"><span class="hs-identifier hs-type">f</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679284456"><span class="hs-identifier hs-type">f</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679284455"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679284456"><span class="hs-identifier hs-type">f</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-58"></span><span>        </span><span id="local-6989586621679284588"><span class="annot"><span class="annottext">applyFilter :: forall (m :: * -&gt; *) (f :: * -&gt; *).
+</span><span id="line-57"></span><span>        </span><span id="local-6989586621679285338"><span id="local-6989586621679285339"><span class="annot"><a href="#local-6989586621679285471"><span class="hs-identifier hs-type">applyFilter</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679285338"><span class="hs-identifier hs-type">m</span></a></span><span class="hs-special">,</span><span class="annot"><span class="hs-identifier hs-type">Functor</span></span><span> </span><span class="annot"><a href="#local-6989586621679285339"><span class="hs-identifier hs-type">f</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679285339"><span class="hs-identifier hs-type">f</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="#local-6989586621679285338"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="#local-6989586621679285339"><span class="hs-identifier hs-type">f</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-58"></span><span>        </span><span id="local-6989586621679285471"><span class="annot"><span class="annottext">applyFilter :: forall (m :: * -&gt; *) (f :: * -&gt; *).
 (Monad m, Functor f) =&gt;
 ShowS -&gt; f String -&gt; m (f String)
-</span><a href="#local-6989586621679284588"><span class="hs-identifier hs-var hs-var">applyFilter</span></a></span></span><span> </span><span id="local-6989586621679284601"><span class="annot"><span class="annottext">ShowS
-</span><a href="#local-6989586621679284601"><span class="hs-identifier hs-var">tr</span></a></span></span><span> </span><span id="local-6989586621679284602"><span class="annot"><span class="annottext">f String
-</span><a href="#local-6989586621679284602"><span class="hs-identifier hs-var">str</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">f String -&gt; m (f String)
+</span><a href="#local-6989586621679285471"><span class="hs-identifier hs-var hs-var">applyFilter</span></a></span></span><span> </span><span id="local-6989586621679285484"><span class="annot"><span class="annottext">ShowS
+</span><a href="#local-6989586621679285484"><span class="hs-identifier hs-var">tr</span></a></span></span><span> </span><span id="local-6989586621679285485"><span class="annot"><span class="annottext">f String
+</span><a href="#local-6989586621679285485"><span class="hs-identifier hs-var">str</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">f String -&gt; m (f String)
 forall a. a -&gt; m a
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">(f String -&gt; m (f String)) -&gt; f String -&gt; m (f String)
@@ -143,45 +143,45 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall a b. (a -&gt; b) -&gt; f a -&gt; f b
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-identifier hs-var">fmap</span></span><span> </span><span class="annot"><span class="annottext">ShowS
-</span><a href="#local-6989586621679284601"><span class="hs-identifier hs-var">tr</span></a></span><span> </span><span class="annot"><span class="annottext">f String
-</span><a href="#local-6989586621679284602"><span class="hs-identifier hs-var">str</span></a></span><span>
-</span><span id="line-59"></span><span>        </span><span class="annot"><a href="#local-6989586621679284589"><span class="hs-identifier hs-type">protectCDATA</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-60"></span><span>        </span><span id="local-6989586621679284589"><span class="annot"><span class="annottext">protectCDATA :: ShowS
-</span><a href="#local-6989586621679284589"><span class="hs-identifier hs-var hs-var">protectCDATA</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS -&gt; ShowS
+</span><a href="#local-6989586621679285484"><span class="hs-identifier hs-var">tr</span></a></span><span> </span><span class="annot"><span class="annottext">f String
+</span><a href="#local-6989586621679285485"><span class="hs-identifier hs-var">str</span></a></span><span>
+</span><span id="line-59"></span><span>        </span><span class="annot"><a href="#local-6989586621679285472"><span class="hs-identifier hs-type">protectCDATA</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-60"></span><span>        </span><span id="local-6989586621679285472"><span class="annot"><span class="annottext">protectCDATA :: ShowS
+</span><a href="#local-6989586621679285472"><span class="hs-identifier hs-var hs-var">protectCDATA</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS -&gt; ShowS
 </span><span class="hs-identifier hs-var">replaceAll</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;]]&gt;&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; ShowS
 forall a b. a -&gt; b -&gt; a
 </span><span class="hs-identifier hs-var">const</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;]]&amp;gt;&quot;</span></span><span class="hs-special">)</span><span>
 </span><span id="line-61"></span><span>
-</span><span id="line-62"></span><span>        </span><span id="local-6989586621679284594"><span class="annot"><span class="annottext">itemContext' :: Context String
-</span><a href="#local-6989586621679284594"><span class="hs-identifier hs-var hs-var">itemContext'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Context String] -&gt; Context String
+</span><span id="line-62"></span><span>        </span><span id="local-6989586621679285477"><span class="annot"><span class="annottext">itemContext' :: Context String
+</span><a href="#local-6989586621679285477"><span class="hs-identifier hs-var hs-var">itemContext'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Context String] -&gt; Context String
 forall a. Monoid a =&gt; [a] -&gt; a
 </span><span class="hs-identifier hs-var">mconcat</span></span><span>
 </span><span id="line-63"></span><span>            </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679284584"><span class="hs-identifier hs-var">itemContext</span></a></span><span>
+</span><a href="#local-6989586621679285467"><span class="hs-identifier hs-var">itemContext</span></a></span><span>
 </span><span id="line-64"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;webroot&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FeedConfiguration -&gt; String
 </span><a href="Hakyll.Web.Feed.Extra.html#feedWebRoot"><span class="hs-identifier hs-var">feedWebRoot</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284583"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679285466"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-65"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;authorName&quot;</span></span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FeedConfiguration -&gt; String
 </span><a href="Hakyll.Web.Feed.Extra.html#feedAuthorName"><span class="hs-identifier hs-var">feedAuthorName</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284583"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679285466"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-66"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;authorEmail&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FeedConfiguration -&gt; String
 </span><a href="Hakyll.Web.Feed.Extra.html#feedAuthorEmail"><span class="hs-identifier hs-var">feedAuthorEmail</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284583"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679285466"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-67"></span><span>            </span><span class="hs-special">]</span><span>
 </span><span id="line-68"></span><span>
-</span><span id="line-69"></span><span>        </span><span id="local-6989586621679284596"><span class="annot"><span class="annottext">feedContext :: Context String
-</span><a href="#local-6989586621679284596"><span class="hs-identifier hs-var hs-var">feedContext</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Context String] -&gt; Context String
+</span><span id="line-69"></span><span>        </span><span id="local-6989586621679285479"><span class="annot"><span class="annottext">feedContext :: Context String
+</span><a href="#local-6989586621679285479"><span class="hs-identifier hs-var hs-var">feedContext</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Context String] -&gt; Context String
 forall a. Monoid a =&gt; [a] -&gt; a
 </span><span class="hs-identifier hs-var">mconcat</span></span><span>
 </span><span id="line-70"></span><span>            </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">String -&gt; Context String
@@ -192,51 +192,51 @@ forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;title&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FeedConfiguration -&gt; String
 </span><a href="Hakyll.Web.Feed.Extra.html#feedTitle"><span class="hs-identifier hs-var">feedTitle</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284583"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679285466"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-72"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;webroot&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FeedConfiguration -&gt; String
 </span><a href="Hakyll.Web.Feed.Extra.html#feedWebRoot"><span class="hs-identifier hs-var">feedWebRoot</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284583"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679285466"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-73"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;blog-title&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FeedConfiguration -&gt; String
 </span><a href="Hakyll.Web.Feed.Extra.html#feedBlogName"><span class="hs-identifier hs-var">feedBlogName</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284583"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679285466"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-74"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;description&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FeedConfiguration -&gt; String
 </span><a href="Hakyll.Web.Feed.Extra.html#feedDescription"><span class="hs-identifier hs-var">feedDescription</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284583"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679285466"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-75"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;authorName&quot;</span></span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FeedConfiguration -&gt; String
 </span><a href="Hakyll.Web.Feed.Extra.html#feedAuthorName"><span class="hs-identifier hs-var">feedAuthorName</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284583"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679285466"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-76"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;authorEmail&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">FeedConfiguration -&gt; String
 </span><a href="Hakyll.Web.Feed.Extra.html#feedAuthorEmail"><span class="hs-identifier hs-var">feedAuthorEmail</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284583"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679285466"><span class="hs-identifier hs-var">config</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-77"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; Context String
 forall a. String -&gt; Context a
 </span><span class="hs-identifier hs-var">urlField</span></span><span>   </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;url&quot;</span></span><span>
 </span><span id="line-78"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String
 forall {a}. Context a
-</span><a href="#local-6989586621679284610"><span class="hs-identifier hs-var">updatedField</span></a></span><span>
+</span><a href="#local-6989586621679285493"><span class="hs-identifier hs-var">updatedField</span></a></span><span>
 </span><span id="line-79"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String
 forall {a}. Context a
 </span><span class="hs-identifier hs-var">missingField</span></span><span>
 </span><span id="line-80"></span><span>            </span><span class="hs-special">]</span><span>
 </span><span id="line-81"></span><span>
-</span><span id="line-82"></span><span>        </span><span id="local-6989586621679284610"><span class="annot"><span class="annottext">updatedField :: Context a
-</span><a href="#local-6989586621679284610"><span class="hs-identifier hs-var hs-var">updatedField</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (Item a -&gt; Compiler String) -&gt; Context a
+</span><span id="line-82"></span><span>        </span><span id="local-6989586621679285493"><span class="annot"><span class="annottext">updatedField :: Context a
+</span><a href="#local-6989586621679285493"><span class="hs-identifier hs-var hs-var">updatedField</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (Item a -&gt; Compiler String) -&gt; Context a
 forall a. String -&gt; (Item a -&gt; Compiler String) -&gt; Context a
 </span><span class="hs-identifier hs-var">field</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;updated&quot;</span></span><span> </span><span class="annot"><span class="annottext">((Item a -&gt; Compiler String) -&gt; Context a)
@@ -248,32 +248,32 @@ forall a b. a -&gt; b -&gt; a
 -&gt; Compiler String -&gt; Item a -&gt; Compiler String
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">[Item String]
-</span><a href="#local-6989586621679284585"><span class="hs-identifier hs-var">items</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><a href="#local-6989586621679285468"><span class="hs-identifier hs-var">items</span></a></span><span> </span><span class="hs-keyword">of</span><span>
 </span><span id="line-83"></span><span>            </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; Compiler String
 forall a. a -&gt; Compiler a
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;Unknown&quot;</span></span><span>
-</span><span id="line-84"></span><span>            </span><span class="hs-special">(</span><span id="local-6989586621679284620"><span class="annot"><span class="annottext">Item String
-</span><a href="#local-6989586621679284620"><span class="hs-identifier hs-var">x</span></a></span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span class="annot"><span class="annottext">[Item String]
+</span><span id="line-84"></span><span>            </span><span class="hs-special">(</span><span id="local-6989586621679285503"><span class="annot"><span class="annottext">Item String
+</span><a href="#local-6989586621679285503"><span class="hs-identifier hs-var">x</span></a></span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span class="annot"><span class="annottext">[Item String]
 </span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Context String
 -&gt; String -&gt; [String] -&gt; Item String -&gt; Compiler ContextField
 forall a.
 Context a -&gt; String -&gt; [String] -&gt; Item a -&gt; Compiler ContextField
 </span><span class="hs-identifier hs-var">unContext</span></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679284594"><span class="hs-identifier hs-var">itemContext'</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679285477"><span class="hs-identifier hs-var">itemContext'</span></a></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;updated&quot;</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">Item String
-</span><a href="#local-6989586621679284620"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">Compiler ContextField
+</span><a href="#local-6989586621679285503"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="annot"><span class="annottext">Compiler ContextField
 -&gt; (ContextField -&gt; Compiler String) -&gt; Compiler String
 forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="hs-glyph">\</span><span class="hs-glyph">case</span><span>
-</span><span id="line-85"></span><span>                </span><span class="annot"><span class="hs-identifier hs-type">StringField</span></span><span> </span><span id="local-6989586621679284623"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679284623"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; Compiler String
+</span><span id="line-85"></span><span>                </span><span class="annot"><span class="hs-identifier hs-type">StringField</span></span><span> </span><span id="local-6989586621679285506"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679285506"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; Compiler String
 forall a. a -&gt; Compiler a
 forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
 </span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679284623"><span class="hs-identifier hs-var">s</span></a></span><span>
+</span><a href="#local-6989586621679285506"><span class="hs-identifier hs-var">s</span></a></span><span>
 </span><span id="line-86"></span><span>                </span><span class="annot"><span class="annottext">ContextField
 </span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String -&gt; Compiler String
 forall a. String -&gt; Compiler a
@@ -294,11 +294,11 @@ forall (m :: * -&gt; *) a. MonadFail m =&gt; String -&gt; m a
 -&gt; Context String
 -&gt; [Item String]
 -&gt; Compiler (Item String)
-</span><a href="Hakyll.Web.Feed.Extra.html#renderRssWithTemplates"><span class="hs-identifier hs-var hs-var">renderRssWithTemplates</span></a></span></span><span> </span><span id="local-6989586621679284625"><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284625"><span class="hs-identifier hs-var">feedTemplate</span></a></span></span><span> </span><span id="local-6989586621679284626"><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284626"><span class="hs-identifier hs-var">itemTemplate</span></a></span></span><span> </span><span id="local-6989586621679284627"><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284627"><span class="hs-identifier hs-var">config</span></a></span></span><span> </span><span id="local-6989586621679284628"><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679284628"><span class="hs-identifier hs-var">context</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Template
+</span><a href="Hakyll.Web.Feed.Extra.html#renderRssWithTemplates"><span class="hs-identifier hs-var hs-var">renderRssWithTemplates</span></a></span></span><span> </span><span id="local-6989586621679285508"><span class="annot"><span class="annottext">Template
+</span><a href="#local-6989586621679285508"><span class="hs-identifier hs-var">feedTemplate</span></a></span></span><span> </span><span id="local-6989586621679285509"><span class="annot"><span class="annottext">Template
+</span><a href="#local-6989586621679285509"><span class="hs-identifier hs-var">itemTemplate</span></a></span></span><span> </span><span id="local-6989586621679285510"><span class="annot"><span class="annottext">FeedConfiguration
+</span><a href="#local-6989586621679285510"><span class="hs-identifier hs-var">config</span></a></span></span><span> </span><span id="local-6989586621679285511"><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679285511"><span class="hs-identifier hs-var">context</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Template
 -&gt; Template
 -&gt; FeedConfiguration
 -&gt; Context String
@@ -306,14 +306,14 @@ forall (m :: * -&gt; *) a. MonadFail m =&gt; String -&gt; m a
 -&gt; Compiler (Item String)
 </span><a href="Hakyll.Web.Feed.Extra.html#renderFeed"><span class="hs-identifier hs-var">renderFeed</span></a></span><span>
 </span><span id="line-96"></span><span>    </span><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284625"><span class="hs-identifier hs-var">feedTemplate</span></a></span><span> </span><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284626"><span class="hs-identifier hs-var">itemTemplate</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284627"><span class="hs-identifier hs-var">config</span></a></span><span>
+</span><a href="#local-6989586621679285508"><span class="hs-identifier hs-var">feedTemplate</span></a></span><span> </span><span class="annot"><span class="annottext">Template
+</span><a href="#local-6989586621679285509"><span class="hs-identifier hs-var">itemTemplate</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
+</span><a href="#local-6989586621679285510"><span class="hs-identifier hs-var">config</span></a></span><span>
 </span><span id="line-97"></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Context String -&gt; Context String
 forall a. String -&gt; Context a -&gt; Context a
 </span><a href="Hakyll.Web.Feed.Extra.html#makeItemContext"><span class="hs-identifier hs-var">makeItemContext</span></a></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;%a, %d %b %Y %H:%M:%S UT&quot;</span></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679284628"><span class="hs-identifier hs-var">context</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679285511"><span class="hs-identifier hs-var">context</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-98"></span><span>
 </span><span id="line-99"></span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#renderAtomWithTemplates"><span class="hs-identifier hs-type">renderAtomWithTemplates</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Template</span></span><span>
 </span><span id="line-100"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Template</span></span><span>
@@ -327,11 +327,11 @@ forall a. String -&gt; Context a -&gt; Context a
 -&gt; Context String
 -&gt; [Item String]
 -&gt; Compiler (Item String)
-</span><a href="Hakyll.Web.Feed.Extra.html#renderAtomWithTemplates"><span class="hs-identifier hs-var hs-var">renderAtomWithTemplates</span></a></span></span><span> </span><span id="local-6989586621679284631"><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284631"><span class="hs-identifier hs-var">feedTemplate</span></a></span></span><span> </span><span id="local-6989586621679284632"><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284632"><span class="hs-identifier hs-var">itemTemplate</span></a></span></span><span> </span><span id="local-6989586621679284633"><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284633"><span class="hs-identifier hs-var">config</span></a></span></span><span> </span><span id="local-6989586621679284634"><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679284634"><span class="hs-identifier hs-var">context</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Template
+</span><a href="Hakyll.Web.Feed.Extra.html#renderAtomWithTemplates"><span class="hs-identifier hs-var hs-var">renderAtomWithTemplates</span></a></span></span><span> </span><span id="local-6989586621679285514"><span class="annot"><span class="annottext">Template
+</span><a href="#local-6989586621679285514"><span class="hs-identifier hs-var">feedTemplate</span></a></span></span><span> </span><span id="local-6989586621679285515"><span class="annot"><span class="annottext">Template
+</span><a href="#local-6989586621679285515"><span class="hs-identifier hs-var">itemTemplate</span></a></span></span><span> </span><span id="local-6989586621679285516"><span class="annot"><span class="annottext">FeedConfiguration
+</span><a href="#local-6989586621679285516"><span class="hs-identifier hs-var">config</span></a></span></span><span> </span><span id="local-6989586621679285517"><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679285517"><span class="hs-identifier hs-var">context</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Template
 -&gt; Template
 -&gt; FeedConfiguration
 -&gt; Context String
@@ -339,32 +339,32 @@ forall a. String -&gt; Context a -&gt; Context a
 -&gt; Compiler (Item String)
 </span><a href="Hakyll.Web.Feed.Extra.html#renderFeed"><span class="hs-identifier hs-var">renderFeed</span></a></span><span>
 </span><span id="line-106"></span><span>    </span><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284631"><span class="hs-identifier hs-var">feedTemplate</span></a></span><span> </span><span class="annot"><span class="annottext">Template
-</span><a href="#local-6989586621679284632"><span class="hs-identifier hs-var">itemTemplate</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
-</span><a href="#local-6989586621679284633"><span class="hs-identifier hs-var">config</span></a></span><span>
+</span><a href="#local-6989586621679285514"><span class="hs-identifier hs-var">feedTemplate</span></a></span><span> </span><span class="annot"><span class="annottext">Template
+</span><a href="#local-6989586621679285515"><span class="hs-identifier hs-var">itemTemplate</span></a></span><span> </span><span class="annot"><span class="annottext">FeedConfiguration
+</span><a href="#local-6989586621679285516"><span class="hs-identifier hs-var">config</span></a></span><span>
 </span><span id="line-107"></span><span>    </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Context String -&gt; Context String
 forall a. String -&gt; Context a -&gt; Context a
 </span><a href="Hakyll.Web.Feed.Extra.html#makeItemContext"><span class="hs-identifier hs-var">makeItemContext</span></a></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;%Y-%m-%dT%H:%M:%SZ&quot;</span></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679284634"><span class="hs-identifier hs-var">context</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679285517"><span class="hs-identifier hs-var">context</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-108"></span><span>
-</span><span id="line-109"></span><span id="local-6989586621679284484"><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#makeItemContext"><span class="hs-identifier hs-type">makeItemContext</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><a href="#local-6989586621679284484"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><a href="#local-6989586621679284484"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-109"></span><span id="local-6989586621679285367"><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#makeItemContext"><span class="hs-identifier hs-type">makeItemContext</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><a href="#local-6989586621679285367"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><a href="#local-6989586621679285367"><span class="hs-identifier hs-type">a</span></a></span></span><span>
 </span><span id="line-110"></span><span id="makeItemContext"><span class="annot"><span class="annottext">makeItemContext :: forall a. String -&gt; Context a -&gt; Context a
-</span><a href="Hakyll.Web.Feed.Extra.html#makeItemContext"><span class="hs-identifier hs-var hs-var">makeItemContext</span></a></span></span><span> </span><span id="local-6989586621679284636"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679284636"><span class="hs-identifier hs-var">fmt</span></a></span></span><span> </span><span id="local-6989586621679284637"><span class="annot"><span class="annottext">Context a
-</span><a href="#local-6989586621679284637"><span class="hs-identifier hs-var">context</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Context a] -&gt; Context a
+</span><a href="Hakyll.Web.Feed.Extra.html#makeItemContext"><span class="hs-identifier hs-var hs-var">makeItemContext</span></a></span></span><span> </span><span id="local-6989586621679285519"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679285519"><span class="hs-identifier hs-var">fmt</span></a></span></span><span> </span><span id="local-6989586621679285520"><span class="annot"><span class="annottext">Context a
+</span><a href="#local-6989586621679285520"><span class="hs-identifier hs-var">context</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Context a] -&gt; Context a
 forall a. Monoid a =&gt; [a] -&gt; a
 </span><span class="hs-identifier hs-var">mconcat</span></span><span>
 </span><span id="line-111"></span><span>    </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Context a
-</span><a href="#local-6989586621679284637"><span class="hs-identifier hs-var">context</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context a
+</span><a href="#local-6989586621679285520"><span class="hs-identifier hs-var">context</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context a
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">dateField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;published&quot;</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679284636"><span class="hs-identifier hs-var">fmt</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context a
+</span><a href="#local-6989586621679285519"><span class="hs-identifier hs-var">fmt</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context a
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">dateField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;updated&quot;</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679284636"><span class="hs-identifier hs-var">fmt</span></a></span><span class="hs-special">]</span><span>
+</span><a href="#local-6989586621679285519"><span class="hs-identifier hs-var">fmt</span></a></span><span class="hs-special">]</span><span>
 </span><span id="line-112"></span><span>
 </span><span id="line-113"></span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#renderRss"><span class="hs-identifier hs-type">renderRss</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Hakyll.Web.Feed.Extra.html#FeedConfiguration"><span class="hs-identifier hs-type">FeedConfiguration</span></a></span><span>
 </span><span id="line-114"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>

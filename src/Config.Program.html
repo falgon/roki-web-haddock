@@ -50,11 +50,11 @@
 </span><span id="line-38"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-var">previewHost</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-string">&quot;127.0.0.1&quot;</span></span><span>
 </span><span id="line-39"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-var">previewPort</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-number">8888</span></span><span>
 </span><span id="line-40"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-var">inMemoryCache</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">True</span></span><span>
-</span><span id="line-41"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-var">ignoreFile</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="#local-6989586621679283501"><span class="hs-identifier hs-type">ignoreFile'</span></a></span><span>
+</span><span id="line-41"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-var">ignoreFile</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="#local-6989586621679284384"><span class="hs-identifier hs-type">ignoreFile'</span></a></span><span>
 </span><span id="line-42"></span><span>  </span><span class="hs-special">}</span><span>
 </span><span id="line-43"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-44"></span><span>    </span><span id="local-6989586621679283501"><span class="annot"><span class="annottext">ignoreFile' :: [Char] -&gt; Bool
-</span><a href="#local-6989586621679283501"><span class="hs-identifier hs-var hs-var">ignoreFile'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(([Char] -&gt; Bool) -&gt; ([Char] -&gt; Bool) -&gt; [Char] -&gt; Bool)
+</span><span id="line-44"></span><span>    </span><span id="local-6989586621679284384"><span class="annot"><span class="annottext">ignoreFile' :: [Char] -&gt; Bool
+</span><a href="#local-6989586621679284384"><span class="hs-identifier hs-var hs-var">ignoreFile'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(([Char] -&gt; Bool) -&gt; ([Char] -&gt; Bool) -&gt; [Char] -&gt; Bool)
 -&gt; [[Char] -&gt; Bool] -&gt; [Char] -&gt; Bool
 forall a. (a -&gt; a -&gt; a) -&gt; [a] -&gt; a
 forall (t :: * -&gt; *) a. Foldable t =&gt; (a -&gt; a -&gt; a) -&gt; t a -&gt; a
@@ -127,7 +127,7 @@ forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 forall a. Eq a =&gt; a -&gt; [a] -&gt; Bool
 forall (t :: * -&gt; *) a. (Foldable t, Eq a) =&gt; a -&gt; t a -&gt; Bool
 </span><span class="hs-operator hs-var">`elem`</span></span><span> </span><span class="annot"><span class="annottext">[[Char]]
-</span><a href="#local-6989586621679283529"><span class="hs-identifier hs-var">minimize</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; Bool) -&gt; ([Char] -&gt; [Char]) -&gt; [Char] -&gt; Bool
+</span><a href="#local-6989586621679284412"><span class="hs-identifier hs-var">minimize</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; Bool) -&gt; ([Char] -&gt; [Char]) -&gt; [Char] -&gt; Bool
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(Char -&gt; Char) -&gt; [Char] -&gt; [Char]
 forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
@@ -139,8 +139,8 @@ forall str. StringLike str =&gt; str -&gt; str
 </span><span class="hs-identifier hs-var">T.escapeHTML</span></span><span>
 </span><span id="line-71"></span><span>  </span><span class="hs-special">}</span><span>
 </span><span id="line-72"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-73"></span><span>    </span><span id="local-6989586621679283529"><span class="annot"><span class="annottext">minimize :: [[Char]]
-</span><a href="#local-6989586621679283529"><span class="hs-identifier hs-var hs-var">minimize</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-73"></span><span>    </span><span id="local-6989586621679284412"><span class="annot"><span class="annottext">minimize :: [[Char]]
+</span><a href="#local-6989586621679284412"><span class="hs-identifier hs-var hs-var">minimize</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;area&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;br&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;col&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]

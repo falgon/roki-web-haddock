@@ -13,59 +13,61 @@
 </span><span id="line-13"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.Blog.html"><span class="hs-identifier">Config.Blog</span></a></span><span>                </span><span class="hs-special">(</span><span class="annot"><a href="Config.Blog.html#BlogConfig"><span class="hs-identifier">BlogConfig</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
 </span><span id="line-14"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.Site.html"><span class="hs-identifier">Config.Site</span></a></span><span>                </span><span class="hs-special">(</span><span class="annot"><a href="Config.Site.html#defaultTimeLocale%27"><span class="hs-identifier">defaultTimeLocale'</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Site.html#timeZoneJST"><span class="hs-identifier">timeZoneJST</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-15"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Contexts.Blog.html"><span class="hs-identifier">Contexts.Blog</span></a></span><span>              </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">BlogCtx</span></span><span>
-</span><span id="line-16"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.EachPosts.Utils.html"><span class="hs-identifier">Rules.Blog.EachPosts.Utils</span></a></span><span>
-</span><span id="line-17"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Type.html"><span class="hs-identifier">Rules.Blog.Type</span></a></span><span>
-</span><span id="line-18"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Utils.html"><span class="hs-identifier">Rules.Blog.Utils</span></a></span><span>           </span><span class="hs-special">(</span><span class="annot"><a href="Rules.Blog.Utils.html#appendFooter"><span class="hs-identifier">appendFooter</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-19"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Utils.html"><span class="hs-identifier">Utils</span></a></span><span>                      </span><span class="hs-special">(</span><span class="annot"><a href="Utils.Hakyll.html#absolutizeUrls"><span class="hs-identifier">absolutizeUrls</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Utils.Base.html#mconcatM"><span class="hs-identifier">mconcatM</span></a></span><span class="hs-special">,</span><span>
-</span><span id="line-20"></span><span>                                             </span><span class="annot"><a href="Utils.Hakyll.html#modifyExternalLinkAttr"><span class="hs-identifier">modifyExternalLinkAttr</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-21"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.html"><span class="hs-identifier">Vendor.FontAwesome</span></a></span><span>         </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">FA</span></span><span>
-</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Vendor.KaTeX.html"><span class="hs-identifier">Vendor.KaTeX</span></a></span><span>               </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">KaTeX</span></span><span>
-</span><span id="line-23"></span><span>
-</span><span id="line-24"></span><span id="local-6989586621679290319"><span class="annot"><a href="Rules.Blog.EachPosts.html#build"><span class="hs-identifier hs-type">build</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#FontAwesomeIcons"><span class="hs-identifier hs-type">FA.FontAwesomeIcons</span></a></span><span>
-</span><span id="line-25"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-26"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679290319"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Snapshot</span></span></span><span>
-</span><span id="line-27"></span><span id="build"><span class="annot"><span class="annottext">build :: forall (m :: * -&gt; *).
+</span><span id="line-16"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Media.SVG.html"><span class="hs-identifier">Media.SVG</span></a></span><span>                  </span><span class="hs-special">(</span><span class="annot"><a href="Media.SVG.html#mermaidTransform"><span class="hs-identifier">mermaidTransform</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-17"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.EachPosts.Utils.html"><span class="hs-identifier">Rules.Blog.EachPosts.Utils</span></a></span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Type.html"><span class="hs-identifier">Rules.Blog.Type</span></a></span><span>
+</span><span id="line-19"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Utils.html"><span class="hs-identifier">Rules.Blog.Utils</span></a></span><span>           </span><span class="hs-special">(</span><span class="annot"><a href="Rules.Blog.Utils.html#appendFooter"><span class="hs-identifier">appendFooter</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Text.Pandoc.Walk</span></span><span>           </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">walkM</span></span><span class="hs-special">)</span><span>
+</span><span id="line-21"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Utils.html"><span class="hs-identifier">Utils</span></a></span><span>                      </span><span class="hs-special">(</span><span class="annot"><a href="Utils.Hakyll.html#absolutizeUrls"><span class="hs-identifier">absolutizeUrls</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Utils.Base.html#mconcatM"><span class="hs-identifier">mconcatM</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-22"></span><span>                                             </span><span class="annot"><a href="Utils.Hakyll.html#modifyExternalLinkAttr"><span class="hs-identifier">modifyExternalLinkAttr</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-23"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.html"><span class="hs-identifier">Vendor.FontAwesome</span></a></span><span>         </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">FA</span></span><span>
+</span><span id="line-24"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Vendor.KaTeX.html"><span class="hs-identifier">Vendor.KaTeX</span></a></span><span>               </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">KaTeX</span></span><span>
+</span><span id="line-25"></span><span>
+</span><span id="line-26"></span><span id="local-6989586621679291440"><span class="annot"><a href="Rules.Blog.EachPosts.html#build"><span class="hs-identifier hs-type">build</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#FontAwesomeIcons"><span class="hs-identifier hs-type">FA.FontAwesomeIcons</span></a></span><span>
+</span><span id="line-27"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-28"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679291440"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Snapshot</span></span></span><span>
+</span><span id="line-29"></span><span id="build"><span class="annot"><span class="annottext">build :: forall (m :: * -&gt; *).
 FontAwesomeIcons -&gt; Context String -&gt; BlogConfReader m Rules String
-</span><a href="Rules.Blog.EachPosts.html#build"><span class="hs-identifier hs-var hs-var">build</span></a></span></span><span> </span><span id="local-6989586621679290477"><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679290477"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span id="local-6989586621679290478"><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679290478"><span class="hs-identifier hs-var">ctx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-28"></span><span>    </span><span id="local-6989586621679290479"><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679290479"><span class="hs-identifier hs-var">disqusCtx</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[ReaderT (BlogConfig m) Rules (Context String)]
+</span><a href="Rules.Blog.EachPosts.html#build"><span class="hs-identifier hs-var hs-var">build</span></a></span></span><span> </span><span id="local-6989586621679291612"><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679291612"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span id="local-6989586621679291613"><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679291613"><span class="hs-identifier hs-var">ctx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-30"></span><span>    </span><span id="local-6989586621679291614"><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679291614"><span class="hs-identifier hs-var">disqusCtx</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[ReaderT (BlogConfig m) Rules (Context String)]
 -&gt; ReaderT (BlogConfig m) Rules (Context String)
 forall (m :: * -&gt; *) b. (Monad m, Monoid b) =&gt; [m b] -&gt; m b
 </span><a href="Utils.Base.html#mconcatM"><span class="hs-identifier hs-var">mconcatM</span></a></span><span> </span><span class="hs-special">[</span><span>
-</span><span id="line-29"></span><span>        </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig m) Rules (Context String)
+</span><span id="line-31"></span><span>        </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig m) Rules (Context String)
 forall a. a -&gt; ReaderT (BlogConfig m) Rules a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679290478"><span class="hs-identifier hs-var">ctx</span></a></span><span>
-</span><span id="line-30"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ReaderT (BlogConfig m) Rules (Context String)
+</span><a href="#local-6989586621679291613"><span class="hs-identifier hs-var">ctx</span></a></span><span>
+</span><span id="line-32"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ReaderT (BlogConfig m) Rules (Context String)
 forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#disqus"><span class="hs-identifier hs-var">BlogCtx.disqus</span></a></span><span>
-</span><span id="line-31"></span><span>      </span><span class="hs-special">]</span><span>
-</span><span id="line-32"></span><span>    </span><span id="local-6989586621679290481"><span class="annot"><span class="annottext">WriterOptions
-</span><a href="#local-6989586621679290481"><span class="hs-identifier hs-var">wOptions</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; WriterOptions)
+</span><span id="line-33"></span><span>      </span><span class="hs-special">]</span><span>
+</span><span id="line-34"></span><span>    </span><span id="local-6989586621679291616"><span class="annot"><span class="annottext">WriterOptions
+</span><a href="#local-6989586621679291616"><span class="hs-identifier hs-var">wOptions</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; WriterOptions)
 -&gt; ReaderT (BlogConfig m) Rules WriterOptions
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; WriterOptions
 forall (m :: * -&gt; *). BlogConfig m -&gt; WriterOptions
 </span><a href="Config.Blog.html#blogWriterOptions"><span class="hs-identifier hs-var">blogWriterOptions</span></a></span><span>
-</span><span id="line-33"></span><span>    </span><span id="local-6989586621679290483"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679290483"><span class="hs-identifier hs-var">cs</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; String) -&gt; BlogConfReader m Rules String
+</span><span id="line-35"></span><span>    </span><span id="local-6989586621679291618"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679291618"><span class="hs-identifier hs-var">cs</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; String) -&gt; BlogConfReader m Rules String
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; String
 forall (m :: * -&gt; *). BlogConfig m -&gt; String
 </span><a href="Config.Blog.html#blogContentSnapshot"><span class="hs-identifier hs-var">blogContentSnapshot</span></a></span><span>
-</span><span id="line-34"></span><span>    </span><span id="local-6989586621679290485"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679290485"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; String) -&gt; BlogConfReader m Rules String
+</span><span id="line-36"></span><span>    </span><span id="local-6989586621679291620"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679291620"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; String) -&gt; BlogConfReader m Rules String
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; String
 forall (m :: * -&gt; *). BlogConfig m -&gt; String
 </span><a href="Config.Blog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
-</span><span id="line-35"></span><span>    </span><span id="local-6989586621679290487"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679290487"><span class="hs-identifier hs-var">feedContent</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; String) -&gt; BlogConfReader m Rules String
+</span><span id="line-37"></span><span>    </span><span id="local-6989586621679291622"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679291622"><span class="hs-identifier hs-var">feedContent</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; String) -&gt; BlogConfReader m Rules String
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">((BlogConfig m -&gt; String) -&gt; BlogConfReader m Rules String)
 -&gt; (BlogConfig m -&gt; String) -&gt; BlogConfReader m Rules String
@@ -79,8 +81,8 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; String
 forall (m :: * -&gt; *). BlogConfig m -&gt; String
 </span><a href="Config.Blog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
-</span><span id="line-36"></span><span>    </span><span id="local-6989586621679290489"><span class="annot"><span class="annottext">KaTeXRender
-</span><a href="#local-6989586621679290489"><span class="hs-identifier hs-var">katexRender</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; KaTeXRender)
+</span><span id="line-38"></span><span>    </span><span id="local-6989586621679291624"><span class="annot"><span class="annottext">KaTeXRender
+</span><a href="#local-6989586621679291624"><span class="hs-identifier hs-var">katexRender</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; KaTeXRender)
 -&gt; ReaderT (BlogConfig m) Rules KaTeXRender
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">((BlogConfig m -&gt; KaTeXRender)
@@ -100,16 +102,16 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; Bool
 forall (m :: * -&gt; *). BlogConfig m -&gt; Bool
 </span><a href="Config.Blog.html#blogIsPreview"><span class="hs-identifier hs-var">blogIsPreview</span></a></span><span>
-</span><span id="line-37"></span><span>
-</span><span id="line-38"></span><span>    </span><span class="annot"><span class="annottext">(Context String -&gt; Rules ()) -&gt; BlogConfReader m Rules ()
+</span><span id="line-39"></span><span>
+</span><span id="line-40"></span><span>    </span><span class="annot"><span class="annottext">(Context String -&gt; Rules ()) -&gt; BlogConfReader m Rules ()
 forall (m :: * -&gt; *).
 (Context String -&gt; Rules ()) -&gt; BlogConfReader m Rules ()
 </span><a href="Rules.Blog.EachPosts.Utils.html#eachPostsSeries"><span class="hs-identifier hs-var">eachPostsSeries</span></a></span><span> </span><span class="annot"><span class="annottext">((Context String -&gt; Rules ()) -&gt; BlogConfReader m Rules ())
 -&gt; (Context String -&gt; Rules ()) -&gt; BlogConfReader m Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679290493"><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679290493"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-39"></span><span>        </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679291628"><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679291628"><span class="hs-identifier hs-var">s</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-41"></span><span>        </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
 </span><span class="hs-identifier hs-var">route</span></span><span> </span><span class="annot"><span class="annottext">(Routes -&gt; Rules ()) -&gt; Routes -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; (String -&gt; String) -&gt; Routes
@@ -125,36 +127,33 @@ forall a. Monoid a =&gt; a
 </span><span class="hs-operator hs-var">`composeRoutes`</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Routes
 </span><span class="hs-identifier hs-var">setExtension</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;html&quot;</span></span><span>
-</span><span id="line-40"></span><span>        </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; Rules ()
+</span><span id="line-42"></span><span>        </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; Rules ()
 forall a.
 (Binary a, Typeable a, Writable a) =&gt;
 Compiler (Item a) -&gt; Rules ()
 </span><span class="hs-identifier hs-var">compile</span></span><span> </span><span class="annot"><span class="annottext">(Compiler (Item String) -&gt; Rules ())
 -&gt; Compiler (Item String) -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ReaderOptions -&gt; WriterOptions -&gt; Compiler (Item String)
-</span><span class="hs-identifier hs-var">pandocCompilerWith</span></span><span> </span><span class="annot"><span class="annottext">ReaderOptions
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ReaderOptions
+-&gt; WriterOptions
+-&gt; (Pandoc -&gt; Compiler Pandoc)
+-&gt; Compiler (Item String)
+</span><span class="hs-identifier hs-var">pandocCompilerWithTransformM</span></span><span> </span><span class="annot"><span class="annottext">ReaderOptions
 </span><a href="Config.Program.html#readerOptions"><span class="hs-identifier hs-var">readerOptions</span></a></span><span> </span><span class="annot"><span class="annottext">WriterOptions
-</span><a href="#local-6989586621679290481"><span class="hs-identifier hs-var">wOptions</span></a></span><span>
-</span><span id="line-41"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
-forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
-forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
-</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">KaTeXRender
-</span><a href="Utils.Hakyll.html#absolutizeUrls"><span class="hs-identifier hs-var">absolutizeUrls</span></a></span><span>
-</span><span id="line-42"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
-forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
-forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
-</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; KaTeXRender
-forall a.
-(Binary a, Typeable a) =&gt;
-String -&gt; Item a -&gt; Compiler (Item a)
-</span><span class="hs-identifier hs-var">saveSnapshot</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679290487"><span class="hs-identifier hs-var">feedContent</span></a></span><span>
+</span><a href="#local-6989586621679291616"><span class="hs-identifier hs-var">wOptions</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(Block -&gt; Compiler Block) -&gt; Pandoc -&gt; Compiler Pandoc
+forall a b (m :: * -&gt; *).
+(Walkable a b, Monad m, Applicative m, Functor m) =&gt;
+(a -&gt; m a) -&gt; b -&gt; m b
+forall (m :: * -&gt; *).
+(Monad m, Applicative m, Functor m) =&gt;
+(Block -&gt; m Block) -&gt; Pandoc -&gt; m Pandoc
+</span><span class="hs-identifier hs-var">walkM</span></span><span> </span><span class="annot"><span class="annottext">Block -&gt; Compiler Block
+</span><a href="Media.SVG.html#mermaidTransform"><span class="hs-identifier hs-var">mermaidTransform</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-43"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
 forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">KaTeXRender
-</span><a href="#local-6989586621679290489"><span class="hs-identifier hs-var">katexRender</span></a></span><span>
+</span><a href="Utils.Hakyll.html#absolutizeUrls"><span class="hs-identifier hs-var">absolutizeUrls</span></a></span><span>
 </span><span id="line-44"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
 forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
@@ -163,35 +162,21 @@ forall a.
 (Binary a, Typeable a) =&gt;
 String -&gt; Item a -&gt; Compiler (Item a)
 </span><span class="hs-identifier hs-var">saveSnapshot</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679290483"><span class="hs-identifier hs-var">cs</span></a></span><span>
+</span><a href="#local-6989586621679291622"><span class="hs-identifier hs-var">feedContent</span></a></span><span>
 </span><span id="line-45"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
 forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
-</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">Identifier -&gt; Context String -&gt; KaTeXRender
-forall a.
-Identifier -&gt; Context a -&gt; Item a -&gt; Compiler (Item String)
-</span><span class="hs-identifier hs-var">loadAndApplyTemplate</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Identifier
-</span><span class="hs-identifier hs-var">fromFilePath</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Identifier) -&gt; String -&gt; Identifier
-forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="Config.Program.html#tmBlogRoot"><span class="hs-identifier hs-var">tmBlogRoot</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
-</span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><span class="hs-string">&quot;post.html&quot;</span></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679290493"><span class="hs-identifier hs-var">s</span></a></span><span> </span><span class="annot"><span class="annottext">Context String -&gt; Context String -&gt; Context String
-forall a. Semigroup a =&gt; a -&gt; a -&gt; a
-</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679290479"><span class="hs-identifier hs-var">disqusCtx</span></a></span><span class="hs-special">)</span><span>
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">KaTeXRender
+</span><a href="#local-6989586621679291624"><span class="hs-identifier hs-var">katexRender</span></a></span><span>
 </span><span id="line-46"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
 forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
-</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; TimeLocale -&gt; TimeZone -&gt; KaTeXRender
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; KaTeXRender
 forall a.
-(Binary a, Typeable a, Semigroup a) =&gt;
-String -&gt; TimeLocale -&gt; TimeZone -&gt; Item a -&gt; Compiler (Item a)
-</span><a href="Rules.Blog.Utils.html#appendFooter"><span class="hs-identifier hs-var">appendFooter</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679290485"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="annot"><span class="annottext">TimeLocale
-</span><a href="Config.Site.html#defaultTimeLocale%27"><span class="hs-identifier hs-var">defaultTimeLocale'</span></a></span><span> </span><span class="annot"><span class="annottext">TimeZone
-</span><a href="Config.Site.html#timeZoneJST"><span class="hs-identifier hs-var">timeZoneJST</span></a></span><span>
+(Binary a, Typeable a) =&gt;
+String -&gt; Item a -&gt; Compiler (Item a)
+</span><span class="hs-identifier hs-var">saveSnapshot</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679291618"><span class="hs-identifier hs-var">cs</span></a></span><span>
 </span><span id="line-47"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
 forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
@@ -204,32 +189,60 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><a href="Config.Program.html#tmBlogRoot"><span class="hs-identifier hs-var">tmBlogRoot</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 </span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><span class="hs-string">&quot;default.html&quot;</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679290478"><span class="hs-identifier hs-var">ctx</span></a></span><span>
+</span><span class="hs-string">&quot;post.html&quot;</span></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679291628"><span class="hs-identifier hs-var">s</span></a></span><span> </span><span class="annot"><span class="annottext">Context String -&gt; Context String -&gt; Context String
+forall a. Semigroup a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">&lt;&gt;</span></span><span> </span><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679291614"><span class="hs-identifier hs-var">disqusCtx</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-48"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
+forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; TimeLocale -&gt; TimeZone -&gt; KaTeXRender
+forall a.
+(Binary a, Typeable a, Semigroup a) =&gt;
+String -&gt; TimeLocale -&gt; TimeZone -&gt; Item a -&gt; Compiler (Item a)
+</span><a href="Rules.Blog.Utils.html#appendFooter"><span class="hs-identifier hs-var">appendFooter</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679291620"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="annot"><span class="annottext">TimeLocale
+</span><a href="Config.Site.html#defaultTimeLocale%27"><span class="hs-identifier hs-var">defaultTimeLocale'</span></a></span><span> </span><span class="annot"><span class="annottext">TimeZone
+</span><a href="Config.Site.html#timeZoneJST"><span class="hs-identifier hs-var">timeZoneJST</span></a></span><span>
+</span><span id="line-49"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
+forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
+forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
+</span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">Identifier -&gt; Context String -&gt; KaTeXRender
+forall a.
+Identifier -&gt; Context a -&gt; Item a -&gt; Compiler (Item String)
+</span><span class="hs-identifier hs-var">loadAndApplyTemplate</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Identifier
+</span><span class="hs-identifier hs-var">fromFilePath</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Identifier) -&gt; String -&gt; Identifier
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="Config.Program.html#tmBlogRoot"><span class="hs-identifier hs-var">tmBlogRoot</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;default.html&quot;</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Context String
+</span><a href="#local-6989586621679291613"><span class="hs-identifier hs-var">ctx</span></a></span><span>
+</span><span id="line-50"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
 forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">KaTeXRender
 </span><a href="Utils.Hakyll.html#modifyExternalLinkAttr"><span class="hs-identifier hs-var">modifyExternalLinkAttr</span></a></span><span>
-</span><span id="line-49"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
+</span><span id="line-51"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
 forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">KaTeXRender
 </span><span class="hs-identifier hs-var">relativizeUrls</span></span><span>
-</span><span id="line-50"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
+</span><span id="line-52"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; KaTeXRender -&gt; Compiler (Item String)
 forall a b. Compiler a -&gt; (a -&gt; Compiler b) -&gt; Compiler b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons -&gt; KaTeXRender
 </span><a href="Vendor.FontAwesome.Compiler.html#render"><span class="hs-identifier hs-var">FA.render</span></a></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679290477"><span class="hs-identifier hs-var">faIcons</span></a></span><span>
-</span><span id="line-51"></span><span>
-</span><span id="line-52"></span><span>    </span><span id="local-6989586621679290506"><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679290506"><span class="hs-identifier hs-var">ep</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; Pattern) -&gt; ReaderT (BlogConfig m) Rules Pattern
+</span><a href="#local-6989586621679291612"><span class="hs-identifier hs-var">faIcons</span></a></span><span>
+</span><span id="line-53"></span><span>
+</span><span id="line-54"></span><span>    </span><span id="local-6989586621679291641"><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679291641"><span class="hs-identifier hs-var">ep</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; Pattern) -&gt; ReaderT (BlogConfig m) Rules Pattern
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; Pattern
 forall (m :: * -&gt; *). BlogConfig m -&gt; Pattern
 </span><a href="Config.Blog.html#blogEntryFilesPattern"><span class="hs-identifier hs-var">blogEntryFilesPattern</span></a></span><span>
-</span><span id="line-53"></span><span>    </span><span class="annot"><span class="annottext">Rules () -&gt; BlogConfReader m Rules ()
+</span><span id="line-55"></span><span>    </span><span class="annot"><span class="annottext">Rules () -&gt; BlogConfReader m Rules ()
 forall (m :: * -&gt; *) a.
 Monad m =&gt;
 m a -&gt; ReaderT (BlogConfig m) m a
@@ -241,10 +254,10 @@ m a -&gt; t m a
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679290506"><span class="hs-identifier hs-var">ep</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679291641"><span class="hs-identifier hs-var">ep</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-54"></span><span>        </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
+</span><span id="line-56"></span><span>        </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
 </span><span class="hs-identifier hs-var">route</span></span><span> </span><span class="annot"><span class="annottext">(Routes -&gt; Rules ()) -&gt; Routes -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; (String -&gt; String) -&gt; Routes
@@ -257,16 +270,16 @@ forall a b. a -&gt; b -&gt; a
 </span><span class="hs-identifier hs-var">const</span></span><span> </span><span class="annot"><span class="annottext">String
 forall a. Monoid a =&gt; a
 </span><span class="hs-identifier hs-var">mempty</span></span><span class="hs-special">)</span><span>
-</span><span id="line-55"></span><span>        </span><span class="annot"><span class="annottext">Compiler (Item CopyFile) -&gt; Rules ()
+</span><span id="line-57"></span><span>        </span><span class="annot"><span class="annottext">Compiler (Item CopyFile) -&gt; Rules ()
 forall a.
 (Binary a, Typeable a, Writable a) =&gt;
 Compiler (Item a) -&gt; Rules ()
 </span><span class="hs-identifier hs-var">compile</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item CopyFile)
 </span><span class="hs-identifier hs-var">copyFileCompiler</span></span><span>
-</span><span id="line-56"></span><span>
-</span><span id="line-57"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; BlogConfReader m Rules String
+</span><span id="line-58"></span><span>
+</span><span id="line-59"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; BlogConfReader m Rules String
 forall a. a -&gt; ReaderT (BlogConfig m) Rules a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679290487"><span class="hs-identifier hs-var">feedContent</span></a></span><span>
-</span><span id="line-58"></span></pre></body></html>
+</span><a href="#local-6989586621679291622"><span class="hs-identifier hs-var">feedContent</span></a></span><span>
+</span><span id="line-60"></span></pre></body></html>

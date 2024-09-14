@@ -12,19 +12,19 @@
 </span><span id="line-12"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Utils.html"><span class="hs-identifier">Utils</span></a></span><span>                </span><span class="hs-special">(</span><span class="annot"><a href="Utils.Hakyll.html#makePageIdentifier"><span class="hs-identifier">makePageIdentifier</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-13"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.html"><span class="hs-identifier">Vendor.FontAwesome</span></a></span><span>   </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">FA</span></span><span>
 </span><span id="line-14"></span><span>
-</span><span id="line-15"></span><span id="local-6989586621679289495"><span class="annot"><a href="Rules.Blog.Index.html#build"><span class="hs-identifier hs-type">build</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#FontAwesomeIcons"><span class="hs-identifier hs-type">FA.FontAwesomeIcons</span></a></span><span>
+</span><span id="line-15"></span><span id="local-6989586621679290603"><span class="annot"><a href="Rules.Blog.Index.html#build"><span class="hs-identifier hs-type">build</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Vendor.FontAwesome.Core.html#FontAwesomeIcons"><span class="hs-identifier hs-type">FA.FontAwesomeIcons</span></a></span><span>
 </span><span id="line-16"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Tags</span></span><span>
 </span><span id="line-17"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.ListPage.html#ListPageOpts"><span class="hs-identifier hs-type">ListPageOpts</span></a></span><span>
-</span><span id="line-18"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679289495"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span><span>
+</span><span id="line-18"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679290603"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span></span><span>
 </span><span id="line-19"></span><span id="build"><span class="annot"><span class="annottext">build :: forall (m :: * -&gt; *).
 FontAwesomeIcons
 -&gt; Tags -&gt; ListPageOpts -&gt; BlogConfReader m Rules ()
-</span><a href="Rules.Blog.Index.html#build"><span class="hs-identifier hs-var hs-var">build</span></a></span></span><span> </span><span id="local-6989586621679289565"><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679289565"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span id="local-6989586621679289566"><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679289566"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span id="local-6989586621679289567"><span class="annot"><span class="annottext">ListPageOpts
-</span><a href="#local-6989586621679289567"><span class="hs-identifier hs-var">opts</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-20"></span><span>    </span><span id="local-6989586621679289568"><span class="annot"><span class="annottext">PageNumber -&gt; Identifier
-</span><a href="#local-6989586621679289568"><span class="hs-identifier hs-var">makeId</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; PageNumber -&gt; Identifier)
+</span><a href="Rules.Blog.Index.html#build"><span class="hs-identifier hs-var hs-var">build</span></a></span></span><span> </span><span id="local-6989586621679290673"><span class="annot"><span class="annottext">FontAwesomeIcons
+</span><a href="#local-6989586621679290673"><span class="hs-identifier hs-var">faIcons</span></a></span></span><span> </span><span id="local-6989586621679290674"><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679290674"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span id="local-6989586621679290675"><span class="annot"><span class="annottext">ListPageOpts
+</span><a href="#local-6989586621679290675"><span class="hs-identifier hs-var">opts</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-20"></span><span>    </span><span id="local-6989586621679290676"><span class="annot"><span class="annottext">PageNumber -&gt; Identifier
+</span><a href="#local-6989586621679290676"><span class="hs-identifier hs-var">makeId</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; PageNumber -&gt; Identifier)
 -&gt; ReaderT (BlogConfig m) Rules (PageNumber -&gt; Identifier)
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">((BlogConfig m -&gt; PageNumber -&gt; Identifier)
@@ -47,8 +47,8 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; FilePath
 forall (m :: * -&gt; *). BlogConfig m -&gt; FilePath
 </span><a href="Config.Blog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
-</span><span id="line-21"></span><span>    </span><span id="local-6989586621679289571"><span class="annot"><span class="annottext">Rules [Identifier] -&gt; Rules [[Identifier]]
-</span><a href="#local-6989586621679289571"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; Rules [Identifier] -&gt; Rules [[Identifier]])
+</span><span id="line-21"></span><span>    </span><span id="local-6989586621679290679"><span class="annot"><span class="annottext">Rules [Identifier] -&gt; Rules [[Identifier]]
+</span><a href="#local-6989586621679290679"><span class="hs-identifier hs-var">f</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; Rules [Identifier] -&gt; Rules [[Identifier]])
 -&gt; ReaderT
      (BlogConfig m) Rules (Rules [Identifier] -&gt; Rules [[Identifier]])
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
@@ -81,8 +81,8 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; PageNumber
 forall (m :: * -&gt; *). BlogConfig m -&gt; PageNumber
 </span><a href="Config.Blog.html#blogPageEntriesNum"><span class="hs-identifier hs-var">blogPageEntriesNum</span></a></span><span>
-</span><span id="line-22"></span><span>    </span><span id="local-6989586621679289574"><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679289574"><span class="hs-identifier hs-var">ep</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; Pattern) -&gt; ReaderT (BlogConfig m) Rules Pattern
+</span><span id="line-22"></span><span>    </span><span id="local-6989586621679290682"><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679290682"><span class="hs-identifier hs-var">ep</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; Pattern) -&gt; ReaderT (BlogConfig m) Rules Pattern
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; Pattern
 forall (m :: * -&gt; *). BlogConfig m -&gt; Pattern
@@ -102,9 +102,9 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><a href="Rules.Blog.ListPage.html#listPage"><span class="hs-identifier hs-var">listPage</span></a></span><span> </span><span class="annot"><span class="annottext">Maybe FilePath
 forall a. Maybe a
 </span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="annot"><span class="annottext">FontAwesomeIcons
-</span><a href="#local-6989586621679289565"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679289566"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
-</span><a href="#local-6989586621679289567"><span class="hs-identifier hs-var">opts</span></a></span><span> </span><span class="annot"><span class="annottext">(Paginate -&gt; Rules ()) -&gt; Rules Paginate -&gt; Rules ()
+</span><a href="#local-6989586621679290673"><span class="hs-identifier hs-var">faIcons</span></a></span><span> </span><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679290674"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="annot"><span class="annottext">ListPageOpts
+</span><a href="#local-6989586621679290675"><span class="hs-identifier hs-var">opts</span></a></span><span> </span><span class="annot"><span class="annottext">(Paginate -&gt; Rules ()) -&gt; Rules Paginate -&gt; Rules ()
 forall (m :: * -&gt; *) a b. Monad m =&gt; (a -&gt; m b) -&gt; m a -&gt; m b
 </span><span class="hs-operator hs-var">=&lt;&lt;</span></span><span>
 </span><span id="line-24"></span><span>        </span><span class="annot"><span class="annottext">([Identifier] -&gt; Rules [[Identifier]])
@@ -114,7 +114,7 @@ MonadMetadata m =&gt;
 ([Identifier] -&gt; m [[Identifier]])
 -&gt; Pattern -&gt; (PageNumber -&gt; Identifier) -&gt; m Paginate
 </span><span class="hs-identifier hs-var">buildPaginateWith</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Rules [Identifier] -&gt; Rules [[Identifier]]
-</span><a href="#local-6989586621679289571"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules [Identifier] -&gt; Rules [[Identifier]])
+</span><a href="#local-6989586621679290679"><span class="hs-identifier hs-var">f</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules [Identifier] -&gt; Rules [[Identifier]])
 -&gt; ([Identifier] -&gt; Rules [Identifier])
 -&gt; [Identifier]
 -&gt; Rules [[Identifier]]
@@ -124,7 +124,7 @@ forall (m :: * -&gt; *).
 (MonadMetadata m, MonadFail m) =&gt;
 [Identifier] -&gt; m [Identifier]
 </span><span class="hs-identifier hs-var">sortRecentFirst</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679289574"><span class="hs-identifier hs-var">ep</span></a></span><span> </span><span class="annot"><span class="annottext">PageNumber -&gt; Identifier
-</span><a href="#local-6989586621679289568"><span class="hs-identifier hs-var">makeId</span></a></span><span>
+</span><a href="#local-6989586621679290682"><span class="hs-identifier hs-var">ep</span></a></span><span> </span><span class="annot"><span class="annottext">PageNumber -&gt; Identifier
+</span><a href="#local-6989586621679290676"><span class="hs-identifier hs-var">makeId</span></a></span><span>
 </span><span id="line-25"></span><span>
 </span><span id="line-26"></span></pre></body></html>

@@ -13,7 +13,7 @@
 </span><a href="Rules.Media.html#rules"><span class="hs-identifier hs-var hs-var">rules</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-13"></span><span>    </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679287714"><span class="hs-identifier hs-var">svg</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679288822"><span class="hs-identifier hs-var">svg</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-14"></span><span>        </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
@@ -41,7 +41,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span id="line-16"></span><span>
 </span><span id="line-17"></span><span>    </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679287719"><span class="hs-identifier hs-var">oth</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679288827"><span class="hs-identifier hs-var">oth</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-18"></span><span>        </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
@@ -62,8 +62,8 @@ Compiler (Item a) -&gt; Rules ()
 </span><span class="hs-identifier hs-var">compile</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item CopyFile)
 </span><span class="hs-identifier hs-var">copyFileCompiler</span></span><span>
 </span><span id="line-20"></span><span>    </span><span class="hs-keyword">where</span><span>
-</span><span id="line-21"></span><span>        </span><span id="local-6989586621679287714"><span class="annot"><span class="annottext">svg :: Pattern
-</span><a href="#local-6989586621679287714"><span class="hs-identifier hs-var hs-var">svg</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-21"></span><span>        </span><span id="local-6989586621679288822"><span class="annot"><span class="annottext">svg :: Pattern
+</span><a href="#local-6989586621679288822"><span class="hs-identifier hs-var hs-var">svg</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromGlob</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Pattern) -&gt; String -&gt; Pattern
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
@@ -72,8 +72,8 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-string">&quot;images&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;**&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;*.svg&quot;</span></span><span class="hs-special">]</span><span>
-</span><span id="line-22"></span><span>        </span><span id="local-6989586621679287719"><span class="annot"><span class="annottext">oth :: Pattern
-</span><a href="#local-6989586621679287719"><span class="hs-identifier hs-var hs-var">oth</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-22"></span><span>        </span><span id="local-6989586621679288827"><span class="annot"><span class="annottext">oth :: Pattern
+</span><a href="#local-6989586621679288827"><span class="hs-identifier hs-var hs-var">oth</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromGlob</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Pattern) -&gt; String -&gt; Pattern
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String

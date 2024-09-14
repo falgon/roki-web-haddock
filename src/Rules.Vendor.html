@@ -9,11 +9,11 @@
 </span><span id="line-9"></span><span>
 </span><span id="line-10"></span><span class="annot"><a href="Rules.Vendor.html#vendRule"><span class="hs-identifier hs-type">vendRule</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Pattern</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Rules</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
 </span><span id="line-11"></span><span id="vendRule"><span class="annot"><span class="annottext">vendRule :: Pattern -&gt; String -&gt; Rules ()
-</span><a href="Rules.Vendor.html#vendRule"><span class="hs-identifier hs-var hs-var">vendRule</span></a></span></span><span> </span><span id="local-6989586621679285584"><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679285584"><span class="hs-identifier hs-var">inpat</span></a></span></span><span> </span><span id="local-6989586621679285585"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679285585"><span class="hs-identifier hs-var">outpath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
+</span><a href="Rules.Vendor.html#vendRule"><span class="hs-identifier hs-var hs-var">vendRule</span></a></span></span><span> </span><span id="local-6989586621679286692"><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679286692"><span class="hs-identifier hs-var">inpat</span></a></span></span><span> </span><span id="local-6989586621679286693"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679286693"><span class="hs-identifier hs-var">outpath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679285584"><span class="hs-identifier hs-var">inpat</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679286692"><span class="hs-identifier hs-var">inpat</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-12"></span><span>    </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
@@ -21,7 +21,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Routes
 </span><span class="hs-identifier hs-var">constRoute</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679285585"><span class="hs-identifier hs-var">outpath</span></a></span><span>
+</span><a href="#local-6989586621679286693"><span class="hs-identifier hs-var">outpath</span></a></span><span>
 </span><span id="line-13"></span><span>    </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; Rules ()
 forall a.
 (Binary a, Typeable a, Writable a) =&gt;
@@ -101,13 +101,13 @@ Applicative m =&gt;
 </span><span class="hs-identifier hs-var">zipWithM_</span></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; String -&gt; Rules ()
 </span><a href="Rules.Vendor.html#vendRule"><span class="hs-identifier hs-var">vendRule</span></a></span><span>
 </span><span id="line-26"></span><span>       </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679285595"><span class="hs-identifier hs-var">fontAwesomeSVGPath</span></a></span><span>
+</span><a href="#local-6989586621679286703"><span class="hs-identifier hs-var">fontAwesomeSVGPath</span></a></span><span>
 </span><span id="line-27"></span><span>       </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679285596"><span class="hs-identifier hs-var">bulmaToolTipPath</span></a></span><span>
+</span><a href="#local-6989586621679286704"><span class="hs-identifier hs-var">bulmaToolTipPath</span></a></span><span>
 </span><span id="line-28"></span><span>       </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679285597"><span class="hs-identifier hs-var">highlightPath</span></a></span><span>
+</span><a href="#local-6989586621679286705"><span class="hs-identifier hs-var">highlightPath</span></a></span><span>
 </span><span id="line-29"></span><span>       </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679285598"><span class="hs-identifier hs-var">katexCssPath</span></a></span><span>
+</span><a href="#local-6989586621679286706"><span class="hs-identifier hs-var">katexCssPath</span></a></span><span>
 </span><span id="line-30"></span><span>       </span><span class="hs-special">]</span><span>
 </span><span id="line-31"></span><span>       </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
 </span><span class="hs-identifier hs-var">joinPath</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String
@@ -217,8 +217,8 @@ Compiler (Item a) -&gt; Rules ()
 </span><span class="hs-identifier hs-var">compile</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item CopyFile)
 </span><span class="hs-identifier hs-var">copyFileCompiler</span></span><span>
 </span><span id="line-48"></span><span>    </span><span class="hs-keyword">where</span><span>
-</span><span id="line-49"></span><span>        </span><span id="local-6989586621679285595"><span class="annot"><span class="annottext">fontAwesomeSVGPath :: Pattern
-</span><a href="#local-6989586621679285595"><span class="hs-identifier hs-var hs-var">fontAwesomeSVGPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-49"></span><span>        </span><span id="local-6989586621679286703"><span class="annot"><span class="annottext">fontAwesomeSVGPath :: Pattern
+</span><a href="#local-6989586621679286703"><span class="hs-identifier hs-var hs-var">fontAwesomeSVGPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromGlob</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Pattern) -&gt; String -&gt; Pattern
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
@@ -228,8 +228,8 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-string">&quot;@fortawesome&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;fontawesome-svg-core&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;styles.css&quot;</span></span><span class="hs-special">]</span><span>
-</span><span id="line-51"></span><span>        </span><span id="local-6989586621679285596"><span class="annot"><span class="annottext">bulmaToolTipPath :: Pattern
-</span><a href="#local-6989586621679285596"><span class="hs-identifier hs-var hs-var">bulmaToolTipPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-51"></span><span>        </span><span id="local-6989586621679286704"><span class="annot"><span class="annottext">bulmaToolTipPath :: Pattern
+</span><a href="#local-6989586621679286704"><span class="hs-identifier hs-var hs-var">bulmaToolTipPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromGlob</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Pattern) -&gt; String -&gt; Pattern
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
@@ -240,8 +240,8 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-string">&quot;bulma-tooltip&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;dist&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;bulma-tooltip.min.css&quot;</span></span><span class="hs-special">]</span><span>
-</span><span id="line-53"></span><span>        </span><span id="local-6989586621679285598"><span class="annot"><span class="annottext">katexCssPath :: Pattern
-</span><a href="#local-6989586621679285598"><span class="hs-identifier hs-var hs-var">katexCssPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-53"></span><span>        </span><span id="local-6989586621679286706"><span class="annot"><span class="annottext">katexCssPath :: Pattern
+</span><a href="#local-6989586621679286706"><span class="hs-identifier hs-var hs-var">katexCssPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromGlob</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Pattern) -&gt; String -&gt; Pattern
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
@@ -251,8 +251,8 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-string">&quot;katex&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;dist&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;katex.min.css&quot;</span></span><span class="hs-special">]</span><span>
-</span><span id="line-55"></span><span>        </span><span id="local-6989586621679285597"><span class="annot"><span class="annottext">highlightPath :: Pattern
-</span><a href="#local-6989586621679285597"><span class="hs-identifier hs-var hs-var">highlightPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-55"></span><span>        </span><span id="local-6989586621679286705"><span class="annot"><span class="annottext">highlightPath :: Pattern
+</span><a href="#local-6989586621679286705"><span class="hs-identifier hs-var hs-var">highlightPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromGlob</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Pattern) -&gt; String -&gt; Pattern
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String

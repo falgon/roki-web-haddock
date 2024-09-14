@@ -24,7 +24,7 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 -&gt; (Item String, Item String) -&gt; (String, Item String)
 forall a a' b. (a -&gt; a') -&gt; (a, b) -&gt; (a', b)
 </span><span class="hs-identifier hs-var">first</span></span><span> </span><span class="annot"><span class="annottext">Item String -&gt; String
-</span><a href="#local-6989586621679284726"><span class="hs-identifier hs-var">minifyJS</span></a></span><span> </span><span class="annot"><span class="annottext">((Item String, Item String) -&gt; (String, Item String))
+</span><a href="#local-6989586621679285609"><span class="hs-identifier hs-var">minifyJS</span></a></span><span> </span><span class="annot"><span class="annottext">((Item String, Item String) -&gt; (String, Item String))
 -&gt; (Item String -&gt; (Item String, Item String))
 -&gt; Item String
 -&gt; (String, Item String)
@@ -37,8 +37,8 @@ forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item String)
 </span><span class="hs-identifier hs-var">getResourceString</span></span><span>
 </span><span id="line-13"></span><span>    </span><span class="hs-keyword">where</span><span>
-</span><span id="line-14"></span><span>        </span><span id="local-6989586621679284726"><span class="annot"><span class="annottext">minifyJS :: Item String -&gt; String
-</span><a href="#local-6989586621679284726"><span class="hs-identifier hs-var hs-var">minifyJS</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; String
+</span><span id="line-14"></span><span>        </span><span id="local-6989586621679285609"><span class="annot"><span class="annottext">minifyJS :: Item String -&gt; String
+</span><a href="#local-6989586621679285609"><span class="hs-identifier hs-var hs-var">minifyJS</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ByteString -&gt; String
 </span><span class="hs-identifier hs-var">C.unpack</span></span><span> </span><span class="annot"><span class="annottext">(ByteString -&gt; String)
 -&gt; (Item String -&gt; ByteString) -&gt; Item String -&gt; String
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c

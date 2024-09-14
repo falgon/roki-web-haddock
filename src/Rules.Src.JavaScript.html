@@ -11,7 +11,7 @@
 </span><span id="line-11"></span><span id="rules"><span class="annot"><span class="annottext">rules :: Rules ()
 </span><a href="Rules.Src.JavaScript.html#rules"><span class="hs-identifier hs-var hs-var">rules</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679285514"><span class="hs-identifier hs-var">jsPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679286622"><span class="hs-identifier hs-var">jsPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-12"></span><span>    </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
@@ -33,8 +33,8 @@ Compiler (Item a) -&gt; Rules ()
 </span><span class="hs-identifier hs-var">compile</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item String)
 </span><a href="Media.JS.html#compressJsCompiler"><span class="hs-identifier hs-var">compressJsCompiler</span></a></span><span>
 </span><span id="line-14"></span><span>    </span><span class="hs-keyword">where</span><span>
-</span><span id="line-15"></span><span>        </span><span id="local-6989586621679285514"><span class="annot"><span class="annottext">jsPath :: Pattern
-</span><a href="#local-6989586621679285514"><span class="hs-identifier hs-var hs-var">jsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-15"></span><span>        </span><span id="local-6989586621679286622"><span class="annot"><span class="annottext">jsPath :: Pattern
+</span><a href="#local-6989586621679286622"><span class="hs-identifier hs-var hs-var">jsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromGlob</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Pattern) -&gt; String -&gt; Pattern
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
