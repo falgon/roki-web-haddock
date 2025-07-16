@@ -115,7 +115,7 @@ forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-string">&quot;Tokyo, JP&quot;</span></span><span class="hs-special">)</span><span>
 </span><span id="line-52"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;author-fav&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679288978"><span class="hs-identifier hs-var">fav</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679291449"><span class="hs-identifier hs-var">fav</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-53"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;author-interested&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;&#12539;FP&amp;#10;&#12539;Compiler&amp;#10;&#12539;Category theory&amp;#10;&#12539;Low layer networking, Infrastructure&quot;</span></span><span class="hs-special">)</span><span>
@@ -154,8 +154,8 @@ forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-string">&quot;UA-116653080-2&quot;</span></span><span class="hs-special">)</span><span>
 </span><span id="line-65"></span><span>  </span><span class="hs-special">]</span><span>
 </span><span id="line-66"></span><span>    </span><span class="hs-keyword">where</span><span>
-</span><span id="line-67"></span><span>        </span><span id="local-6989586621679288978"><span class="annot"><span class="annottext">fav :: String
-</span><a href="#local-6989586621679288978"><span class="hs-identifier hs-var hs-var">fav</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text -&gt; String
+</span><span id="line-67"></span><span>        </span><span id="local-6989586621679291449"><span class="annot"><span class="annottext">fav :: String
+</span><a href="#local-6989586621679291449"><span class="hs-identifier hs-var hs-var">fav</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text -&gt; String
 </span><span class="hs-identifier hs-var">TL.unpack</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; String) -&gt; Text -&gt; String
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">HtmlT Identity () -&gt; Text
@@ -195,40 +195,53 @@ forall arg result. Term arg result =&gt; arg -&gt; result
 </span><span class="hs-string">&quot;https://www.san-x.co.jp/rilakkuma/profile/#&amp;gid=1&amp;pid=3&quot;</span></span><span class="hs-special">]</span><span>
 </span><span id="line-73"></span><span>                    </span><span class="annot"><span class="annottext">HtmlT Identity ()
 </span><span class="hs-string">&quot;Kiiroitori&quot;</span></span><span>
-</span><span id="line-74"></span><span>
-</span><span id="line-75"></span><span class="annot"><a href="Contexts.Core.html#siteCtx"><span class="hs-identifier hs-type">siteCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-76"></span><span id="siteCtx"><span class="annot"><span class="annottext">siteCtx :: Context String
+</span><span id="line-74"></span><span>                </span><span class="annot"><span class="annottext">HtmlT Identity () -&gt; HtmlT Identity ()
+forall arg result. Term arg result =&gt; arg -&gt; result
+</span><span class="hs-identifier hs-var">li_</span></span><span> </span><span class="annot"><span class="annottext">(HtmlT Identity () -&gt; HtmlT Identity ())
+-&gt; HtmlT Identity () -&gt; HtmlT Identity ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">[Attribute] -&gt; HtmlT Identity () -&gt; HtmlT Identity ()
+forall arg result. Term arg result =&gt; arg -&gt; result
+</span><span class="hs-identifier hs-var">a_</span></span><span>
+</span><span id="line-75"></span><span>                    </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Attribute
+</span><span class="hs-identifier hs-var">href_</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;disney_experience_summary/jp.html&quot;</span></span><span class="hs-special">]</span><span>
+</span><span id="line-76"></span><span>                    </span><span class="annot"><span class="annottext">HtmlT Identity ()
+</span><span class="hs-string">&quot;Disney&quot;</span></span><span>
+</span><span id="line-77"></span><span>
+</span><span id="line-78"></span><span class="annot"><a href="Contexts.Core.html#siteCtx"><span class="hs-identifier hs-type">siteCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-79"></span><span id="siteCtx"><span class="annot"><span class="annottext">siteCtx :: Context String
 </span><a href="Contexts.Core.html#siteCtx"><span class="hs-identifier hs-var hs-var">siteCtx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Context String] -&gt; Context String
 forall a. Monoid a =&gt; [a] -&gt; a
 </span><span class="hs-identifier hs-var">mconcat</span></span><span> </span><span class="hs-special">[</span><span>
-</span><span id="line-77"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
+</span><span id="line-80"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;lang&quot;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;ja&quot;</span></span><span>
-</span><span id="line-78"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
+</span><span id="line-81"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;site-title&quot;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><a href="Config.Site.html#siteName"><span class="hs-identifier hs-var">siteName</span></a></span><span>
-</span><span id="line-79"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
+</span><span id="line-82"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;site-description&quot;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;This is a Roki's website.&quot;</span></span><span>
-</span><span id="line-80"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
+</span><span id="line-83"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;copyright&quot;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;copyright &amp;copy; 2016~ Roki All Rights Reserved.&quot;</span></span><span>
-</span><span id="line-81"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String
+</span><span id="line-84"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String
 </span><a href="Contexts.Core.html#blogCtx"><span class="hs-identifier hs-var">blogCtx</span></a></span><span>
-</span><span id="line-82"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String
+</span><span id="line-85"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String
 </span><a href="Contexts.Core.html#authorCtx"><span class="hs-identifier hs-var">authorCtx</span></a></span><span>
-</span><span id="line-83"></span><span>  </span><span class="hs-special">]</span><span>
-</span><span id="line-84"></span><span>
-</span><span id="line-85"></span><span class="annot"><a href="Contexts.Core.html#jsPathCtx"><span class="hs-identifier hs-type">jsPathCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-86"></span><span id="jsPathCtx"><span class="annot"><span class="annottext">jsPathCtx :: Context String
+</span><span id="line-86"></span><span>  </span><span class="hs-special">]</span><span>
+</span><span id="line-87"></span><span>
+</span><span id="line-88"></span><span class="annot"><a href="Contexts.Core.html#jsPathCtx"><span class="hs-identifier hs-type">jsPathCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-89"></span><span id="jsPathCtx"><span class="annot"><span class="annottext">jsPathCtx :: Context String
 </span><a href="Contexts.Core.html#jsPathCtx"><span class="hs-identifier hs-var hs-var">jsPathCtx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 -&gt; Context String
 -&gt; (Item String -&gt; Compiler [Item String])
@@ -237,24 +250,24 @@ forall a b.
 String -&gt; Context a -&gt; (Item b -&gt; Compiler [Item a]) -&gt; Context b
 </span><span class="hs-identifier hs-var">listFieldWith</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;js&quot;</span></span><span> </span><span class="annot"><span class="annottext">Context String
-</span><a href="#local-6989586621679289018"><span class="hs-identifier hs-var">ctx</span></a></span><span> </span><span class="annot"><span class="annottext">((Item String -&gt; Compiler [Item String]) -&gt; Context String)
+</span><a href="#local-6989586621679291496"><span class="hs-identifier hs-var">ctx</span></a></span><span> </span><span class="annot"><span class="annottext">((Item String -&gt; Compiler [Item String]) -&gt; Context String)
 -&gt; (Item String -&gt; Compiler [Item String]) -&gt; Context String
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679289019"><span class="annot"><span class="annottext">Item String
-</span><a href="#local-6989586621679289019"><span class="hs-identifier hs-var">item</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
-</span><span id="line-87"></span><span>    </span><span class="annot"><span class="annottext">Identifier -&gt; String -&gt; Compiler (Maybe String)
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679291497"><span class="annot"><span class="annottext">Item String
+</span><a href="#local-6989586621679291497"><span class="hs-identifier hs-var">item</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-90"></span><span>    </span><span class="annot"><span class="annottext">Identifier -&gt; String -&gt; Compiler (Maybe String)
 forall (m :: * -&gt; *).
 MonadMetadata m =&gt;
 Identifier -&gt; String -&gt; m (Maybe String)
 </span><span class="hs-identifier hs-var">getMetadataField</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Item String -&gt; Identifier
 forall a. Item a -&gt; Identifier
 </span><span class="hs-identifier hs-var">itemIdentifier</span></span><span> </span><span class="annot"><span class="annottext">Item String
-</span><a href="#local-6989586621679289019"><span class="hs-identifier hs-var">item</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679291497"><span class="hs-identifier hs-var">item</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;js&quot;</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Maybe String)
 -&gt; (Maybe String -&gt; [Item String]) -&gt; Compiler [Item String]
 forall (f :: * -&gt; *) a b. Functor f =&gt; f a -&gt; (a -&gt; b) -&gt; f b
 </span><span class="hs-operator hs-var">&lt;&amp;&gt;</span></span><span>
-</span><span id="line-88"></span><span>        </span><span class="annot"><span class="annottext">[Item String]
+</span><span id="line-91"></span><span>        </span><span class="annot"><span class="annottext">[Item String]
 -&gt; (String -&gt; [Item String]) -&gt; Maybe String -&gt; [Item String]
 forall b a. b -&gt; (a -&gt; b) -&gt; Maybe a -&gt; b
 </span><span class="hs-identifier hs-var">maybe</span></span><span> </span><span class="annot"><span class="annottext">[Item String]
@@ -263,8 +276,8 @@ forall a. Monoid a =&gt; a
 forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Item String -&gt; String -&gt; Item String
 forall {a}. Item a -&gt; String -&gt; Item String
-</span><a href="#local-6989586621679289023"><span class="hs-identifier hs-var">itemize</span></a></span><span> </span><span class="annot"><span class="annottext">Item String
-</span><a href="#local-6989586621679289019"><span class="hs-identifier hs-var">item</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Item String)
+</span><a href="#local-6989586621679291501"><span class="hs-identifier hs-var">itemize</span></a></span><span> </span><span class="annot"><span class="annottext">Item String
+</span><a href="#local-6989586621679291497"><span class="hs-identifier hs-var">item</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Item String)
 -&gt; (String -&gt; String) -&gt; String -&gt; Item String
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String
@@ -274,9 +287,9 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; [String]
 </span><span class="hs-identifier hs-var">splitAll</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;,&quot;</span></span><span class="hs-special">)</span><span>
-</span><span id="line-89"></span><span>    </span><span class="hs-keyword">where</span><span>
-</span><span id="line-90"></span><span>        </span><span id="local-6989586621679289018"><span class="annot"><span class="annottext">ctx :: Context String
-</span><a href="#local-6989586621679289018"><span class="hs-identifier hs-var hs-var">ctx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (Item String -&gt; Compiler String) -&gt; Context String
+</span><span id="line-92"></span><span>    </span><span class="hs-keyword">where</span><span>
+</span><span id="line-93"></span><span>        </span><span id="local-6989586621679291496"><span class="annot"><span class="annottext">ctx :: Context String
+</span><a href="#local-6989586621679291496"><span class="hs-identifier hs-var hs-var">ctx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (Item String -&gt; Compiler String) -&gt; Context String
 forall a. String -&gt; (Item a -&gt; Compiler String) -&gt; Context a
 </span><span class="hs-identifier hs-var">field</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;src-script&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Compiler String
@@ -288,41 +301,41 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Item String -&gt; String
 forall a. Item a -&gt; a
 </span><span class="hs-identifier hs-var">itemBody</span></span><span class="hs-special">)</span><span>
-</span><span id="line-91"></span><span>        </span><span id="local-6989586621679289023"><span class="annot"><span class="annottext">itemize :: Item a -&gt; String -&gt; Item String
-</span><a href="#local-6989586621679289023"><span class="hs-identifier hs-var hs-var">itemize</span></a></span></span><span> </span><span id="local-6989586621679289033"><span class="annot"><span class="annottext">Item a
-</span><a href="#local-6989586621679289033"><span class="hs-identifier hs-var">item</span></a></span></span><span> </span><span id="local-6989586621679289034"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289034"><span class="hs-identifier hs-var">md</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="hs-special">{</span><span>
-</span><span id="line-92"></span><span>            </span><span class="annot"><span class="annottext">itemIdentifier :: Identifier
+</span><span id="line-94"></span><span>        </span><span id="local-6989586621679291501"><span class="annot"><span class="annottext">itemize :: Item a -&gt; String -&gt; Item String
+</span><a href="#local-6989586621679291501"><span class="hs-identifier hs-var hs-var">itemize</span></a></span></span><span> </span><span id="local-6989586621679291511"><span class="annot"><span class="annottext">Item a
+</span><a href="#local-6989586621679291511"><span class="hs-identifier hs-var">item</span></a></span></span><span> </span><span id="local-6989586621679291512"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679291512"><span class="hs-identifier hs-var">md</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-95"></span><span>            </span><span class="annot"><span class="annottext">itemIdentifier :: Identifier
 </span><span class="hs-identifier hs-var">itemIdentifier</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Identifier
 forall a. IsString a =&gt; String -&gt; a
 </span><span class="hs-identifier hs-var">fromString</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289034"><span class="hs-identifier hs-var">md</span></a></span><span>
-</span><span id="line-93"></span><span>          </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">itemBody :: String
+</span><a href="#local-6989586621679291512"><span class="hs-identifier hs-var">md</span></a></span><span>
+</span><span id="line-96"></span><span>          </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">itemBody :: String
 </span><span class="hs-identifier hs-var">itemBody</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Item a -&gt; String
 forall {a}. Item a -&gt; String
-</span><a href="#local-6989586621679289036"><span class="hs-identifier hs-var">jsDirPath</span></a></span><span> </span><span class="annot"><span class="annottext">Item a
-</span><a href="#local-6989586621679289033"><span class="hs-identifier hs-var">item</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="#local-6989586621679291514"><span class="hs-identifier hs-var">jsDirPath</span></a></span><span> </span><span class="annot"><span class="annottext">Item a
+</span><a href="#local-6989586621679291511"><span class="hs-identifier hs-var">item</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 </span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679289034"><span class="hs-identifier hs-var">md</span></a></span><span>
-</span><span id="line-94"></span><span>          </span><span class="hs-special">}</span><span>
-</span><span id="line-95"></span><span>        </span><span id="local-6989586621679289036"><span class="annot"><span class="annottext">jsDirPath :: Item a -&gt; String
-</span><a href="#local-6989586621679289036"><span class="hs-identifier hs-var hs-var">jsDirPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="#local-6989586621679291512"><span class="hs-identifier hs-var">md</span></a></span><span>
+</span><span id="line-97"></span><span>          </span><span class="hs-special">}</span><span>
+</span><span id="line-98"></span><span>        </span><span id="local-6989586621679291514"><span class="annot"><span class="annottext">jsDirPath :: Item a -&gt; String
+</span><a href="#local-6989586621679291514"><span class="hs-identifier hs-var hs-var">jsDirPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a. Eq a =&gt; [a] -&gt; [a] -&gt; [a]
 </span><span class="hs-identifier hs-var">dropPrefix</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><a href="Config.Program.html#contentsRoot"><span class="hs-identifier hs-var">contentsRoot</span></a></span><span>
-</span><span id="line-96"></span><span>            </span><span class="annot"><span class="annottext">(String -&gt; String) -&gt; (Item a -&gt; String) -&gt; Item a -&gt; String
+</span><span id="line-99"></span><span>            </span><span class="annot"><span class="annottext">(String -&gt; String) -&gt; (Item a -&gt; String) -&gt; Item a -&gt; String
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String
 </span><span class="hs-identifier hs-var">takeDirectory</span></span><span>
-</span><span id="line-97"></span><span>            </span><span class="annot"><span class="annottext">(String -&gt; String) -&gt; (Item a -&gt; String) -&gt; Item a -&gt; String
+</span><span id="line-100"></span><span>            </span><span class="annot"><span class="annottext">(String -&gt; String) -&gt; (Item a -&gt; String) -&gt; Item a -&gt; String
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Identifier -&gt; String
 </span><span class="hs-identifier hs-var">toFilePath</span></span><span>
-</span><span id="line-98"></span><span>            </span><span class="annot"><span class="annottext">(Identifier -&gt; String)
+</span><span id="line-101"></span><span>            </span><span class="annot"><span class="annottext">(Identifier -&gt; String)
 -&gt; (Item a -&gt; Identifier) -&gt; Item a -&gt; String
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Item a -&gt; Identifier
 forall a. Item a -&gt; Identifier
 </span><span class="hs-identifier hs-var">itemIdentifier</span></span><span>
-</span><span id="line-99"></span><span>
-</span><span id="line-100"></span></pre></body></html>
+</span><span id="line-102"></span><span>
+</span><span id="line-103"></span></pre></body></html>

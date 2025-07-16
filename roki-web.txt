@@ -134,6 +134,9 @@ optimizeSVGCompiler :: [String] -> Compiler (Item String)
 --   <tt>```{lang=mermaid caption=hoge}</tt>.
 mermaidTransform :: Block -> Compiler Block
 
+module Media.TS
+compileTypeScriptCompiler :: Compiler (Item String)
+
 module Media
 
 module Rules.Blog.Type
@@ -398,10 +401,11 @@ render :: KaTeXRender
 
 module Rules.PageType
 data PageConf
-PageConf :: WriterOptions -> KaTeXRender -> FontAwesomeIcons -> PageConf
+PageConf :: WriterOptions -> KaTeXRender -> FontAwesomeIcons -> Bool -> PageConf
 [pcWriterOpt] :: PageConf -> WriterOptions
 [pcKaTeXRender] :: PageConf -> KaTeXRender
 [pcFaIcons] :: PageConf -> FontAwesomeIcons
+[pcIsPreview] :: PageConf -> Bool
 type PageConfReader = ReaderT PageConf
 
 module Rules.TopPage
@@ -409,6 +413,18 @@ rules :: [BlogConfig m] -> PageConfReader Rules ()
 
 module Rules.Resume
 rules :: PageConfReader Rules ()
+
+module Rules.DisneyExperienceSummary
+rules :: PageConfReader Rules ()
+instance GHC.Show.Show Rules.DisneyExperienceSummary.Favorite
+instance GHC.Generics.Generic Rules.DisneyExperienceSummary.Favorite
+instance GHC.Show.Show Rules.DisneyExperienceSummary.TagInfo
+instance GHC.Generics.Generic Rules.DisneyExperienceSummary.TagInfo
+instance GHC.Show.Show Rules.DisneyExperienceSummary.TagConfig
+instance GHC.Generics.Generic Rules.DisneyExperienceSummary.TagConfig
+instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.TagConfig
+instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.TagInfo
+instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.Favorite
 
 module Rules.Blog.EachPosts
 build :: FontAwesomeIcons -> Context String -> BlogConfReader m Rules Snapshot
