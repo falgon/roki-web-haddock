@@ -421,15 +421,15 @@ instance GHC.Generics.Generic Rules.DisneyExperienceSummary.Favorite
 instance GHC.Show.Show Rules.DisneyExperienceSummary.HotelDetail
 instance GHC.Generics.Generic Rules.DisneyExperienceSummary.HotelDetail
 instance GHC.Show.Show Rules.DisneyExperienceSummary.Hotel
-instance GHC.Generics.Generic Rules.DisneyExperienceSummary.Hotel
+instance GHC.Show.Show Rules.DisneyExperienceSummary.HotelRaw
+instance GHC.Generics.Generic Rules.DisneyExperienceSummary.HotelRaw
 instance GHC.Show.Show Rules.DisneyExperienceSummary.TagInfo
 instance GHC.Generics.Generic Rules.DisneyExperienceSummary.TagInfo
 instance GHC.Show.Show Rules.DisneyExperienceSummary.TagConfig
 instance GHC.Generics.Generic Rules.DisneyExperienceSummary.TagConfig
 instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.TagConfig
 instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.TagInfo
-instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.Hotel
-instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.HotelDetail
+instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.HotelRaw
 instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.Favorite
 
 module Rules.Blog.EachPosts
