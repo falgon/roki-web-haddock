@@ -16,10 +16,10 @@ forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 -&gt; Item String -&gt; Compiler (Item String)
 forall a b. (a -&gt; Compiler b) -&gt; Item a -&gt; Compiler (Item b)
 </span><span class="hs-identifier hs-var">withItemBody</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Compiler String
-</span><a href="#local-6989586621679290245"><span class="hs-identifier hs-var">compileTS</span></a></span><span>
+</span><a href="#local-6989586621679290688"><span class="hs-identifier hs-var">compileTS</span></a></span><span>
 </span><span id="line-9"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-10"></span><span>    </span><span id="local-6989586621679290245"><span class="annot"><span class="annottext">compileTS :: String -&gt; Compiler String
-</span><a href="#local-6989586621679290245"><span class="hs-identifier hs-var hs-var">compileTS</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String -&gt; Compiler String
+</span><span id="line-10"></span><span>    </span><span id="local-6989586621679290688"><span class="annot"><span class="annottext">compileTS :: String -&gt; Compiler String
+</span><a href="#local-6989586621679290688"><span class="hs-identifier hs-var hs-var">compileTS</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String -&gt; Compiler String
 </span><span class="hs-identifier hs-var">unixFilter</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;tools/ts-stdin-compile.sh&quot;</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(String -&gt; Compiler String)
 -&gt; (String -&gt; Compiler String) -&gt; String -&gt; Compiler String

@@ -176,6 +176,7 @@ sanitizeTagName :: String -> String
 sanitizeDisqusName :: String -> String
 makePageIdentifier :: FilePath -> PageNumber -> Identifier
 getStringField :: String -> Context String -> Compiler (Maybe String)
+injectTableOfContents :: Pandoc -> Pandoc
 
 module Utils
 

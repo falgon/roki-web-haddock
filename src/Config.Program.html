@@ -50,11 +50,11 @@
 </span><span id="line-38"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-var">previewHost</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-string">&quot;127.0.0.1&quot;</span></span><span>
 </span><span id="line-39"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-var">previewPort</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-number">8888</span></span><span>
 </span><span id="line-40"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-var">inMemoryCache</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">True</span></span><span>
-</span><span id="line-41"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-var">ignoreFile</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="#local-6989586621679288756"><span class="hs-identifier hs-type">ignoreFile'</span></a></span><span>
+</span><span id="line-41"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier hs-var">ignoreFile</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="#local-6989586621679289198"><span class="hs-identifier hs-type">ignoreFile'</span></a></span><span>
 </span><span id="line-42"></span><span>  </span><span class="hs-special">}</span><span>
 </span><span id="line-43"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-44"></span><span>    </span><span id="local-6989586621679288756"><span class="annot"><span class="annottext">ignoreFile' :: [Char] -&gt; Bool
-</span><a href="#local-6989586621679288756"><span class="hs-identifier hs-var hs-var">ignoreFile'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(([Char] -&gt; Bool) -&gt; ([Char] -&gt; Bool) -&gt; [Char] -&gt; Bool)
+</span><span id="line-44"></span><span>    </span><span id="local-6989586621679289198"><span class="annot"><span class="annottext">ignoreFile' :: [Char] -&gt; Bool
+</span><a href="#local-6989586621679289198"><span class="hs-identifier hs-var hs-var">ignoreFile'</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(([Char] -&gt; Bool) -&gt; ([Char] -&gt; Bool) -&gt; [Char] -&gt; Bool)
 -&gt; [[Char] -&gt; Bool] -&gt; [Char] -&gt; Bool
 forall a. (a -&gt; a -&gt; a) -&gt; [a] -&gt; a
 forall (t :: * -&gt; *) a. Foldable t =&gt; (a -&gt; a -&gt; a) -&gt; t a -&gt; a
@@ -94,23 +94,24 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><a href="Config.Program.html#writerPreviewOptions"><span class="hs-identifier hs-var hs-var">writerPreviewOptions</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">WriterOptions
 </span><span class="hs-identifier hs-var">defaultHakyllWriterOptions</span></span><span> </span><span class="hs-special">{</span><span>
 </span><span id="line-54"></span><span>    </span><span class="annot"><span class="hs-identifier hs-var">writerHTMLMathMethod</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">MathJax</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">mempty</span></span><span>
-</span><span id="line-55"></span><span> </span><span class="hs-special">}</span><span>
+</span><span id="line-55"></span><span>  </span><span class="hs-special">}</span><span>
 </span><span id="line-56"></span><span>
 </span><span id="line-57"></span><span class="annot"><a href="Config.Program.html#readerOptions"><span class="hs-identifier hs-type">readerOptions</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">ReaderOptions</span></span><span>
 </span><span id="line-58"></span><span id="readerOptions"><span class="annot"><span class="annottext">readerOptions :: ReaderOptions
 </span><a href="Config.Program.html#readerOptions"><span class="hs-identifier hs-var hs-var">readerOptions</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ReaderOptions
 </span><span class="hs-identifier hs-var">defaultHakyllReaderOptions</span></span><span> </span><span class="hs-special">{</span><span>
-</span><span id="line-59"></span><span>    </span><span class="annot"><span class="hs-identifier hs-var">readerExtensions</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">enableExtension</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Ext_east_asian_line_breaks</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">$</span></span><span>
-</span><span id="line-60"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">enableExtension</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Ext_emoji</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">$</span></span><span>
-</span><span id="line-61"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">enableExtension</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Ext_tex_math_double_backslash</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">$</span></span><span>
-</span><span id="line-62"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">disableExtension</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Ext_citations</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">$</span></span><span>
-</span><span id="line-63"></span><span>        </span><span class="annot"><span class="hs-identifier hs-var">readerExtensions</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">defaultHakyllReaderOptions</span></span><span>
-</span><span id="line-64"></span><span>    </span><span class="hs-special">}</span><span>
-</span><span id="line-65"></span><span>
-</span><span id="line-66"></span><span class="annot"><a href="Config.Program.html#tagSoupOption"><span class="hs-identifier hs-type">tagSoupOption</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.RenderOptions</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
-</span><span id="line-67"></span><span id="tagSoupOption"><span class="annot"><span class="annottext">tagSoupOption :: RenderOptions [Char]
+</span><span id="line-59"></span><span>    </span><span class="annot"><span class="hs-identifier hs-var">readerExtensions</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">enableExtension</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Ext_raw_html</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">$</span></span><span>
+</span><span id="line-60"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">enableExtension</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Ext_east_asian_line_breaks</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">$</span></span><span>
+</span><span id="line-61"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">enableExtension</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Ext_emoji</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">$</span></span><span>
+</span><span id="line-62"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">enableExtension</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Ext_tex_math_double_backslash</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">$</span></span><span>
+</span><span id="line-63"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">disableExtension</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Ext_citations</span></span><span> </span><span class="annot"><span class="hs-operator hs-type">$</span></span><span>
+</span><span id="line-64"></span><span>        </span><span class="annot"><span class="hs-identifier hs-var">readerExtensions</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">defaultHakyllReaderOptions</span></span><span>
+</span><span id="line-65"></span><span>    </span><span class="hs-special">}</span><span>
+</span><span id="line-66"></span><span>
+</span><span id="line-67"></span><span class="annot"><a href="Config.Program.html#tagSoupOption"><span class="hs-identifier hs-type">tagSoupOption</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.RenderOptions</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-68"></span><span id="tagSoupOption"><span class="annot"><span class="annottext">tagSoupOption :: RenderOptions [Char]
 </span><a href="Config.Program.html#tagSoupOption"><span class="hs-identifier hs-var hs-var">tagSoupOption</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="hs-identifier hs-type">T.RenderOptions</span></span><span> </span><span class="hs-special">{</span><span>
-</span><span id="line-68"></span><span>    </span><span class="annot"><span class="annottext">optRawTag :: [Char] -&gt; Bool
+</span><span id="line-69"></span><span>    </span><span class="annot"><span class="annottext">optRawTag :: [Char] -&gt; Bool
 </span><span class="hs-identifier hs-var">T.optRawTag</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Char] -&gt; [[Char]] -&gt; Bool
 forall a. Eq a =&gt; a -&gt; [a] -&gt; Bool
 forall (t :: * -&gt; *) a. (Foldable t, Eq a) =&gt; a -&gt; t a -&gt; Bool
@@ -122,25 +123,25 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char
 </span><span class="hs-identifier hs-var">toLower</span></span><span>
-</span><span id="line-69"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">optMinimize :: [Char] -&gt; Bool
+</span><span id="line-70"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">optMinimize :: [Char] -&gt; Bool
 </span><span class="hs-identifier hs-var">T.optMinimize</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[Char] -&gt; [[Char]] -&gt; Bool
 forall a. Eq a =&gt; a -&gt; [a] -&gt; Bool
 forall (t :: * -&gt; *) a. (Foldable t, Eq a) =&gt; a -&gt; t a -&gt; Bool
 </span><span class="hs-operator hs-var">`elem`</span></span><span> </span><span class="annot"><span class="annottext">[[Char]]
-</span><a href="#local-6989586621679288784"><span class="hs-identifier hs-var">minimize</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; Bool) -&gt; ([Char] -&gt; [Char]) -&gt; [Char] -&gt; Bool
+</span><a href="#local-6989586621679289227"><span class="hs-identifier hs-var">minimize</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">([Char] -&gt; Bool) -&gt; ([Char] -&gt; [Char]) -&gt; [Char] -&gt; Bool
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(Char -&gt; Char) -&gt; [Char] -&gt; [Char]
 forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
 </span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char
 </span><span class="hs-identifier hs-var">toLower</span></span><span>
-</span><span id="line-70"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">optEscape :: [Char] -&gt; [Char]
+</span><span id="line-71"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">optEscape :: [Char] -&gt; [Char]
 </span><span class="hs-identifier hs-var">T.optEscape</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Char] -&gt; [Char]
 forall str. StringLike str =&gt; str -&gt; str
 </span><span class="hs-identifier hs-var">T.escapeHTML</span></span><span>
-</span><span id="line-71"></span><span>  </span><span class="hs-special">}</span><span>
-</span><span id="line-72"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-73"></span><span>    </span><span id="local-6989586621679288784"><span class="annot"><span class="annottext">minimize :: [[Char]]
-</span><a href="#local-6989586621679288784"><span class="hs-identifier hs-var hs-var">minimize</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">[Char]
+</span><span id="line-72"></span><span>  </span><span class="hs-special">}</span><span>
+</span><span id="line-73"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-74"></span><span>    </span><span id="local-6989586621679289227"><span class="annot"><span class="annottext">minimize :: [[Char]]
+</span><a href="#local-6989586621679289227"><span class="hs-identifier hs-var hs-var">minimize</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;area&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;br&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;col&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
@@ -151,4 +152,4 @@ forall str. StringLike str =&gt; str -&gt; str
 </span><span class="hs-string">&quot;meta&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;link&quot;</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[Char]
 </span><span class="hs-string">&quot;param&quot;</span></span><span class="hs-special">]</span><span>
-</span><span id="line-74"></span></pre></body></html>
+</span><span id="line-75"></span></pre></body></html>
