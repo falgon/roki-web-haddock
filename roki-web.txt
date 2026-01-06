@@ -83,6 +83,123 @@ font :: Html ()
 module Contexts.Utils
 metadataToListField :: String -> String -> Context String
 
+
+-- | Disney体験記録のデータ構造を定義するモジュール
+--   このモジュールは、Disney体験記録の型定義とJSON変換のためのインスタンスを提供する
+module Data.Disney.Experience
+
+-- | 体験記録の構造
+data ExperienceRecord
+ExperienceRecord :: Text -> Day -> [Text] -> SNSLinks -> Bool -> ExperienceRecord
+[title] :: ExperienceRecord -> Text
+[date] :: ExperienceRecord -> Day
+[disneyTags] :: ExperienceRecord -> [Text]
+[snsLinks] :: ExperienceRecord -> SNSLinks
+[aiGenerated] :: ExperienceRecord -> Bool
+
+-- | SNSリンクの構造
+data SNSLinks
+SNSLinks :: [Text] -> [Text] -> [Text] -> [Text] -> SNSLinks
+[youtube] :: SNSLinks -> [Text]
+[instagram] :: SNSLinks -> [Text]
+[x] :: SNSLinks -> [Text]
+[note] :: SNSLinks -> [Text]
+
+-- | 時系列データの構造
+data TimeSeriesData
+TimeSeriesData :: [DailyCount] -> TimeSeriesData
+[daily] :: TimeSeriesData -> [DailyCount]
+
+-- | 日別カウントの構造
+data DailyCount
+DailyCount :: Day -> Int -> DailyCount
+[dcDate] :: DailyCount -> Day
+[dcCount] :: DailyCount -> Int
+
+-- | タグ統計の構造
+data TagStats
+TagStats :: [TagCount] -> TagStats
+[tags] :: TagStats -> [TagCount]
+
+-- | タグ別カウントの構造
+data TagCount
+TagCount :: Text -> Int -> TagCount
+[tcTag] :: TagCount -> Text
+[tcCount] :: TagCount -> Int
+
+-- | 年度別データの構造
+data YearData
+YearData :: Int -> [DailyCount] -> YearData
+[yearNumber] :: YearData -> Int
+[yearlyDaily] :: YearData -> [DailyCount]
+
+-- | 可視化データの全体構造
+data VisualizationData
+VisualizationData :: TimeSeriesData -> TagStats -> [YearData] -> VisualizationData
+[timeSeries] :: VisualizationData -> TimeSeriesData
+[tagStats] :: VisualizationData -> TagStats
+[yearlyTimeSeries] :: VisualizationData -> [YearData]
+instance GHC.Generics.Generic Data.Disney.Experience.SNSLinks
+instance GHC.Show.Show Data.Disney.Experience.SNSLinks
+instance GHC.Classes.Eq Data.Disney.Experience.SNSLinks
+instance GHC.Generics.Generic Data.Disney.Experience.ExperienceRecord
+instance GHC.Show.Show Data.Disney.Experience.ExperienceRecord
+instance GHC.Classes.Eq Data.Disney.Experience.ExperienceRecord
+instance GHC.Generics.Generic Data.Disney.Experience.DailyCount
+instance GHC.Show.Show Data.Disney.Experience.DailyCount
+instance GHC.Classes.Eq Data.Disney.Experience.DailyCount
+instance GHC.Generics.Generic Data.Disney.Experience.TimeSeriesData
+instance GHC.Show.Show Data.Disney.Experience.TimeSeriesData
+instance GHC.Classes.Eq Data.Disney.Experience.TimeSeriesData
+instance GHC.Generics.Generic Data.Disney.Experience.TagCount
+instance GHC.Show.Show Data.Disney.Experience.TagCount
+instance GHC.Classes.Eq Data.Disney.Experience.TagCount
+instance GHC.Generics.Generic Data.Disney.Experience.TagStats
+instance GHC.Show.Show Data.Disney.Experience.TagStats
+instance GHC.Classes.Eq Data.Disney.Experience.TagStats
+instance GHC.Generics.Generic Data.Disney.Experience.YearData
+instance GHC.Show.Show Data.Disney.Experience.YearData
+instance GHC.Classes.Eq Data.Disney.Experience.YearData
+instance GHC.Generics.Generic Data.Disney.Experience.VisualizationData
+instance GHC.Show.Show Data.Disney.Experience.VisualizationData
+instance GHC.Classes.Eq Data.Disney.Experience.VisualizationData
+instance Data.Aeson.Types.ToJSON.ToJSON Data.Disney.Experience.VisualizationData
+instance Data.Aeson.Types.FromJSON.FromJSON Data.Disney.Experience.VisualizationData
+instance Data.Aeson.Types.ToJSON.ToJSON Data.Disney.Experience.YearData
+instance Data.Aeson.Types.FromJSON.FromJSON Data.Disney.Experience.YearData
+instance Data.Aeson.Types.ToJSON.ToJSON Data.Disney.Experience.TagStats
+instance Data.Aeson.Types.FromJSON.FromJSON Data.Disney.Experience.TagStats
+instance Data.Aeson.Types.ToJSON.ToJSON Data.Disney.Experience.TagCount
+instance Data.Aeson.Types.FromJSON.FromJSON Data.Disney.Experience.TagCount
+instance Data.Aeson.Types.ToJSON.ToJSON Data.Disney.Experience.TimeSeriesData
+instance Data.Aeson.Types.FromJSON.FromJSON Data.Disney.Experience.TimeSeriesData
+instance Data.Aeson.Types.ToJSON.ToJSON Data.Disney.Experience.DailyCount
+instance Data.Aeson.Types.FromJSON.FromJSON Data.Disney.Experience.DailyCount
+instance Data.Aeson.Types.ToJSON.ToJSON Data.Disney.Experience.ExperienceRecord
+instance Data.Aeson.Types.FromJSON.FromJSON Data.Disney.Experience.ExperienceRecord
+instance Data.Aeson.Types.ToJSON.ToJSON Data.Disney.Experience.SNSLinks
+instance Data.Aeson.Types.FromJSON.FromJSON Data.Disney.Experience.SNSLinks
+
+
+-- | Disney体験記録のJSON生成パイプラインモジュール このモジュールは、Hakyllコンテキストでディズニーログを集約し、
+--   D3.js可視化用のJSONデータを生成する
+module Data.Disney.Experience.Generator
+
+-- | 可視化データを生成
+generateVisualizationData :: [Item a] -> Compiler VisualizationData
+
+-- | 日別データを集約
+aggregateDailyData :: [ExperienceRecord] -> [DailyCount]
+
+-- | タグ別データを集約
+aggregateTagData :: [ExperienceRecord] -> [TagCount]
+
+-- | 年度別にデータを集約
+aggregateByYear :: [ExperienceRecord] -> [YearData]
+
+-- | メタデータから体験記録をパースする
+parseLogMetadata :: Metadata -> Maybe ExperienceRecord
+
 module Hakyll.Web.Feed.Extra
 data FeedConfiguration
 FeedConfiguration :: String -> String -> String -> String -> String -> String -> FeedConfiguration
@@ -135,6 +252,9 @@ optimizeSVGCompiler :: [String] -> Compiler (Item String)
 mermaidTransform :: Block -> Compiler Block
 
 module Media.TS
+
+-- | TypeScriptファイルをコンパイルするCompiler disney-experience-visualizations.ts
+--   の場合はViteバンドラーを使用し、 それ以外のファイルは従来のstdin方式でコンパイルする
 compileTypeScriptCompiler :: Compiler (Item String)
 
 module Media

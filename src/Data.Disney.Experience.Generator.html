@@ -1,0 +1,471 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE OverloadedStrings #-}</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-comment">-- | Disney&#20307;&#39443;&#35352;&#37682;&#12398;JSON&#29983;&#25104;&#12497;&#12452;&#12503;&#12521;&#12452;&#12531;&#12514;&#12472;&#12517;&#12540;&#12523;</span><span>
+</span><span id="line-4"></span><span class="hs-comment">-- &#12371;&#12398;&#12514;&#12472;&#12517;&#12540;&#12523;&#12399;&#12289;Hakyll&#12467;&#12531;&#12486;&#12461;&#12473;&#12488;&#12391;&#12487;&#12451;&#12474;&#12491;&#12540;&#12525;&#12464;&#12434;&#38598;&#32004;&#12375;&#12289;</span><span>
+</span><span id="line-5"></span><span class="hs-comment">-- D3.js&#21487;&#35222;&#21270;&#29992;&#12398;JSON&#12487;&#12540;&#12479;&#12434;&#29983;&#25104;&#12377;&#12427;</span><span>
+</span><span id="line-6"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Data.Disney.Experience.Generator</span><span>
+</span><span id="line-7"></span><span>    </span><span class="hs-special">(</span><span> </span><span class="annot"><a href="Data.Disney.Experience.Generator.html#generateVisualizationData"><span class="hs-identifier">generateVisualizationData</span></a></span><span>
+</span><span id="line-8"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Disney.Experience.Generator.html#aggregateDailyData"><span class="hs-identifier">aggregateDailyData</span></a></span><span>
+</span><span id="line-9"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Disney.Experience.Generator.html#aggregateTagData"><span class="hs-identifier">aggregateTagData</span></a></span><span>
+</span><span id="line-10"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Disney.Experience.Generator.html#aggregateByYear"><span class="hs-identifier">aggregateByYear</span></a></span><span>
+</span><span id="line-11"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Data.Disney.Experience.Generator.html#parseLogMetadata"><span class="hs-identifier">parseLogMetadata</span></a></span><span>
+</span><span id="line-12"></span><span>    </span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-13"></span><span>
+</span><span id="line-14"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad</span></span><span>          </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">forM</span></span><span class="hs-special">)</span><span>
+</span><span id="line-15"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Aeson</span></span><span>             </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">encode</span></span><span class="hs-special">)</span><span>
+</span><span id="line-16"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.ByteString.Lazy</span></span><span>   </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">BL</span></span><span>
+</span><span id="line-17"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Data.Disney.Experience.html"><span class="hs-identifier">Data.Disney.Experience</span></a></span><span>
+</span><span id="line-18"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.List</span></span><span>              </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">foldl'</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">sort</span></span><span class="hs-special">)</span><span>
+</span><span id="line-19"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Map.Strict</span></span><span>        </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">M</span></span><span>
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Maybe</span></span><span>             </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">fromMaybe</span></span><span class="hs-special">)</span><span>
+</span><span id="line-21"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span>              </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Text</span></span><span class="hs-special">)</span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span>              </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
+</span><span id="line-23"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Time</span></span><span>              </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Day</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">defaultTimeLocale</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">parseTimeM</span></span><span class="hs-special">,</span><span>
+</span><span id="line-24"></span><span>                                         </span><span class="annot"><span class="hs-identifier">toGregorian</span></span><span class="hs-special">)</span><span>
+</span><span id="line-25"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>
+</span><span id="line-26"></span><span>
+</span><span id="line-27"></span><span class="annot"><span class="hs-comment">-- | &#12513;&#12479;&#12487;&#12540;&#12479;&#12363;&#12425;&#20307;&#39443;&#35352;&#37682;&#12434;&#12497;&#12540;&#12473;&#12377;&#12427;</span></span><span>
+</span><span id="line-28"></span><span class="annot"><a href="Data.Disney.Experience.Generator.html#parseLogMetadata"><span class="hs-identifier hs-type">parseLogMetadata</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Metadata</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-type">ExperienceRecord</span></a></span><span>
+</span><span id="line-29"></span><span id="parseLogMetadata"><span class="annot"><span class="annottext">parseLogMetadata :: Metadata -&gt; Maybe ExperienceRecord
+</span><a href="Data.Disney.Experience.Generator.html#parseLogMetadata"><span class="hs-identifier hs-var hs-var">parseLogMetadata</span></a></span></span><span> </span><span id="local-6989586621679295850"><span class="annot"><span class="annottext">Metadata
+</span><a href="#local-6989586621679295850"><span class="hs-identifier hs-var">meta</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-30"></span><span>    </span><span id="local-6989586621679295851"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679295851"><span class="hs-identifier hs-var">titleStr</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">String -&gt; Metadata -&gt; Maybe String
+</span><span class="hs-identifier hs-var">lookupString</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;title&quot;</span></span><span> </span><span class="annot"><span class="annottext">Metadata
+</span><a href="#local-6989586621679295850"><span class="hs-identifier hs-var">meta</span></a></span><span>
+</span><span id="line-31"></span><span>    </span><span id="local-6989586621679295853"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679295853"><span class="hs-identifier hs-var">dateStr</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">String -&gt; Metadata -&gt; Maybe String
+</span><span class="hs-identifier hs-var">lookupString</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;date&quot;</span></span><span> </span><span class="annot"><span class="annottext">Metadata
+</span><a href="#local-6989586621679295850"><span class="hs-identifier hs-var">meta</span></a></span><span>
+</span><span id="line-32"></span><span>    </span><span id="local-6989586621679295854"><span class="annot"><span class="annottext">Day
+</span><a href="#local-6989586621679295854"><span class="hs-identifier hs-var">date</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Bool -&gt; TimeLocale -&gt; String -&gt; String -&gt; Maybe Day
+forall (m :: * -&gt; *) t.
+(MonadFail m, ParseTime t) =&gt;
+Bool -&gt; TimeLocale -&gt; String -&gt; String -&gt; m t
+</span><span class="hs-identifier hs-var">parseTimeM</span></span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">True</span></span><span> </span><span class="annot"><span class="annottext">TimeLocale
+</span><span class="hs-identifier hs-var">defaultTimeLocale</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;%Y-%m-%d&quot;</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679295853"><span class="hs-identifier hs-var">dateStr</span></a></span><span>
+</span><span id="line-33"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679295855"><span class="annot"><span class="annottext">tagsStr :: String
+</span><a href="#local-6989586621679295855"><span class="hs-identifier hs-var hs-var">tagsStr</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Maybe String -&gt; String
+forall a. a -&gt; Maybe a -&gt; a
+</span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;&quot;</span></span><span> </span><span class="annot"><span class="annottext">(Maybe String -&gt; String) -&gt; Maybe String -&gt; String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Metadata -&gt; Maybe String
+</span><span class="hs-identifier hs-var">lookupString</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;disney-tags&quot;</span></span><span> </span><span class="annot"><span class="annottext">Metadata
+</span><a href="#local-6989586621679295850"><span class="hs-identifier hs-var">meta</span></a></span><span>
+</span><span id="line-34"></span><span>        </span><span id="local-6989586621679295859"><span class="annot"><span class="annottext">tags :: [Text]
+</span><a href="#local-6989586621679295859"><span class="hs-identifier hs-var hs-var">tags</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Bool) -&gt; [Text] -&gt; [Text]
+forall a. (a -&gt; Bool) -&gt; [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">filter</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Bool -&gt; Bool
+</span><span class="hs-identifier hs-var">not</span></span><span> </span><span class="annot"><span class="annottext">(Bool -&gt; Bool) -&gt; (Text -&gt; Bool) -&gt; Text -&gt; Bool
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Bool
+</span><span class="hs-identifier hs-var">T.null</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">([Text] -&gt; [Text]) -&gt; [Text] -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Text) -&gt; [Text] -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text
+</span><span class="hs-identifier hs-var">T.strip</span></span><span> </span><span class="annot"><span class="annottext">([Text] -&gt; [Text]) -&gt; [Text] -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">HasCallStack =&gt; Text -&gt; Text -&gt; [Text]
+Text -&gt; Text -&gt; [Text]
+</span><span class="hs-identifier hs-var">T.splitOn</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;,&quot;</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; [Text]) -&gt; Text -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Text
+</span><span class="hs-identifier hs-var">T.pack</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679295855"><span class="hs-identifier hs-var">tagsStr</span></a></span><span>
+</span><span id="line-35"></span><span>        </span><span id="local-6989586621679295866"><span class="annot"><span class="annottext">aiGeneratedStr :: String
+</span><a href="#local-6989586621679295866"><span class="hs-identifier hs-var hs-var">aiGeneratedStr</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Maybe String -&gt; String
+forall a. a -&gt; Maybe a -&gt; a
+</span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;false&quot;</span></span><span> </span><span class="annot"><span class="annottext">(Maybe String -&gt; String) -&gt; Maybe String -&gt; String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Metadata -&gt; Maybe String
+</span><span class="hs-identifier hs-var">lookupString</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;ai-generated&quot;</span></span><span> </span><span class="annot"><span class="annottext">Metadata
+</span><a href="#local-6989586621679295850"><span class="hs-identifier hs-var">meta</span></a></span><span>
+</span><span id="line-36"></span><span>        </span><span id="local-6989586621679295870"><span class="annot"><span class="annottext">aiGenerated :: Bool
+</span><a href="#local-6989586621679295870"><span class="hs-identifier hs-var hs-var">aiGenerated</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text
+</span><span class="hs-identifier hs-var">T.toLower</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Text
+</span><span class="hs-identifier hs-var">T.pack</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679295866"><span class="hs-identifier hs-var">aiGeneratedStr</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;true&quot;</span></span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span>        </span><span class="hs-comment">-- SNS&#12522;&#12531;&#12463;&#12398;&#21462;&#24471;</span><span>
+</span><span id="line-39"></span><span>        </span><span id="local-6989586621679295872"><span class="annot"><span class="annottext">youtube :: [Text]
+</span><a href="#local-6989586621679295872"><span class="hs-identifier hs-var hs-var">youtube</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; [Text]
+</span><a href="Data.Disney.Experience.Generator.html#parseLinks"><span class="hs-identifier hs-var">parseLinks</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; [Text]) -&gt; String -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Maybe String -&gt; String
+forall a. a -&gt; Maybe a -&gt; a
+</span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;&quot;</span></span><span> </span><span class="annot"><span class="annottext">(Maybe String -&gt; String) -&gt; Maybe String -&gt; String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Metadata -&gt; Maybe String
+</span><span class="hs-identifier hs-var">lookupString</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;youtube&quot;</span></span><span> </span><span class="annot"><span class="annottext">Metadata
+</span><a href="#local-6989586621679295850"><span class="hs-identifier hs-var">meta</span></a></span><span>
+</span><span id="line-40"></span><span>        </span><span id="local-6989586621679295874"><span class="annot"><span class="annottext">instagram :: [Text]
+</span><a href="#local-6989586621679295874"><span class="hs-identifier hs-var hs-var">instagram</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; [Text]
+</span><a href="Data.Disney.Experience.Generator.html#parseLinks"><span class="hs-identifier hs-var">parseLinks</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; [Text]) -&gt; String -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Maybe String -&gt; String
+forall a. a -&gt; Maybe a -&gt; a
+</span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;&quot;</span></span><span> </span><span class="annot"><span class="annottext">(Maybe String -&gt; String) -&gt; Maybe String -&gt; String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Metadata -&gt; Maybe String
+</span><span class="hs-identifier hs-var">lookupString</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;instagram&quot;</span></span><span> </span><span class="annot"><span class="annottext">Metadata
+</span><a href="#local-6989586621679295850"><span class="hs-identifier hs-var">meta</span></a></span><span>
+</span><span id="line-41"></span><span>        </span><span id="local-6989586621679295875"><span class="annot"><span class="annottext">xLinks :: [Text]
+</span><a href="#local-6989586621679295875"><span class="hs-identifier hs-var hs-var">xLinks</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; [Text]
+</span><a href="Data.Disney.Experience.Generator.html#parseLinks"><span class="hs-identifier hs-var">parseLinks</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; [Text]) -&gt; String -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Maybe String -&gt; String
+forall a. a -&gt; Maybe a -&gt; a
+</span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;&quot;</span></span><span> </span><span class="annot"><span class="annottext">(Maybe String -&gt; String) -&gt; Maybe String -&gt; String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Metadata -&gt; Maybe String
+</span><span class="hs-identifier hs-var">lookupString</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;x&quot;</span></span><span> </span><span class="annot"><span class="annottext">Metadata
+</span><a href="#local-6989586621679295850"><span class="hs-identifier hs-var">meta</span></a></span><span>
+</span><span id="line-42"></span><span>        </span><span id="local-6989586621679295876"><span class="annot"><span class="annottext">note :: [Text]
+</span><a href="#local-6989586621679295876"><span class="hs-identifier hs-var hs-var">note</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; [Text]
+</span><a href="Data.Disney.Experience.Generator.html#parseLinks"><span class="hs-identifier hs-var">parseLinks</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; [Text]) -&gt; String -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Maybe String -&gt; String
+forall a. a -&gt; Maybe a -&gt; a
+</span><span class="hs-identifier hs-var">fromMaybe</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;&quot;</span></span><span> </span><span class="annot"><span class="annottext">(Maybe String -&gt; String) -&gt; Maybe String -&gt; String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Metadata -&gt; Maybe String
+</span><span class="hs-identifier hs-var">lookupString</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;note&quot;</span></span><span> </span><span class="annot"><span class="annottext">Metadata
+</span><a href="#local-6989586621679295850"><span class="hs-identifier hs-var">meta</span></a></span><span>
+</span><span id="line-43"></span><span>
+</span><span id="line-44"></span><span>        </span><span id="local-6989586621679295877"><span class="annot"><span class="annottext">snsLinks :: SNSLinks
+</span><a href="#local-6989586621679295877"><span class="hs-identifier hs-var hs-var">snsLinks</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#SNSLinks"><span class="hs-identifier hs-type">SNSLinks</span></a></span><span>
+</span><span id="line-45"></span><span>            </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">youtube :: [Text]
+</span><a href="Data.Disney.Experience.html#youtube"><span class="hs-identifier hs-var">youtube</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679295872"><span class="hs-identifier hs-var">youtube</span></a></span><span>
+</span><span id="line-46"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">instagram :: [Text]
+</span><a href="Data.Disney.Experience.html#instagram"><span class="hs-identifier hs-var">instagram</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679295874"><span class="hs-identifier hs-var">instagram</span></a></span><span>
+</span><span id="line-47"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">x :: [Text]
+</span><a href="Data.Disney.Experience.html#x"><span class="hs-identifier hs-var">x</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679295875"><span class="hs-identifier hs-var">xLinks</span></a></span><span>
+</span><span id="line-48"></span><span>            </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">note :: [Text]
+</span><a href="Data.Disney.Experience.html#note"><span class="hs-identifier hs-var">note</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679295876"><span class="hs-identifier hs-var">note</span></a></span><span>
+</span><span id="line-49"></span><span>            </span><span class="hs-special">}</span><span>
+</span><span id="line-50"></span><span>
+</span><span id="line-51"></span><span>    </span><span class="annot"><span class="annottext">ExperienceRecord -&gt; Maybe ExperienceRecord
+forall a. a -&gt; Maybe a
+forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
+</span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-type">ExperienceRecord</span></a></span><span>
+</span><span id="line-52"></span><span>        </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">title :: Text
+</span><a href="Data.Disney.Experience.html#title"><span class="hs-identifier hs-var">title</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Text
+</span><span class="hs-identifier hs-var">T.pack</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679295851"><span class="hs-identifier hs-var">titleStr</span></a></span><span>
+</span><span id="line-53"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">date :: Day
+</span><a href="Data.Disney.Experience.html#date"><span class="hs-identifier hs-var">date</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Day
+</span><a href="#local-6989586621679295854"><span class="hs-identifier hs-var">date</span></a></span><span>
+</span><span id="line-54"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">disneyTags :: [Text]
+</span><a href="Data.Disney.Experience.html#disneyTags"><span class="hs-identifier hs-var">disneyTags</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679295859"><span class="hs-identifier hs-var">tags</span></a></span><span>
+</span><span id="line-55"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">snsLinks :: SNSLinks
+</span><a href="Data.Disney.Experience.html#snsLinks"><span class="hs-identifier hs-var">snsLinks</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">SNSLinks
+</span><a href="#local-6989586621679295877"><span class="hs-identifier hs-var">snsLinks</span></a></span><span>
+</span><span id="line-56"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">aiGenerated :: Bool
+</span><a href="Data.Disney.Experience.html#aiGenerated"><span class="hs-identifier hs-var">aiGenerated</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679295870"><span class="hs-identifier hs-var">aiGenerated</span></a></span><span>
+</span><span id="line-57"></span><span>        </span><span class="hs-special">}</span><span>
+</span><span id="line-58"></span><span>
+</span><span id="line-59"></span><span class="annot"><span class="hs-comment">-- | &#12459;&#12531;&#12510;&#21306;&#20999;&#12426;&#12398;&#25991;&#23383;&#21015;&#12434;&#12522;&#12473;&#12488;&#12395;&#12497;&#12540;&#12473;</span></span><span>
+</span><span id="line-60"></span><span class="annot"><a href="Data.Disney.Experience.Generator.html#parseLinks"><span class="hs-identifier hs-type">parseLinks</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span class="hs-special">]</span><span>
+</span><span id="line-61"></span><span id="parseLinks"><span class="annot"><span class="annottext">parseLinks :: String -&gt; [Text]
+</span><a href="Data.Disney.Experience.Generator.html#parseLinks"><span class="hs-identifier hs-var hs-var">parseLinks</span></a></span></span><span> </span><span id="local-6989586621679295889"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679295889"><span class="hs-identifier hs-var">str</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Bool) -&gt; [Text] -&gt; [Text]
+forall a. (a -&gt; Bool) -&gt; [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">filter</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Bool -&gt; Bool
+</span><span class="hs-identifier hs-var">not</span></span><span> </span><span class="annot"><span class="annottext">(Bool -&gt; Bool) -&gt; (Text -&gt; Bool) -&gt; Text -&gt; Bool
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Bool
+</span><span class="hs-identifier hs-var">T.null</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">([Text] -&gt; [Text]) -&gt; [Text] -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Text) -&gt; [Text] -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">Text -&gt; Text
+</span><span class="hs-identifier hs-var">T.strip</span></span><span> </span><span class="annot"><span class="annottext">([Text] -&gt; [Text]) -&gt; [Text] -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">HasCallStack =&gt; Text -&gt; Text -&gt; [Text]
+Text -&gt; Text -&gt; [Text]
+</span><span class="hs-identifier hs-var">T.splitOn</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><span class="hs-string">&quot;,&quot;</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; [Text]) -&gt; Text -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Text
+</span><span class="hs-identifier hs-var">T.pack</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679295889"><span class="hs-identifier hs-var">str</span></a></span><span>
+</span><span id="line-62"></span><span>
+</span><span id="line-63"></span><span class="annot"><span class="hs-comment">-- | &#26085;&#21029;&#12487;&#12540;&#12479;&#12434;&#38598;&#32004;</span></span><span>
+</span><span id="line-64"></span><span class="annot"><a href="Data.Disney.Experience.Generator.html#aggregateDailyData"><span class="hs-identifier hs-type">aggregateDailyData</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-type">ExperienceRecord</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.Experience.html#DailyCount"><span class="hs-identifier hs-type">DailyCount</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-65"></span><span id="aggregateDailyData"><span class="annot"><span class="annottext">aggregateDailyData :: [ExperienceRecord] -&gt; [DailyCount]
+</span><a href="Data.Disney.Experience.Generator.html#aggregateDailyData"><span class="hs-identifier hs-var hs-var">aggregateDailyData</span></a></span></span><span> </span><span id="local-6989586621679295890"><span class="annot"><span class="annottext">[ExperienceRecord]
+</span><a href="#local-6989586621679295890"><span class="hs-identifier hs-var">records</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-66"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679295897"><span class="annot"><span class="annottext">dateCountMap :: Map Day Int
+</span><a href="#local-6989586621679295897"><span class="hs-identifier hs-var hs-var">dateCountMap</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Map Day Int -&gt; ExperienceRecord -&gt; Map Day Int)
+-&gt; Map Day Int -&gt; [ExperienceRecord] -&gt; Map Day Int
+forall b a. (b -&gt; a -&gt; b) -&gt; b -&gt; [a] -&gt; b
+forall (t :: * -&gt; *) b a.
+Foldable t =&gt;
+(b -&gt; a -&gt; b) -&gt; b -&gt; t a -&gt; b
+</span><span class="hs-identifier hs-var">foldl'</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679295898"><span class="annot"><span class="annottext">Map Day Int
+</span><a href="#local-6989586621679295898"><span class="hs-identifier hs-var">acc</span></a></span></span><span> </span><span id="local-6989586621679295899"><span class="annot"><span class="annottext">ExperienceRecord
+</span><a href="#local-6989586621679295899"><span class="hs-identifier hs-var">rec</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">(Int -&gt; Int -&gt; Int) -&gt; Day -&gt; Int -&gt; Map Day Int -&gt; Map Day Int
+forall k a. Ord k =&gt; (a -&gt; a -&gt; a) -&gt; k -&gt; a -&gt; Map k a -&gt; Map k a
+</span><span class="hs-identifier hs-var">M.insertWith</span></span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Int
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">(+)</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ExperienceRecord -&gt; Day
+</span><a href="Data.Disney.Experience.html#date"><span class="hs-identifier hs-var">date</span></a></span><span> </span><span class="annot"><span class="annottext">ExperienceRecord
+</span><a href="#local-6989586621679295899"><span class="hs-identifier hs-var">rec</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Int
+</span><span class="hs-number">1</span></span><span> </span><span class="annot"><span class="annottext">Map Day Int
+</span><a href="#local-6989586621679295898"><span class="hs-identifier hs-var">acc</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Map Day Int
+forall k a. Map k a
+</span><span class="hs-identifier hs-var">M.empty</span></span><span> </span><span class="annot"><span class="annottext">[ExperienceRecord]
+</span><a href="#local-6989586621679295890"><span class="hs-identifier hs-var">records</span></a></span><span>
+</span><span id="line-67"></span><span>        </span><span id="local-6989586621679295904"><span class="annot"><span class="annottext">sortedDates :: [Day]
+</span><a href="#local-6989586621679295904"><span class="hs-identifier hs-var hs-var">sortedDates</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Day] -&gt; [Day]
+forall a. Ord a =&gt; [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">sort</span></span><span> </span><span class="annot"><span class="annottext">([Day] -&gt; [Day]) -&gt; [Day] -&gt; [Day]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Map Day Int -&gt; [Day]
+forall k a. Map k a -&gt; [k]
+</span><span class="hs-identifier hs-var">M.keys</span></span><span> </span><span class="annot"><span class="annottext">Map Day Int
+</span><a href="#local-6989586621679295897"><span class="hs-identifier hs-var">dateCountMap</span></a></span><span>
+</span><span id="line-68"></span><span>    </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">(Day -&gt; DailyCount) -&gt; [Day] -&gt; [DailyCount]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679295906"><span class="annot"><span class="annottext">Day
+</span><a href="#local-6989586621679295906"><span class="hs-identifier hs-var">d</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Day -&gt; Int -&gt; DailyCount
+</span><a href="Data.Disney.Experience.html#DailyCount"><span class="hs-identifier hs-var">DailyCount</span></a></span><span> </span><span class="annot"><span class="annottext">Day
+</span><a href="#local-6989586621679295906"><span class="hs-identifier hs-var">d</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Map Day Int
+</span><a href="#local-6989586621679295897"><span class="hs-identifier hs-var">dateCountMap</span></a></span><span> </span><span class="annot"><span class="annottext">Map Day Int -&gt; Day -&gt; Int
+forall k a. Ord k =&gt; Map k a -&gt; k -&gt; a
+</span><span class="hs-operator hs-var">M.!</span></span><span> </span><span class="annot"><span class="annottext">Day
+</span><a href="#local-6989586621679295906"><span class="hs-identifier hs-var">d</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Day]
+</span><a href="#local-6989586621679295904"><span class="hs-identifier hs-var">sortedDates</span></a></span><span>
+</span><span id="line-69"></span><span>
+</span><span id="line-70"></span><span class="annot"><span class="hs-comment">-- | &#12479;&#12464;&#21029;&#12487;&#12540;&#12479;&#12434;&#38598;&#32004;</span></span><span>
+</span><span id="line-71"></span><span class="annot"><a href="Data.Disney.Experience.Generator.html#aggregateTagData"><span class="hs-identifier hs-type">aggregateTagData</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-type">ExperienceRecord</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.Experience.html#TagCount"><span class="hs-identifier hs-type">TagCount</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-72"></span><span id="aggregateTagData"><span class="annot"><span class="annottext">aggregateTagData :: [ExperienceRecord] -&gt; [TagCount]
+</span><a href="Data.Disney.Experience.Generator.html#aggregateTagData"><span class="hs-identifier hs-var hs-var">aggregateTagData</span></a></span></span><span> </span><span id="local-6989586621679295909"><span class="annot"><span class="annottext">[ExperienceRecord]
+</span><a href="#local-6989586621679295909"><span class="hs-identifier hs-var">records</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-73"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679295915"><span class="annot"><span class="annottext">tagCountMap :: Map Text Int
+</span><a href="#local-6989586621679295915"><span class="hs-identifier hs-var hs-var">tagCountMap</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Map Text Int -&gt; ExperienceRecord -&gt; Map Text Int)
+-&gt; Map Text Int -&gt; [ExperienceRecord] -&gt; Map Text Int
+forall b a. (b -&gt; a -&gt; b) -&gt; b -&gt; [a] -&gt; b
+forall (t :: * -&gt; *) b a.
+Foldable t =&gt;
+(b -&gt; a -&gt; b) -&gt; b -&gt; t a -&gt; b
+</span><span class="hs-identifier hs-var">foldl'</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679295916"><span class="annot"><span class="annottext">Map Text Int
+</span><a href="#local-6989586621679295916"><span class="hs-identifier hs-var">acc</span></a></span></span><span> </span><span id="local-6989586621679295917"><span class="annot"><span class="annottext">ExperienceRecord
+</span><a href="#local-6989586621679295917"><span class="hs-identifier hs-var">rec</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">(Map Text Int -&gt; Text -&gt; Map Text Int)
+-&gt; Map Text Int -&gt; [Text] -&gt; Map Text Int
+forall b a. (b -&gt; a -&gt; b) -&gt; b -&gt; [a] -&gt; b
+forall (t :: * -&gt; *) b a.
+Foldable t =&gt;
+(b -&gt; a -&gt; b) -&gt; b -&gt; t a -&gt; b
+</span><span class="hs-identifier hs-var">foldl'</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679295918"><span class="annot"><span class="annottext">Map Text Int
+</span><a href="#local-6989586621679295918"><span class="hs-identifier hs-var">m</span></a></span></span><span> </span><span id="local-6989586621679295919"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679295919"><span class="hs-identifier hs-var">tag</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">(Int -&gt; Int -&gt; Int) -&gt; Text -&gt; Int -&gt; Map Text Int -&gt; Map Text Int
+forall k a. Ord k =&gt; (a -&gt; a -&gt; a) -&gt; k -&gt; a -&gt; Map k a -&gt; Map k a
+</span><span class="hs-identifier hs-var">M.insertWith</span></span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Int
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">(+)</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679295919"><span class="hs-identifier hs-var">tag</span></a></span><span> </span><span class="annot"><span class="annottext">Int
+</span><span class="hs-number">1</span></span><span> </span><span class="annot"><span class="annottext">Map Text Int
+</span><a href="#local-6989586621679295918"><span class="hs-identifier hs-var">m</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Map Text Int
+</span><a href="#local-6989586621679295916"><span class="hs-identifier hs-var">acc</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ExperienceRecord -&gt; [Text]
+</span><a href="Data.Disney.Experience.html#disneyTags"><span class="hs-identifier hs-var">disneyTags</span></a></span><span> </span><span class="annot"><span class="annottext">ExperienceRecord
+</span><a href="#local-6989586621679295917"><span class="hs-identifier hs-var">rec</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Map Text Int
+forall k a. Map k a
+</span><span class="hs-identifier hs-var">M.empty</span></span><span> </span><span class="annot"><span class="annottext">[ExperienceRecord]
+</span><a href="#local-6989586621679295909"><span class="hs-identifier hs-var">records</span></a></span><span>
+</span><span id="line-74"></span><span>        </span><span id="local-6989586621679295921"><span class="annot"><span class="annottext">sortedTags :: [Text]
+</span><a href="#local-6989586621679295921"><span class="hs-identifier hs-var hs-var">sortedTags</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Text] -&gt; [Text]
+forall a. Ord a =&gt; [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">sort</span></span><span> </span><span class="annot"><span class="annottext">([Text] -&gt; [Text]) -&gt; [Text] -&gt; [Text]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Map Text Int -&gt; [Text]
+forall k a. Map k a -&gt; [k]
+</span><span class="hs-identifier hs-var">M.keys</span></span><span> </span><span class="annot"><span class="annottext">Map Text Int
+</span><a href="#local-6989586621679295915"><span class="hs-identifier hs-var">tagCountMap</span></a></span><span>
+</span><span id="line-75"></span><span>    </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">(Text -&gt; TagCount) -&gt; [Text] -&gt; [TagCount]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679295922"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679295922"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Int -&gt; TagCount
+</span><a href="Data.Disney.Experience.html#TagCount"><span class="hs-identifier hs-var">TagCount</span></a></span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679295922"><span class="hs-identifier hs-var">t</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Map Text Int
+</span><a href="#local-6989586621679295915"><span class="hs-identifier hs-var">tagCountMap</span></a></span><span> </span><span class="annot"><span class="annottext">Map Text Int -&gt; Text -&gt; Int
+forall k a. Ord k =&gt; Map k a -&gt; k -&gt; a
+</span><span class="hs-operator hs-var">M.!</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679295922"><span class="hs-identifier hs-var">t</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679295921"><span class="hs-identifier hs-var">sortedTags</span></a></span><span>
+</span><span id="line-76"></span><span>
+</span><span id="line-77"></span><span class="annot"><span class="hs-comment">-- | &#24180;&#24230;&#21029;&#12395;&#12487;&#12540;&#12479;&#12434;&#38598;&#32004;</span></span><span>
+</span><span id="line-78"></span><span class="annot"><a href="Data.Disney.Experience.Generator.html#aggregateByYear"><span class="hs-identifier hs-type">aggregateByYear</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-type">ExperienceRecord</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.Experience.html#YearData"><span class="hs-identifier hs-type">YearData</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-79"></span><span id="aggregateByYear"><span class="annot"><span class="annottext">aggregateByYear :: [ExperienceRecord] -&gt; [YearData]
+</span><a href="Data.Disney.Experience.Generator.html#aggregateByYear"><span class="hs-identifier hs-var hs-var">aggregateByYear</span></a></span></span><span> </span><span id="local-6989586621679295924"><span class="annot"><span class="annottext">[ExperienceRecord]
+</span><a href="#local-6989586621679295924"><span class="hs-identifier hs-var">records</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-80"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679295929"><span class="annot"><span class="annottext">yearGrouped :: Map Int [ExperienceRecord]
+</span><a href="#local-6989586621679295929"><span class="hs-identifier hs-var hs-var">yearGrouped</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">([ExperienceRecord] -&gt; [ExperienceRecord] -&gt; [ExperienceRecord])
+-&gt; [(Int, [ExperienceRecord])] -&gt; Map Int [ExperienceRecord]
+forall k a. Ord k =&gt; (a -&gt; a -&gt; a) -&gt; [(k, a)] -&gt; Map k a
+</span><span class="hs-identifier hs-var">M.fromListWith</span></span><span> </span><span class="annot"><span class="annottext">[ExperienceRecord] -&gt; [ExperienceRecord] -&gt; [ExperienceRecord]
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">(++)</span></span><span> </span><span class="hs-special">[</span><span class="hs-special">(</span><span class="annot"><span class="annottext">Day -&gt; Int
+forall {a}. Num a =&gt; Day -&gt; a
+</span><a href="#local-6989586621679295931"><span class="hs-identifier hs-var">getYear</span></a></span><span> </span><span class="annot"><span class="annottext">(Day -&gt; Int) -&gt; Day -&gt; Int
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">ExperienceRecord -&gt; Day
+</span><a href="Data.Disney.Experience.html#date"><span class="hs-identifier hs-var">date</span></a></span><span> </span><span class="annot"><span class="annottext">ExperienceRecord
+</span><a href="#local-6989586621679295932"><span class="hs-identifier hs-var">rec</span></a></span><span class="hs-special">,</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">ExperienceRecord
+</span><a href="#local-6989586621679295932"><span class="hs-identifier hs-var">rec</span></a></span><span class="hs-special">]</span><span class="hs-special">)</span><span> </span><span class="hs-glyph">|</span><span> </span><span id="local-6989586621679295932"><span class="annot"><span class="annottext">ExperienceRecord
+</span><a href="#local-6989586621679295932"><span class="hs-identifier hs-var">rec</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[ExperienceRecord]
+</span><a href="#local-6989586621679295924"><span class="hs-identifier hs-var">records</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-81"></span><span>        </span><span id="local-6989586621679295935"><span class="annot"><span class="annottext">sortedYears :: [Int]
+</span><a href="#local-6989586621679295935"><span class="hs-identifier hs-var hs-var">sortedYears</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Int] -&gt; [Int]
+forall a. Ord a =&gt; [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">sort</span></span><span> </span><span class="annot"><span class="annottext">([Int] -&gt; [Int]) -&gt; [Int] -&gt; [Int]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Map Int [ExperienceRecord] -&gt; [Int]
+forall k a. Map k a -&gt; [k]
+</span><span class="hs-identifier hs-var">M.keys</span></span><span> </span><span class="annot"><span class="annottext">Map Int [ExperienceRecord]
+</span><a href="#local-6989586621679295929"><span class="hs-identifier hs-var">yearGrouped</span></a></span><span>
+</span><span id="line-82"></span><span>    </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">(Int -&gt; YearData) -&gt; [Int] -&gt; [YearData]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">\</span><span id="local-6989586621679295936"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679295936"><span class="hs-identifier hs-var">y</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Int -&gt; [DailyCount] -&gt; YearData
+</span><a href="Data.Disney.Experience.html#YearData"><span class="hs-identifier hs-var">YearData</span></a></span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679295936"><span class="hs-identifier hs-var">y</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[ExperienceRecord] -&gt; [DailyCount]
+</span><a href="Data.Disney.Experience.Generator.html#aggregateDailyData"><span class="hs-identifier hs-var">aggregateDailyData</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Map Int [ExperienceRecord]
+</span><a href="#local-6989586621679295929"><span class="hs-identifier hs-var">yearGrouped</span></a></span><span> </span><span class="annot"><span class="annottext">Map Int [ExperienceRecord] -&gt; Int -&gt; [ExperienceRecord]
+forall k a. Ord k =&gt; Map k a -&gt; k -&gt; a
+</span><span class="hs-operator hs-var">M.!</span></span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679295936"><span class="hs-identifier hs-var">y</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Int]
+</span><a href="#local-6989586621679295935"><span class="hs-identifier hs-var">sortedYears</span></a></span><span>
+</span><span id="line-83"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-84"></span><span>    </span><span id="local-6989586621679295931"><span class="annot"><span class="annottext">getYear :: Day -&gt; a
+</span><a href="#local-6989586621679295931"><span class="hs-identifier hs-var hs-var">getYear</span></a></span></span><span> </span><span id="local-6989586621679295940"><span class="annot"><span class="annottext">Day
+</span><a href="#local-6989586621679295940"><span class="hs-identifier hs-var">day</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">let</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295941"><span class="annot"><span class="annottext">Year
+</span><a href="#local-6989586621679295941"><span class="hs-identifier hs-var">y</span></a></span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Int
+</span><span class="hs-identifier">_</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Int
+</span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Day -&gt; (Year, Int, Int)
+</span><span class="hs-identifier hs-var">toGregorian</span></span><span> </span><span class="annot"><span class="annottext">Day
+</span><a href="#local-6989586621679295940"><span class="hs-identifier hs-var">day</span></a></span><span> </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">Year -&gt; a
+forall a. Num a =&gt; Year -&gt; a
+</span><span class="hs-identifier hs-var">fromInteger</span></span><span> </span><span class="annot"><span class="annottext">Year
+</span><a href="#local-6989586621679295941"><span class="hs-identifier hs-var">y</span></a></span><span>
+</span><span id="line-85"></span><span>
+</span><span id="line-86"></span><span class="annot"><span class="hs-comment">-- | &#21487;&#35222;&#21270;&#12487;&#12540;&#12479;&#12434;&#29983;&#25104;</span></span><span>
+</span><span id="line-87"></span><span id="local-6989586621679295800"><span class="annot"><a href="Data.Disney.Experience.Generator.html#generateVisualizationData"><span class="hs-identifier hs-type">generateVisualizationData</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Item</span></span><span> </span><span class="annot"><a href="#local-6989586621679295800"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Compiler</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#VisualizationData"><span class="hs-identifier hs-type">VisualizationData</span></a></span></span><span>
+</span><span id="line-88"></span><span id="generateVisualizationData"><span class="annot"><span class="annottext">generateVisualizationData :: forall a. [Item a] -&gt; Compiler VisualizationData
+</span><a href="Data.Disney.Experience.Generator.html#generateVisualizationData"><span class="hs-identifier hs-var hs-var">generateVisualizationData</span></a></span></span><span> </span><span id="local-6989586621679295952"><span class="annot"><span class="annottext">[Item a]
+</span><a href="#local-6989586621679295952"><span class="hs-identifier hs-var">items</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-89"></span><span>    </span><span id="local-6989586621679295953"><span class="annot"><span class="annottext">[Maybe ExperienceRecord]
+</span><a href="#local-6989586621679295953"><span class="hs-identifier hs-var">records</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[Item a]
+-&gt; (Item a -&gt; Compiler (Maybe ExperienceRecord))
+-&gt; Compiler [Maybe ExperienceRecord]
+forall (t :: * -&gt; *) (m :: * -&gt; *) a b.
+(Traversable t, Monad m) =&gt;
+t a -&gt; (a -&gt; m b) -&gt; m (t b)
+</span><span class="hs-identifier hs-var">forM</span></span><span> </span><span class="annot"><span class="annottext">[Item a]
+</span><a href="#local-6989586621679295952"><span class="hs-identifier hs-var">items</span></a></span><span> </span><span class="annot"><span class="annottext">((Item a -&gt; Compiler (Maybe ExperienceRecord))
+ -&gt; Compiler [Maybe ExperienceRecord])
+-&gt; (Item a -&gt; Compiler (Maybe ExperienceRecord))
+-&gt; Compiler [Maybe ExperienceRecord]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295954"><span class="annot"><span class="annottext">Item a
+</span><a href="#local-6989586621679295954"><span class="hs-identifier hs-var">item</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-90"></span><span>        </span><span id="local-6989586621679295955"><span class="annot"><span class="annottext">Metadata
+</span><a href="#local-6989586621679295955"><span class="hs-identifier hs-var">meta</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Identifier -&gt; Compiler Metadata
+forall (m :: * -&gt; *). MonadMetadata m =&gt; Identifier -&gt; m Metadata
+</span><span class="hs-identifier hs-var">getMetadata</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Item a -&gt; Identifier
+forall a. Item a -&gt; Identifier
+</span><span class="hs-identifier hs-var">itemIdentifier</span></span><span> </span><span class="annot"><span class="annottext">Item a
+</span><a href="#local-6989586621679295954"><span class="hs-identifier hs-var">item</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-91"></span><span>        </span><span class="annot"><span class="annottext">Maybe ExperienceRecord -&gt; Compiler (Maybe ExperienceRecord)
+forall a. a -&gt; Compiler a
+forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
+</span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><span class="annottext">(Maybe ExperienceRecord -&gt; Compiler (Maybe ExperienceRecord))
+-&gt; Maybe ExperienceRecord -&gt; Compiler (Maybe ExperienceRecord)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Metadata -&gt; Maybe ExperienceRecord
+</span><a href="Data.Disney.Experience.Generator.html#parseLogMetadata"><span class="hs-identifier hs-var">parseLogMetadata</span></a></span><span> </span><span class="annot"><span class="annottext">Metadata
+</span><a href="#local-6989586621679295955"><span class="hs-identifier hs-var">meta</span></a></span><span>
+</span><span id="line-92"></span><span>
+</span><span id="line-93"></span><span>    </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679295958"><span class="annot"><span class="annottext">validRecords :: [ExperienceRecord]
+</span><a href="#local-6989586621679295958"><span class="hs-identifier hs-var hs-var">validRecords</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">ExperienceRecord
+</span><a href="#local-6989586621679295959"><span class="hs-identifier hs-var">rec</span></a></span><span> </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679295959"><span class="annot"><span class="annottext">ExperienceRecord
+</span><a href="#local-6989586621679295959"><span class="hs-identifier hs-var">rec</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[Maybe ExperienceRecord]
+</span><a href="#local-6989586621679295953"><span class="hs-identifier hs-var">records</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-94"></span><span>        </span><span id="local-6989586621679295960"><span class="annot"><span class="annottext">dailyData :: [DailyCount]
+</span><a href="#local-6989586621679295960"><span class="hs-identifier hs-var hs-var">dailyData</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[ExperienceRecord] -&gt; [DailyCount]
+</span><a href="Data.Disney.Experience.Generator.html#aggregateDailyData"><span class="hs-identifier hs-var">aggregateDailyData</span></a></span><span> </span><span class="annot"><span class="annottext">[ExperienceRecord]
+</span><a href="#local-6989586621679295958"><span class="hs-identifier hs-var">validRecords</span></a></span><span>
+</span><span id="line-95"></span><span>        </span><span id="local-6989586621679295961"><span class="annot"><span class="annottext">tagData :: [TagCount]
+</span><a href="#local-6989586621679295961"><span class="hs-identifier hs-var hs-var">tagData</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[ExperienceRecord] -&gt; [TagCount]
+</span><a href="Data.Disney.Experience.Generator.html#aggregateTagData"><span class="hs-identifier hs-var">aggregateTagData</span></a></span><span> </span><span class="annot"><span class="annottext">[ExperienceRecord]
+</span><a href="#local-6989586621679295958"><span class="hs-identifier hs-var">validRecords</span></a></span><span>
+</span><span id="line-96"></span><span>        </span><span id="local-6989586621679295962"><span class="annot"><span class="annottext">yearlyData :: [YearData]
+</span><a href="#local-6989586621679295962"><span class="hs-identifier hs-var hs-var">yearlyData</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[ExperienceRecord] -&gt; [YearData]
+</span><a href="Data.Disney.Experience.Generator.html#aggregateByYear"><span class="hs-identifier hs-var">aggregateByYear</span></a></span><span> </span><span class="annot"><span class="annottext">[ExperienceRecord]
+</span><a href="#local-6989586621679295958"><span class="hs-identifier hs-var">validRecords</span></a></span><span>
+</span><span id="line-97"></span><span>
+</span><span id="line-98"></span><span>        </span><span id="local-6989586621679295963"><span class="annot"><span class="annottext">timeSeriesData :: TimeSeriesData
+</span><a href="#local-6989586621679295963"><span class="hs-identifier hs-var hs-var">timeSeriesData</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TimeSeriesData"><span class="hs-identifier hs-type">TimeSeriesData</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">daily :: [DailyCount]
+</span><a href="Data.Disney.Experience.html#daily"><span class="hs-identifier hs-var">daily</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[DailyCount]
+</span><a href="#local-6989586621679295960"><span class="hs-identifier hs-var">dailyData</span></a></span><span> </span><span class="hs-special">}</span><span>
+</span><span id="line-99"></span><span>        </span><span id="local-6989586621679295966"><span class="annot"><span class="annottext">tagStatsData :: TagStats
+</span><a href="#local-6989586621679295966"><span class="hs-identifier hs-var hs-var">tagStatsData</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TagStats"><span class="hs-identifier hs-type">TagStats</span></a></span><span> </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">tags :: [TagCount]
+</span><a href="Data.Disney.Experience.html#tags"><span class="hs-identifier hs-var">tags</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[TagCount]
+</span><a href="#local-6989586621679295961"><span class="hs-identifier hs-var">tagData</span></a></span><span> </span><span class="hs-special">}</span><span>
+</span><span id="line-100"></span><span>
+</span><span id="line-101"></span><span>    </span><span class="annot"><span class="annottext">VisualizationData -&gt; Compiler VisualizationData
+forall a. a -&gt; Compiler a
+forall (m :: * -&gt; *) a. Monad m =&gt; a -&gt; m a
+</span><span class="hs-identifier hs-var">return</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#VisualizationData"><span class="hs-identifier hs-type">VisualizationData</span></a></span><span>
+</span><span id="line-102"></span><span>        </span><span class="hs-special">{</span><span> </span><span class="annot"><span class="annottext">timeSeries :: TimeSeriesData
+</span><a href="Data.Disney.Experience.html#timeSeries"><span class="hs-identifier hs-var">timeSeries</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">TimeSeriesData
+</span><a href="#local-6989586621679295963"><span class="hs-identifier hs-var">timeSeriesData</span></a></span><span>
+</span><span id="line-103"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">tagStats :: TagStats
+</span><a href="Data.Disney.Experience.html#tagStats"><span class="hs-identifier hs-var">tagStats</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">TagStats
+</span><a href="#local-6989586621679295966"><span class="hs-identifier hs-var">tagStatsData</span></a></span><span>
+</span><span id="line-104"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">yearlyTimeSeries :: [YearData]
+</span><a href="#local-6989586621679295972"><span class="hs-identifier hs-var">yearlyTimeSeries</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[YearData]
+</span><a href="#local-6989586621679295962"><span class="hs-identifier hs-var">yearlyData</span></a></span><span>
+</span><span id="line-105"></span><span>        </span><span class="hs-special">}</span><span>
+</span><span id="line-106"></span><span>
+</span><span id="line-107"></span><span class="annot"><span class="hs-comment">-- | JSON&#12501;&#12449;&#12452;&#12523;&#12392;&#12375;&#12390;&#20445;&#23384;</span></span><span>
+</span><span id="line-108"></span><span class="annot"><a href="Data.Disney.Experience.Generator.html#saveVisualizationDataAsJSON"><span class="hs-identifier hs-type">saveVisualizationDataAsJSON</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#VisualizationData"><span class="hs-identifier hs-type">VisualizationData</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-109"></span><span id="saveVisualizationDataAsJSON"><span class="annot"><span class="annottext">saveVisualizationDataAsJSON :: VisualizationData -&gt; String -&gt; IO ()
+</span><a href="Data.Disney.Experience.Generator.html#saveVisualizationDataAsJSON"><span class="hs-identifier hs-var hs-var">saveVisualizationDataAsJSON</span></a></span></span><span> </span><span id="local-6989586621679295975"><span class="annot"><span class="annottext">VisualizationData
+</span><a href="#local-6989586621679295975"><span class="hs-identifier hs-var">vizData</span></a></span></span><span> </span><span id="local-6989586621679295976"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679295976"><span class="hs-identifier hs-var">filepath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-110"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; ByteString -&gt; IO ()
+</span><span class="hs-identifier hs-var">BL.writeFile</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679295976"><span class="hs-identifier hs-var">filepath</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">VisualizationData -&gt; ByteString
+forall a. ToJSON a =&gt; a -&gt; ByteString
+</span><span class="hs-identifier hs-var">encode</span></span><span> </span><span class="annot"><span class="annottext">VisualizationData
+</span><a href="#local-6989586621679295975"><span class="hs-identifier hs-var">vizData</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-111"></span></pre></body></html>
