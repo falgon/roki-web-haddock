@@ -29,7 +29,7 @@
 </span><a href="Data.Disney.Experience.html#x"><span class="hs-identifier hs-var hs-var">x</span></a></span></span><span>         </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span class="hs-special">]</span><span>
 </span><span id="line-27"></span><span>    </span><span class="hs-special">,</span><span> </span><span id="note"><span class="annot"><span class="annottext">SNSLinks -&gt; [Text]
 </span><a href="Data.Disney.Experience.html#note"><span class="hs-identifier hs-var hs-var">note</span></a></span></span><span>      </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span class="hs-special">]</span><span>
-</span><span id="line-28"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295115"><span id="local-6989586621679295123"><span class="annot"><span class="annottext">SNSLinks -&gt; SNSLinks -&gt; Bool
+</span><span id="line-28"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295145"><span id="local-6989586621679295153"><span class="annot"><span class="annottext">SNSLinks -&gt; SNSLinks -&gt; Bool
 (SNSLinks -&gt; SNSLinks -&gt; Bool)
 -&gt; (SNSLinks -&gt; SNSLinks -&gt; Bool) -&gt; Eq SNSLinks
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -37,7 +37,7 @@ $c== :: SNSLinks -&gt; SNSLinks -&gt; Bool
 == :: SNSLinks -&gt; SNSLinks -&gt; Bool
 $c/= :: SNSLinks -&gt; SNSLinks -&gt; Bool
 /= :: SNSLinks -&gt; SNSLinks -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295129"><span id="local-6989586621679295139"><span id="local-6989586621679295143"><span class="annot"><span class="annottext">Int -&gt; SNSLinks -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295159"><span id="local-6989586621679295169"><span id="local-6989586621679295173"><span class="annot"><span class="annottext">Int -&gt; SNSLinks -&gt; ShowS
 [SNSLinks] -&gt; ShowS
 SNSLinks -&gt; String
 (Int -&gt; SNSLinks -&gt; ShowS)
@@ -50,7 +50,7 @@ $cshow :: SNSLinks -&gt; String
 show :: SNSLinks -&gt; String
 $cshowList :: [SNSLinks] -&gt; ShowS
 showList :: [SNSLinks] -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295148"><span id="local-6989586621679295150"><span class="annot"><span class="annottext">(forall x. SNSLinks -&gt; Rep SNSLinks x)
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295178"><span id="local-6989586621679295180"><span class="annot"><span class="annottext">(forall x. SNSLinks -&gt; Rep SNSLinks x)
 -&gt; (forall x. Rep SNSLinks x -&gt; SNSLinks) -&gt; Generic SNSLinks
 forall x. Rep SNSLinks x -&gt; SNSLinks
 forall x. SNSLinks -&gt; Rep SNSLinks x
@@ -62,56 +62,56 @@ $cto :: forall x. Rep SNSLinks x -&gt; SNSLinks
 to :: forall x. Rep SNSLinks x -&gt; SNSLinks
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Generic</span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-29"></span><span>
-</span><span id="line-30"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295155"><span id="local-6989586621679295159"><span id="local-6989586621679295162"><span id="local-6989586621679295165"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#SNSLinks"><span class="hs-identifier hs-type">SNSLinks</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-31"></span><span>    </span><span id="local-6989586621679295187"><span class="annot"><span class="annottext">toJSON :: SNSLinks -&gt; Value
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#SNSLinks"><span class="hs-identifier hs-type">SNSLinks</span></a></span><span> </span><span id="local-6989586621679295188"><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679295188"><span class="hs-identifier hs-var">yt</span></a></span></span><span> </span><span id="local-6989586621679295189"><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679295189"><span class="hs-identifier hs-var">ig</span></a></span></span><span> </span><span id="local-6989586621679295190"><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679295190"><span class="hs-identifier hs-var">xLinks</span></a></span></span><span> </span><span id="local-6989586621679295191"><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679295191"><span class="hs-identifier hs-var">nt</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
+</span><span id="line-30"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295185"><span id="local-6989586621679295189"><span id="local-6989586621679295192"><span id="local-6989586621679295195"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#SNSLinks"><span class="hs-identifier hs-type">SNSLinks</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-31"></span><span>    </span><span id="local-6989586621679295217"><span class="annot"><span class="annottext">toJSON :: SNSLinks -&gt; Value
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#SNSLinks"><span class="hs-identifier hs-type">SNSLinks</span></a></span><span> </span><span id="local-6989586621679295218"><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679295218"><span class="hs-identifier hs-var">yt</span></a></span></span><span> </span><span id="local-6989586621679295219"><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679295219"><span class="hs-identifier hs-var">ig</span></a></span></span><span> </span><span id="local-6989586621679295220"><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679295220"><span class="hs-identifier hs-var">xLinks</span></a></span></span><span> </span><span id="local-6989586621679295221"><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679295221"><span class="hs-identifier hs-var">nt</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
 </span><span class="hs-identifier hs-var">object</span></span><span>
 </span><span id="line-32"></span><span>        </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;youtube&quot;</span></span><span>   </span><span class="annot"><span class="annottext">Key -&gt; [Text] -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679295188"><span class="hs-identifier hs-var">yt</span></a></span><span>
+</span><a href="#local-6989586621679295218"><span class="hs-identifier hs-var">yt</span></a></span><span>
 </span><span id="line-33"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;instagram&quot;</span></span><span> </span><span class="annot"><span class="annottext">Key -&gt; [Text] -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679295189"><span class="hs-identifier hs-var">ig</span></a></span><span>
+</span><a href="#local-6989586621679295219"><span class="hs-identifier hs-var">ig</span></a></span><span>
 </span><span id="line-34"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;x&quot;</span></span><span>         </span><span class="annot"><span class="annottext">Key -&gt; [Text] -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679295190"><span class="hs-identifier hs-var">xLinks</span></a></span><span>
+</span><a href="#local-6989586621679295220"><span class="hs-identifier hs-var">xLinks</span></a></span><span>
 </span><span id="line-35"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;note&quot;</span></span><span>      </span><span class="annot"><span class="annottext">Key -&gt; [Text] -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679295191"><span class="hs-identifier hs-var">nt</span></a></span><span>
+</span><a href="#local-6989586621679295221"><span class="hs-identifier hs-var">nt</span></a></span><span>
 </span><span id="line-36"></span><span>        </span><span class="hs-special">]</span><span>
 </span><span id="line-37"></span><span>
-</span><span id="line-38"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295194"><span id="local-6989586621679295198"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#SNSLinks"><span class="hs-identifier hs-type">SNSLinks</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-39"></span><span>    </span><span id="local-6989586621679295218"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser SNSLinks
-</span><a href="#local-6989586621679295218"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (Object -&gt; Parser SNSLinks) -&gt; Value -&gt; Parser SNSLinks
+</span><span id="line-38"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295224"><span id="local-6989586621679295228"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#SNSLinks"><span class="hs-identifier hs-type">SNSLinks</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-39"></span><span>    </span><span id="local-6989586621679295248"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser SNSLinks
+</span><a href="#local-6989586621679295248"><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (Object -&gt; Parser SNSLinks) -&gt; Value -&gt; Parser SNSLinks
 forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 </span><span class="hs-identifier hs-var">withObject</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;SNSLinks&quot;</span></span><span> </span><span class="annot"><span class="annottext">((Object -&gt; Parser SNSLinks) -&gt; Value -&gt; Parser SNSLinks)
 -&gt; (Object -&gt; Parser SNSLinks) -&gt; Value -&gt; Parser SNSLinks
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295220"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295220"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Text] -&gt; [Text] -&gt; [Text] -&gt; [Text] -&gt; SNSLinks
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295250"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679295250"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Text] -&gt; [Text] -&gt; [Text] -&gt; [Text] -&gt; SNSLinks
 </span><a href="Data.Disney.Experience.html#SNSLinks"><span class="hs-identifier hs-var">SNSLinks</span></a></span><span>
 </span><span id="line-40"></span><span>        </span><span class="annot"><span class="annottext">([Text] -&gt; [Text] -&gt; [Text] -&gt; [Text] -&gt; SNSLinks)
 -&gt; Parser [Text] -&gt; Parser ([Text] -&gt; [Text] -&gt; [Text] -&gt; SNSLinks)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295220"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [Text]
+</span><a href="#local-6989586621679295250"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [Text]
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;youtube&quot;</span></span><span>
@@ -120,7 +120,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295220"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [Text]
+</span><a href="#local-6989586621679295250"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [Text]
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;instagram&quot;</span></span><span>
@@ -129,7 +129,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295220"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [Text]
+</span><a href="#local-6989586621679295250"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [Text]
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;x&quot;</span></span><span>
@@ -137,7 +137,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295220"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [Text]
+</span><a href="#local-6989586621679295250"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [Text]
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;note&quot;</span></span><span>
@@ -154,7 +154,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><a href="Data.Disney.Experience.html#snsLinks"><span class="hs-identifier hs-var hs-var">snsLinks</span></a></span></span><span>    </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#SNSLinks"><span class="hs-identifier hs-type">SNSLinks</span></a></span><span>
 </span><span id="line-51"></span><span>    </span><span class="hs-special">,</span><span> </span><span id="aiGenerated"><span class="annot"><span class="annottext">ExperienceRecord -&gt; Bool
 </span><a href="Data.Disney.Experience.html#aiGenerated"><span class="hs-identifier hs-var hs-var">aiGenerated</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span>
-</span><span id="line-52"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295229"><span id="local-6989586621679295238"><span class="annot"><span class="annottext">ExperienceRecord -&gt; ExperienceRecord -&gt; Bool
+</span><span id="line-52"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295259"><span id="local-6989586621679295268"><span class="annot"><span class="annottext">ExperienceRecord -&gt; ExperienceRecord -&gt; Bool
 (ExperienceRecord -&gt; ExperienceRecord -&gt; Bool)
 -&gt; (ExperienceRecord -&gt; ExperienceRecord -&gt; Bool)
 -&gt; Eq ExperienceRecord
@@ -163,7 +163,7 @@ $c== :: ExperienceRecord -&gt; ExperienceRecord -&gt; Bool
 == :: ExperienceRecord -&gt; ExperienceRecord -&gt; Bool
 $c/= :: ExperienceRecord -&gt; ExperienceRecord -&gt; Bool
 /= :: ExperienceRecord -&gt; ExperienceRecord -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295242"><span id="local-6989586621679295252"><span id="local-6989586621679295256"><span class="annot"><span class="annottext">Int -&gt; ExperienceRecord -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295272"><span id="local-6989586621679295282"><span id="local-6989586621679295286"><span class="annot"><span class="annottext">Int -&gt; ExperienceRecord -&gt; ShowS
 [ExperienceRecord] -&gt; ShowS
 ExperienceRecord -&gt; String
 (Int -&gt; ExperienceRecord -&gt; ShowS)
@@ -178,7 +178,7 @@ $cshow :: ExperienceRecord -&gt; String
 show :: ExperienceRecord -&gt; String
 $cshowList :: [ExperienceRecord] -&gt; ShowS
 showList :: [ExperienceRecord] -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295259"><span id="local-6989586621679295261"><span class="annot"><span class="annottext">(forall x. ExperienceRecord -&gt; Rep ExperienceRecord x)
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295289"><span id="local-6989586621679295291"><span class="annot"><span class="annottext">(forall x. ExperienceRecord -&gt; Rep ExperienceRecord x)
 -&gt; (forall x. Rep ExperienceRecord x -&gt; ExperienceRecord)
 -&gt; Generic ExperienceRecord
 forall x. Rep ExperienceRecord x -&gt; ExperienceRecord
@@ -191,49 +191,49 @@ $cto :: forall x. Rep ExperienceRecord x -&gt; ExperienceRecord
 to :: forall x. Rep ExperienceRecord x -&gt; ExperienceRecord
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Generic</span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-53"></span><span>
-</span><span id="line-54"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295265"><span id="local-6989586621679295269"><span id="local-6989586621679295272"><span id="local-6989586621679295275"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-type">ExperienceRecord</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-55"></span><span>    </span><span id="local-6989586621679295296"><span class="annot"><span class="annottext">toJSON :: ExperienceRecord -&gt; Value
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-type">ExperienceRecord</span></a></span><span> </span><span id="local-6989586621679295297"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679295297"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span id="local-6989586621679295298"><span class="annot"><span class="annottext">Day
-</span><a href="#local-6989586621679295298"><span class="hs-identifier hs-var">d</span></a></span></span><span> </span><span id="local-6989586621679295299"><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679295299"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span id="local-6989586621679295300"><span class="annot"><span class="annottext">SNSLinks
-</span><a href="#local-6989586621679295300"><span class="hs-identifier hs-var">sns</span></a></span></span><span> </span><span id="local-6989586621679295301"><span class="annot"><span class="annottext">Bool
-</span><a href="#local-6989586621679295301"><span class="hs-identifier hs-var">ai</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
+</span><span id="line-54"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295295"><span id="local-6989586621679295299"><span id="local-6989586621679295302"><span id="local-6989586621679295305"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-type">ExperienceRecord</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-55"></span><span>    </span><span id="local-6989586621679295326"><span class="annot"><span class="annottext">toJSON :: ExperienceRecord -&gt; Value
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-type">ExperienceRecord</span></a></span><span> </span><span id="local-6989586621679295327"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679295327"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span id="local-6989586621679295328"><span class="annot"><span class="annottext">Day
+</span><a href="#local-6989586621679295328"><span class="hs-identifier hs-var">d</span></a></span></span><span> </span><span id="local-6989586621679295329"><span class="annot"><span class="annottext">[Text]
+</span><a href="#local-6989586621679295329"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span id="local-6989586621679295330"><span class="annot"><span class="annottext">SNSLinks
+</span><a href="#local-6989586621679295330"><span class="hs-identifier hs-var">sns</span></a></span></span><span> </span><span id="local-6989586621679295331"><span class="annot"><span class="annottext">Bool
+</span><a href="#local-6989586621679295331"><span class="hs-identifier hs-var">ai</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
 </span><span class="hs-identifier hs-var">object</span></span><span>
 </span><span id="line-56"></span><span>        </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;title&quot;</span></span><span>        </span><span class="annot"><span class="annottext">Key -&gt; Text -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679295297"><span class="hs-identifier hs-var">t</span></a></span><span>
+</span><a href="#local-6989586621679295327"><span class="hs-identifier hs-var">t</span></a></span><span>
 </span><span id="line-57"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;date&quot;</span></span><span>         </span><span class="annot"><span class="annottext">Key -&gt; Day -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Day
-</span><a href="#local-6989586621679295298"><span class="hs-identifier hs-var">d</span></a></span><span>
+</span><a href="#local-6989586621679295328"><span class="hs-identifier hs-var">d</span></a></span><span>
 </span><span id="line-58"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;disneyTags&quot;</span></span><span>   </span><span class="annot"><span class="annottext">Key -&gt; [Text] -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">[Text]
-</span><a href="#local-6989586621679295299"><span class="hs-identifier hs-var">tags</span></a></span><span>
+</span><a href="#local-6989586621679295329"><span class="hs-identifier hs-var">tags</span></a></span><span>
 </span><span id="line-59"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;snsLinks&quot;</span></span><span>     </span><span class="annot"><span class="annottext">Key -&gt; SNSLinks -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">SNSLinks
-</span><a href="#local-6989586621679295300"><span class="hs-identifier hs-var">sns</span></a></span><span>
+</span><a href="#local-6989586621679295330"><span class="hs-identifier hs-var">sns</span></a></span><span>
 </span><span id="line-60"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;aiGenerated&quot;</span></span><span>  </span><span class="annot"><span class="annottext">Key -&gt; Bool -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Bool
-</span><a href="#local-6989586621679295301"><span class="hs-identifier hs-var">ai</span></a></span><span>
+</span><a href="#local-6989586621679295331"><span class="hs-identifier hs-var">ai</span></a></span><span>
 </span><span id="line-61"></span><span>        </span><span class="hs-special">]</span><span>
 </span><span id="line-62"></span><span>
-</span><span id="line-63"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295304"><span id="local-6989586621679295308"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-type">ExperienceRecord</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-64"></span><span>    </span><span id="local-6989586621679295327"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser ExperienceRecord
+</span><span id="line-63"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295334"><span id="local-6989586621679295338"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-type">ExperienceRecord</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-64"></span><span>    </span><span id="local-6989586621679295357"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser ExperienceRecord
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 -&gt; (Object -&gt; Parser ExperienceRecord)
 -&gt; Value
@@ -246,15 +246,15 @@ forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 -&gt; Value
 -&gt; Parser ExperienceRecord
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295328"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295328"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Day -&gt; [Text] -&gt; SNSLinks -&gt; Bool -&gt; ExperienceRecord
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295358"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679295358"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Day -&gt; [Text] -&gt; SNSLinks -&gt; Bool -&gt; ExperienceRecord
 </span><a href="Data.Disney.Experience.html#ExperienceRecord"><span class="hs-identifier hs-var">ExperienceRecord</span></a></span><span>
 </span><span id="line-65"></span><span>        </span><span class="annot"><span class="annottext">(Text -&gt; Day -&gt; [Text] -&gt; SNSLinks -&gt; Bool -&gt; ExperienceRecord)
 -&gt; Parser Text
 -&gt; Parser (Day -&gt; [Text] -&gt; SNSLinks -&gt; Bool -&gt; ExperienceRecord)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295328"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Text
+</span><a href="#local-6989586621679295358"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Text
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;title&quot;</span></span><span>
@@ -264,7 +264,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295328"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Day
+</span><a href="#local-6989586621679295358"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Day
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;date&quot;</span></span><span>
@@ -273,7 +273,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295328"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [Text]
+</span><a href="#local-6989586621679295358"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [Text]
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;disneyTags&quot;</span></span><span>
@@ -282,7 +282,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295328"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser SNSLinks
+</span><a href="#local-6989586621679295358"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser SNSLinks
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;snsLinks&quot;</span></span><span>
@@ -291,7 +291,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295328"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Bool
+</span><a href="#local-6989586621679295358"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Bool
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;aiGenerated&quot;</span></span><span>
@@ -302,7 +302,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><a href="Data.Disney.Experience.html#dcDate"><span class="hs-identifier hs-var hs-var">dcDate</span></a></span></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Day</span></span><span>
 </span><span id="line-74"></span><span>    </span><span class="hs-special">,</span><span> </span><span id="dcCount"><span class="annot"><span class="annottext">DailyCount -&gt; Int
 </span><a href="Data.Disney.Experience.html#dcCount"><span class="hs-identifier hs-var hs-var">dcCount</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
-</span><span id="line-75"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295333"><span id="local-6989586621679295338"><span class="annot"><span class="annottext">DailyCount -&gt; DailyCount -&gt; Bool
+</span><span id="line-75"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295363"><span id="local-6989586621679295368"><span class="annot"><span class="annottext">DailyCount -&gt; DailyCount -&gt; Bool
 (DailyCount -&gt; DailyCount -&gt; Bool)
 -&gt; (DailyCount -&gt; DailyCount -&gt; Bool) -&gt; Eq DailyCount
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -310,7 +310,7 @@ $c== :: DailyCount -&gt; DailyCount -&gt; Bool
 == :: DailyCount -&gt; DailyCount -&gt; Bool
 $c/= :: DailyCount -&gt; DailyCount -&gt; Bool
 /= :: DailyCount -&gt; DailyCount -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295342"><span id="local-6989586621679295348"><span id="local-6989586621679295352"><span class="annot"><span class="annottext">Int -&gt; DailyCount -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295372"><span id="local-6989586621679295378"><span id="local-6989586621679295382"><span class="annot"><span class="annottext">Int -&gt; DailyCount -&gt; ShowS
 [DailyCount] -&gt; ShowS
 DailyCount -&gt; String
 (Int -&gt; DailyCount -&gt; ShowS)
@@ -325,7 +325,7 @@ $cshow :: DailyCount -&gt; String
 show :: DailyCount -&gt; String
 $cshowList :: [DailyCount] -&gt; ShowS
 showList :: [DailyCount] -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295355"><span id="local-6989586621679295357"><span class="annot"><span class="annottext">(forall x. DailyCount -&gt; Rep DailyCount x)
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295385"><span id="local-6989586621679295387"><span class="annot"><span class="annottext">(forall x. DailyCount -&gt; Rep DailyCount x)
 -&gt; (forall x. Rep DailyCount x -&gt; DailyCount) -&gt; Generic DailyCount
 forall x. Rep DailyCount x -&gt; DailyCount
 forall x. DailyCount -&gt; Rep DailyCount x
@@ -337,28 +337,28 @@ $cto :: forall x. Rep DailyCount x -&gt; DailyCount
 to :: forall x. Rep DailyCount x -&gt; DailyCount
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Generic</span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-76"></span><span>
-</span><span id="line-77"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295361"><span id="local-6989586621679295365"><span id="local-6989586621679295368"><span id="local-6989586621679295371"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#DailyCount"><span class="hs-identifier hs-type">DailyCount</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-78"></span><span>    </span><span id="local-6989586621679295382"><span class="annot"><span class="annottext">toJSON :: DailyCount -&gt; Value
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#DailyCount"><span class="hs-identifier hs-type">DailyCount</span></a></span><span> </span><span id="local-6989586621679295383"><span class="annot"><span class="annottext">Day
-</span><a href="#local-6989586621679295383"><span class="hs-identifier hs-var">d</span></a></span></span><span> </span><span id="local-6989586621679295384"><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679295384"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
+</span><span id="line-77"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295391"><span id="local-6989586621679295395"><span id="local-6989586621679295398"><span id="local-6989586621679295401"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#DailyCount"><span class="hs-identifier hs-type">DailyCount</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-78"></span><span>    </span><span id="local-6989586621679295412"><span class="annot"><span class="annottext">toJSON :: DailyCount -&gt; Value
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#DailyCount"><span class="hs-identifier hs-type">DailyCount</span></a></span><span> </span><span id="local-6989586621679295413"><span class="annot"><span class="annottext">Day
+</span><a href="#local-6989586621679295413"><span class="hs-identifier hs-var">d</span></a></span></span><span> </span><span id="local-6989586621679295414"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679295414"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
 </span><span class="hs-identifier hs-var">object</span></span><span>
 </span><span id="line-79"></span><span>        </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;date&quot;</span></span><span>  </span><span class="annot"><span class="annottext">Key -&gt; Day -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Day
-</span><a href="#local-6989586621679295383"><span class="hs-identifier hs-var">d</span></a></span><span>
+</span><a href="#local-6989586621679295413"><span class="hs-identifier hs-var">d</span></a></span><span>
 </span><span id="line-80"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;count&quot;</span></span><span> </span><span class="annot"><span class="annottext">Key -&gt; Int -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679295384"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><a href="#local-6989586621679295414"><span class="hs-identifier hs-var">c</span></a></span><span>
 </span><span id="line-81"></span><span>        </span><span class="hs-special">]</span><span>
 </span><span id="line-82"></span><span>
-</span><span id="line-83"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295387"><span id="local-6989586621679295391"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#DailyCount"><span class="hs-identifier hs-type">DailyCount</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-84"></span><span>    </span><span id="local-6989586621679295400"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser DailyCount
+</span><span id="line-83"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295417"><span id="local-6989586621679295421"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#DailyCount"><span class="hs-identifier hs-type">DailyCount</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-84"></span><span>    </span><span id="local-6989586621679295430"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser DailyCount
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 -&gt; (Object -&gt; Parser DailyCount) -&gt; Value -&gt; Parser DailyCount
 forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
@@ -366,14 +366,14 @@ forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 </span><span class="hs-string">&quot;DailyCount&quot;</span></span><span> </span><span class="annot"><span class="annottext">((Object -&gt; Parser DailyCount) -&gt; Value -&gt; Parser DailyCount)
 -&gt; (Object -&gt; Parser DailyCount) -&gt; Value -&gt; Parser DailyCount
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295401"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295401"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Day -&gt; Int -&gt; DailyCount
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295431"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679295431"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Day -&gt; Int -&gt; DailyCount
 </span><a href="Data.Disney.Experience.html#DailyCount"><span class="hs-identifier hs-var">DailyCount</span></a></span><span>
 </span><span id="line-85"></span><span>        </span><span class="annot"><span class="annottext">(Day -&gt; Int -&gt; DailyCount)
 -&gt; Parser Day -&gt; Parser (Int -&gt; DailyCount)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295401"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Day
+</span><a href="#local-6989586621679295431"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Day
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;date&quot;</span></span><span>
@@ -381,7 +381,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295401"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Int
+</span><a href="#local-6989586621679295431"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Int
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;count&quot;</span></span><span>
@@ -390,7 +390,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span id="line-89"></span><span class="hs-keyword">data</span><span> </span><span id="TimeSeriesData"><span class="annot"><a href="Data.Disney.Experience.html#TimeSeriesData"><span class="hs-identifier hs-var">TimeSeriesData</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="TimeSeriesData"><span class="annot"><a href="Data.Disney.Experience.html#TimeSeriesData"><span class="hs-identifier hs-var">TimeSeriesData</span></a></span></span><span>
 </span><span id="line-90"></span><span>    </span><span class="hs-special">{</span><span> </span><span id="daily"><span class="annot"><span class="annottext">TimeSeriesData -&gt; [DailyCount]
 </span><a href="Data.Disney.Experience.html#daily"><span class="hs-identifier hs-var hs-var">daily</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.Experience.html#DailyCount"><span class="hs-identifier hs-type">DailyCount</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-91"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295405"><span id="local-6989586621679295409"><span class="annot"><span class="annottext">TimeSeriesData -&gt; TimeSeriesData -&gt; Bool
+</span><span id="line-91"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295435"><span id="local-6989586621679295439"><span class="annot"><span class="annottext">TimeSeriesData -&gt; TimeSeriesData -&gt; Bool
 (TimeSeriesData -&gt; TimeSeriesData -&gt; Bool)
 -&gt; (TimeSeriesData -&gt; TimeSeriesData -&gt; Bool) -&gt; Eq TimeSeriesData
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -398,7 +398,7 @@ $c== :: TimeSeriesData -&gt; TimeSeriesData -&gt; Bool
 == :: TimeSeriesData -&gt; TimeSeriesData -&gt; Bool
 $c/= :: TimeSeriesData -&gt; TimeSeriesData -&gt; Bool
 /= :: TimeSeriesData -&gt; TimeSeriesData -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295413"><span id="local-6989586621679295418"><span id="local-6989586621679295422"><span class="annot"><span class="annottext">Int -&gt; TimeSeriesData -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295443"><span id="local-6989586621679295448"><span id="local-6989586621679295452"><span class="annot"><span class="annottext">Int -&gt; TimeSeriesData -&gt; ShowS
 [TimeSeriesData] -&gt; ShowS
 TimeSeriesData -&gt; String
 (Int -&gt; TimeSeriesData -&gt; ShowS)
@@ -413,7 +413,7 @@ $cshow :: TimeSeriesData -&gt; String
 show :: TimeSeriesData -&gt; String
 $cshowList :: [TimeSeriesData] -&gt; ShowS
 showList :: [TimeSeriesData] -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295425"><span id="local-6989586621679295427"><span class="annot"><span class="annottext">(forall x. TimeSeriesData -&gt; Rep TimeSeriesData x)
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295455"><span id="local-6989586621679295457"><span class="annot"><span class="annottext">(forall x. TimeSeriesData -&gt; Rep TimeSeriesData x)
 -&gt; (forall x. Rep TimeSeriesData x -&gt; TimeSeriesData)
 -&gt; Generic TimeSeriesData
 forall x. Rep TimeSeriesData x -&gt; TimeSeriesData
@@ -426,19 +426,19 @@ $cto :: forall x. Rep TimeSeriesData x -&gt; TimeSeriesData
 to :: forall x. Rep TimeSeriesData x -&gt; TimeSeriesData
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Generic</span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-92"></span><span>
-</span><span id="line-93"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295431"><span id="local-6989586621679295435"><span id="local-6989586621679295438"><span id="local-6989586621679295441"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TimeSeriesData"><span class="hs-identifier hs-type">TimeSeriesData</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-94"></span><span>    </span><span id="local-6989586621679295449"><span class="annot"><span class="annottext">toJSON :: TimeSeriesData -&gt; Value
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#TimeSeriesData"><span class="hs-identifier hs-type">TimeSeriesData</span></a></span><span> </span><span id="local-6989586621679295450"><span class="annot"><span class="annottext">[DailyCount]
-</span><a href="#local-6989586621679295450"><span class="hs-identifier hs-var">d</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
+</span><span id="line-93"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295461"><span id="local-6989586621679295465"><span id="local-6989586621679295468"><span id="local-6989586621679295471"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TimeSeriesData"><span class="hs-identifier hs-type">TimeSeriesData</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-94"></span><span>    </span><span id="local-6989586621679295479"><span class="annot"><span class="annottext">toJSON :: TimeSeriesData -&gt; Value
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#TimeSeriesData"><span class="hs-identifier hs-type">TimeSeriesData</span></a></span><span> </span><span id="local-6989586621679295480"><span class="annot"><span class="annottext">[DailyCount]
+</span><a href="#local-6989586621679295480"><span class="hs-identifier hs-var">d</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
 </span><span class="hs-identifier hs-var">object</span></span><span> </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;daily&quot;</span></span><span> </span><span class="annot"><span class="annottext">Key -&gt; [DailyCount] -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">[DailyCount]
-</span><a href="#local-6989586621679295450"><span class="hs-identifier hs-var">d</span></a></span><span> </span><span class="hs-special">]</span><span>
+</span><a href="#local-6989586621679295480"><span class="hs-identifier hs-var">d</span></a></span><span> </span><span class="hs-special">]</span><span>
 </span><span id="line-95"></span><span>
-</span><span id="line-96"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295453"><span id="local-6989586621679295457"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TimeSeriesData"><span class="hs-identifier hs-type">TimeSeriesData</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-97"></span><span>    </span><span id="local-6989586621679295463"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser TimeSeriesData
+</span><span id="line-96"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295483"><span id="local-6989586621679295487"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TimeSeriesData"><span class="hs-identifier hs-type">TimeSeriesData</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-97"></span><span>    </span><span id="local-6989586621679295493"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser TimeSeriesData
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 -&gt; (Object -&gt; Parser TimeSeriesData)
 -&gt; Value
@@ -451,14 +451,14 @@ forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 -&gt; Value
 -&gt; Parser TimeSeriesData
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295464"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295464"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[DailyCount] -&gt; TimeSeriesData
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295494"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679295494"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[DailyCount] -&gt; TimeSeriesData
 </span><a href="Data.Disney.Experience.html#TimeSeriesData"><span class="hs-identifier hs-var">TimeSeriesData</span></a></span><span>
 </span><span id="line-98"></span><span>        </span><span class="annot"><span class="annottext">([DailyCount] -&gt; TimeSeriesData)
 -&gt; Parser [DailyCount] -&gt; Parser TimeSeriesData
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295464"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [DailyCount]
+</span><a href="#local-6989586621679295494"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [DailyCount]
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;daily&quot;</span></span><span>
@@ -469,7 +469,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><a href="Data.Disney.Experience.html#tcTag"><span class="hs-identifier hs-var hs-var">tcTag</span></a></span></span><span>   </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Text</span></span><span>
 </span><span id="line-103"></span><span>    </span><span class="hs-special">,</span><span> </span><span id="tcCount"><span class="annot"><span class="annottext">TagCount -&gt; Int
 </span><a href="Data.Disney.Experience.html#tcCount"><span class="hs-identifier hs-var hs-var">tcCount</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
-</span><span id="line-104"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295469"><span id="local-6989586621679295473"><span class="annot"><span class="annottext">TagCount -&gt; TagCount -&gt; Bool
+</span><span id="line-104"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295499"><span id="local-6989586621679295503"><span class="annot"><span class="annottext">TagCount -&gt; TagCount -&gt; Bool
 (TagCount -&gt; TagCount -&gt; Bool)
 -&gt; (TagCount -&gt; TagCount -&gt; Bool) -&gt; Eq TagCount
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -477,7 +477,7 @@ $c== :: TagCount -&gt; TagCount -&gt; Bool
 == :: TagCount -&gt; TagCount -&gt; Bool
 $c/= :: TagCount -&gt; TagCount -&gt; Bool
 /= :: TagCount -&gt; TagCount -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295477"><span id="local-6989586621679295482"><span id="local-6989586621679295486"><span class="annot"><span class="annottext">Int -&gt; TagCount -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295507"><span id="local-6989586621679295512"><span id="local-6989586621679295516"><span class="annot"><span class="annottext">Int -&gt; TagCount -&gt; ShowS
 [TagCount] -&gt; ShowS
 TagCount -&gt; String
 (Int -&gt; TagCount -&gt; ShowS)
@@ -490,7 +490,7 @@ $cshow :: TagCount -&gt; String
 show :: TagCount -&gt; String
 $cshowList :: [TagCount] -&gt; ShowS
 showList :: [TagCount] -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295489"><span id="local-6989586621679295491"><span class="annot"><span class="annottext">(forall x. TagCount -&gt; Rep TagCount x)
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295519"><span id="local-6989586621679295521"><span class="annot"><span class="annottext">(forall x. TagCount -&gt; Rep TagCount x)
 -&gt; (forall x. Rep TagCount x -&gt; TagCount) -&gt; Generic TagCount
 forall x. Rep TagCount x -&gt; TagCount
 forall x. TagCount -&gt; Rep TagCount x
@@ -502,42 +502,42 @@ $cto :: forall x. Rep TagCount x -&gt; TagCount
 to :: forall x. Rep TagCount x -&gt; TagCount
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Generic</span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-105"></span><span>
-</span><span id="line-106"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295495"><span id="local-6989586621679295499"><span id="local-6989586621679295502"><span id="local-6989586621679295505"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TagCount"><span class="hs-identifier hs-type">TagCount</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-107"></span><span>    </span><span id="local-6989586621679295515"><span class="annot"><span class="annottext">toJSON :: TagCount -&gt; Value
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#TagCount"><span class="hs-identifier hs-type">TagCount</span></a></span><span> </span><span id="local-6989586621679295516"><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679295516"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span id="local-6989586621679295517"><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679295517"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
+</span><span id="line-106"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295525"><span id="local-6989586621679295529"><span id="local-6989586621679295532"><span id="local-6989586621679295535"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TagCount"><span class="hs-identifier hs-type">TagCount</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-107"></span><span>    </span><span id="local-6989586621679295545"><span class="annot"><span class="annottext">toJSON :: TagCount -&gt; Value
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#TagCount"><span class="hs-identifier hs-type">TagCount</span></a></span><span> </span><span id="local-6989586621679295546"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679295546"><span class="hs-identifier hs-var">t</span></a></span></span><span> </span><span id="local-6989586621679295547"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679295547"><span class="hs-identifier hs-var">c</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
 </span><span class="hs-identifier hs-var">object</span></span><span>
 </span><span id="line-108"></span><span>        </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;tag&quot;</span></span><span>   </span><span class="annot"><span class="annottext">Key -&gt; Text -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Text
-</span><a href="#local-6989586621679295516"><span class="hs-identifier hs-var">t</span></a></span><span>
+</span><a href="#local-6989586621679295546"><span class="hs-identifier hs-var">t</span></a></span><span>
 </span><span id="line-109"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;count&quot;</span></span><span> </span><span class="annot"><span class="annottext">Key -&gt; Int -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679295517"><span class="hs-identifier hs-var">c</span></a></span><span>
+</span><a href="#local-6989586621679295547"><span class="hs-identifier hs-var">c</span></a></span><span>
 </span><span id="line-110"></span><span>        </span><span class="hs-special">]</span><span>
 </span><span id="line-111"></span><span>
-</span><span id="line-112"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295520"><span id="local-6989586621679295524"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TagCount"><span class="hs-identifier hs-type">TagCount</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-113"></span><span>    </span><span id="local-6989586621679295532"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser TagCount
+</span><span id="line-112"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295550"><span id="local-6989586621679295554"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TagCount"><span class="hs-identifier hs-type">TagCount</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-113"></span><span>    </span><span id="local-6989586621679295562"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser TagCount
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (Object -&gt; Parser TagCount) -&gt; Value -&gt; Parser TagCount
 forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 </span><span class="hs-identifier hs-var">withObject</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;TagCount&quot;</span></span><span> </span><span class="annot"><span class="annottext">((Object -&gt; Parser TagCount) -&gt; Value -&gt; Parser TagCount)
 -&gt; (Object -&gt; Parser TagCount) -&gt; Value -&gt; Parser TagCount
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295533"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295533"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Int -&gt; TagCount
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295563"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679295563"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Text -&gt; Int -&gt; TagCount
 </span><a href="Data.Disney.Experience.html#TagCount"><span class="hs-identifier hs-var">TagCount</span></a></span><span>
 </span><span id="line-114"></span><span>        </span><span class="annot"><span class="annottext">(Text -&gt; Int -&gt; TagCount)
 -&gt; Parser Text -&gt; Parser (Int -&gt; TagCount)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295533"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Text
+</span><a href="#local-6989586621679295563"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Text
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;tag&quot;</span></span><span>
@@ -545,7 +545,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295533"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Int
+</span><a href="#local-6989586621679295563"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Int
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;count&quot;</span></span><span>
@@ -554,7 +554,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span id="line-118"></span><span class="hs-keyword">data</span><span> </span><span id="TagStats"><span class="annot"><a href="Data.Disney.Experience.html#TagStats"><span class="hs-identifier hs-var">TagStats</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="TagStats"><span class="annot"><a href="Data.Disney.Experience.html#TagStats"><span class="hs-identifier hs-var">TagStats</span></a></span></span><span>
 </span><span id="line-119"></span><span>    </span><span class="hs-special">{</span><span> </span><span id="tags"><span class="annot"><span class="annottext">TagStats -&gt; [TagCount]
 </span><a href="Data.Disney.Experience.html#tags"><span class="hs-identifier hs-var hs-var">tags</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.Experience.html#TagCount"><span class="hs-identifier hs-type">TagCount</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-120"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295537"><span id="local-6989586621679295541"><span class="annot"><span class="annottext">TagStats -&gt; TagStats -&gt; Bool
+</span><span id="line-120"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295567"><span id="local-6989586621679295571"><span class="annot"><span class="annottext">TagStats -&gt; TagStats -&gt; Bool
 (TagStats -&gt; TagStats -&gt; Bool)
 -&gt; (TagStats -&gt; TagStats -&gt; Bool) -&gt; Eq TagStats
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -562,7 +562,7 @@ $c== :: TagStats -&gt; TagStats -&gt; Bool
 == :: TagStats -&gt; TagStats -&gt; Bool
 $c/= :: TagStats -&gt; TagStats -&gt; Bool
 /= :: TagStats -&gt; TagStats -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295545"><span id="local-6989586621679295550"><span id="local-6989586621679295554"><span class="annot"><span class="annottext">Int -&gt; TagStats -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295575"><span id="local-6989586621679295580"><span id="local-6989586621679295584"><span class="annot"><span class="annottext">Int -&gt; TagStats -&gt; ShowS
 [TagStats] -&gt; ShowS
 TagStats -&gt; String
 (Int -&gt; TagStats -&gt; ShowS)
@@ -575,7 +575,7 @@ $cshow :: TagStats -&gt; String
 show :: TagStats -&gt; String
 $cshowList :: [TagStats] -&gt; ShowS
 showList :: [TagStats] -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295557"><span id="local-6989586621679295559"><span class="annot"><span class="annottext">(forall x. TagStats -&gt; Rep TagStats x)
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295587"><span id="local-6989586621679295589"><span class="annot"><span class="annottext">(forall x. TagStats -&gt; Rep TagStats x)
 -&gt; (forall x. Rep TagStats x -&gt; TagStats) -&gt; Generic TagStats
 forall x. Rep TagStats x -&gt; TagStats
 forall x. TagStats -&gt; Rep TagStats x
@@ -587,32 +587,32 @@ $cto :: forall x. Rep TagStats x -&gt; TagStats
 to :: forall x. Rep TagStats x -&gt; TagStats
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Generic</span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-121"></span><span>
-</span><span id="line-122"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295563"><span id="local-6989586621679295567"><span id="local-6989586621679295570"><span id="local-6989586621679295573"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TagStats"><span class="hs-identifier hs-type">TagStats</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-123"></span><span>    </span><span id="local-6989586621679295581"><span class="annot"><span class="annottext">toJSON :: TagStats -&gt; Value
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#TagStats"><span class="hs-identifier hs-type">TagStats</span></a></span><span> </span><span id="local-6989586621679295582"><span class="annot"><span class="annottext">[TagCount]
-</span><a href="#local-6989586621679295582"><span class="hs-identifier hs-var">ts</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
+</span><span id="line-122"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295593"><span id="local-6989586621679295597"><span id="local-6989586621679295600"><span id="local-6989586621679295603"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TagStats"><span class="hs-identifier hs-type">TagStats</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-123"></span><span>    </span><span id="local-6989586621679295611"><span class="annot"><span class="annottext">toJSON :: TagStats -&gt; Value
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#TagStats"><span class="hs-identifier hs-type">TagStats</span></a></span><span> </span><span id="local-6989586621679295612"><span class="annot"><span class="annottext">[TagCount]
+</span><a href="#local-6989586621679295612"><span class="hs-identifier hs-var">ts</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
 </span><span class="hs-identifier hs-var">object</span></span><span> </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;tags&quot;</span></span><span> </span><span class="annot"><span class="annottext">Key -&gt; [TagCount] -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">[TagCount]
-</span><a href="#local-6989586621679295582"><span class="hs-identifier hs-var">ts</span></a></span><span> </span><span class="hs-special">]</span><span>
+</span><a href="#local-6989586621679295612"><span class="hs-identifier hs-var">ts</span></a></span><span> </span><span class="hs-special">]</span><span>
 </span><span id="line-124"></span><span>
-</span><span id="line-125"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295585"><span id="local-6989586621679295589"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TagStats"><span class="hs-identifier hs-type">TagStats</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-126"></span><span>    </span><span id="local-6989586621679295595"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser TagStats
+</span><span id="line-125"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295615"><span id="local-6989586621679295619"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TagStats"><span class="hs-identifier hs-type">TagStats</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-126"></span><span>    </span><span id="local-6989586621679295625"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser TagStats
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (Object -&gt; Parser TagStats) -&gt; Value -&gt; Parser TagStats
 forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 </span><span class="hs-identifier hs-var">withObject</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;TagStats&quot;</span></span><span> </span><span class="annot"><span class="annottext">((Object -&gt; Parser TagStats) -&gt; Value -&gt; Parser TagStats)
 -&gt; (Object -&gt; Parser TagStats) -&gt; Value -&gt; Parser TagStats
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295596"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295596"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[TagCount] -&gt; TagStats
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295626"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679295626"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[TagCount] -&gt; TagStats
 </span><a href="Data.Disney.Experience.html#TagStats"><span class="hs-identifier hs-var">TagStats</span></a></span><span>
 </span><span id="line-127"></span><span>        </span><span class="annot"><span class="annottext">([TagCount] -&gt; TagStats) -&gt; Parser [TagCount] -&gt; Parser TagStats
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295596"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [TagCount]
+</span><a href="#local-6989586621679295626"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [TagCount]
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;tags&quot;</span></span><span>
@@ -623,7 +623,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><a href="Data.Disney.Experience.html#yearNumber"><span class="hs-identifier hs-var hs-var">yearNumber</span></a></span></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
 </span><span id="line-132"></span><span>    </span><span class="hs-special">,</span><span> </span><span id="yearlyDaily"><span class="annot"><span class="annottext">YearData -&gt; [DailyCount]
 </span><a href="Data.Disney.Experience.html#yearlyDaily"><span class="hs-identifier hs-var hs-var">yearlyDaily</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.Experience.html#DailyCount"><span class="hs-identifier hs-type">DailyCount</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-133"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295601"><span id="local-6989586621679295606"><span class="annot"><span class="annottext">YearData -&gt; YearData -&gt; Bool
+</span><span id="line-133"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295631"><span id="local-6989586621679295636"><span class="annot"><span class="annottext">YearData -&gt; YearData -&gt; Bool
 (YearData -&gt; YearData -&gt; Bool)
 -&gt; (YearData -&gt; YearData -&gt; Bool) -&gt; Eq YearData
 forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
@@ -631,7 +631,7 @@ $c== :: YearData -&gt; YearData -&gt; Bool
 == :: YearData -&gt; YearData -&gt; Bool
 $c/= :: YearData -&gt; YearData -&gt; Bool
 /= :: YearData -&gt; YearData -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295610"><span id="local-6989586621679295616"><span id="local-6989586621679295620"><span class="annot"><span class="annottext">Int -&gt; YearData -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295640"><span id="local-6989586621679295646"><span id="local-6989586621679295650"><span class="annot"><span class="annottext">Int -&gt; YearData -&gt; ShowS
 [YearData] -&gt; ShowS
 YearData -&gt; String
 (Int -&gt; YearData -&gt; ShowS)
@@ -644,7 +644,7 @@ $cshow :: YearData -&gt; String
 show :: YearData -&gt; String
 $cshowList :: [YearData] -&gt; ShowS
 showList :: [YearData] -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295623"><span id="local-6989586621679295625"><span class="annot"><span class="annottext">(forall x. YearData -&gt; Rep YearData x)
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295653"><span id="local-6989586621679295655"><span class="annot"><span class="annottext">(forall x. YearData -&gt; Rep YearData x)
 -&gt; (forall x. Rep YearData x -&gt; YearData) -&gt; Generic YearData
 forall x. Rep YearData x -&gt; YearData
 forall x. YearData -&gt; Rep YearData x
@@ -656,42 +656,42 @@ $cto :: forall x. Rep YearData x -&gt; YearData
 to :: forall x. Rep YearData x -&gt; YearData
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Generic</span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-134"></span><span>
-</span><span id="line-135"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295629"><span id="local-6989586621679295633"><span id="local-6989586621679295636"><span id="local-6989586621679295639"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#YearData"><span class="hs-identifier hs-type">YearData</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-136"></span><span>    </span><span id="local-6989586621679295650"><span class="annot"><span class="annottext">toJSON :: YearData -&gt; Value
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#YearData"><span class="hs-identifier hs-type">YearData</span></a></span><span> </span><span id="local-6989586621679295651"><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679295651"><span class="hs-identifier hs-var">year</span></a></span></span><span> </span><span id="local-6989586621679295652"><span class="annot"><span class="annottext">[DailyCount]
-</span><a href="#local-6989586621679295652"><span class="hs-identifier hs-var">daily</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
+</span><span id="line-135"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295659"><span id="local-6989586621679295663"><span id="local-6989586621679295666"><span id="local-6989586621679295669"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#YearData"><span class="hs-identifier hs-type">YearData</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-136"></span><span>    </span><span id="local-6989586621679295680"><span class="annot"><span class="annottext">toJSON :: YearData -&gt; Value
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#YearData"><span class="hs-identifier hs-type">YearData</span></a></span><span> </span><span id="local-6989586621679295681"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679295681"><span class="hs-identifier hs-var">year</span></a></span></span><span> </span><span id="local-6989586621679295682"><span class="annot"><span class="annottext">[DailyCount]
+</span><a href="#local-6989586621679295682"><span class="hs-identifier hs-var">daily</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
 </span><span class="hs-identifier hs-var">object</span></span><span>
 </span><span id="line-137"></span><span>        </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;year&quot;</span></span><span>  </span><span class="annot"><span class="annottext">Key -&gt; Int -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">Int
-</span><a href="#local-6989586621679295651"><span class="hs-identifier hs-var">year</span></a></span><span>
+</span><a href="#local-6989586621679295681"><span class="hs-identifier hs-var">year</span></a></span><span>
 </span><span id="line-138"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;daily&quot;</span></span><span> </span><span class="annot"><span class="annottext">Key -&gt; [DailyCount] -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">[DailyCount]
-</span><a href="#local-6989586621679295652"><span class="hs-identifier hs-var">daily</span></a></span><span>
+</span><a href="#local-6989586621679295682"><span class="hs-identifier hs-var">daily</span></a></span><span>
 </span><span id="line-139"></span><span>        </span><span class="hs-special">]</span><span>
 </span><span id="line-140"></span><span>
-</span><span id="line-141"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295655"><span id="local-6989586621679295659"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#YearData"><span class="hs-identifier hs-type">YearData</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-142"></span><span>    </span><span id="local-6989586621679295668"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser YearData
+</span><span id="line-141"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295685"><span id="local-6989586621679295689"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#YearData"><span class="hs-identifier hs-type">YearData</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-142"></span><span>    </span><span id="local-6989586621679295698"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser YearData
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (Object -&gt; Parser YearData) -&gt; Value -&gt; Parser YearData
 forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 </span><span class="hs-identifier hs-var">withObject</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;YearData&quot;</span></span><span> </span><span class="annot"><span class="annottext">((Object -&gt; Parser YearData) -&gt; Value -&gt; Parser YearData)
 -&gt; (Object -&gt; Parser YearData) -&gt; Value -&gt; Parser YearData
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295669"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295669"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Int -&gt; [DailyCount] -&gt; YearData
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295699"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679295699"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">Int -&gt; [DailyCount] -&gt; YearData
 </span><a href="Data.Disney.Experience.html#YearData"><span class="hs-identifier hs-var">YearData</span></a></span><span>
 </span><span id="line-143"></span><span>        </span><span class="annot"><span class="annottext">(Int -&gt; [DailyCount] -&gt; YearData)
 -&gt; Parser Int -&gt; Parser ([DailyCount] -&gt; YearData)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295669"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Int
+</span><a href="#local-6989586621679295699"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser Int
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;year&quot;</span></span><span>
@@ -700,7 +700,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295669"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [DailyCount]
+</span><a href="#local-6989586621679295699"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [DailyCount]
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;daily&quot;</span></span><span>
@@ -713,7 +713,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><a href="Data.Disney.Experience.html#tagStats"><span class="hs-identifier hs-var hs-var">tagStats</span></a></span></span><span>         </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#TagStats"><span class="hs-identifier hs-type">TagStats</span></a></span><span>
 </span><span id="line-150"></span><span>    </span><span class="hs-special">,</span><span> </span><span id="yearlyTimeSeries"><span class="annot"><span class="annottext">VisualizationData -&gt; [YearData]
 </span><a href="Data.Disney.Experience.html#yearlyTimeSeries"><span class="hs-identifier hs-var hs-var">yearlyTimeSeries</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.Experience.html#YearData"><span class="hs-identifier hs-type">YearData</span></a></span><span class="hs-special">]</span><span>
-</span><span id="line-151"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295675"><span id="local-6989586621679295681"><span class="annot"><span class="annottext">VisualizationData -&gt; VisualizationData -&gt; Bool
+</span><span id="line-151"></span><span>    </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679295705"><span id="local-6989586621679295711"><span class="annot"><span class="annottext">VisualizationData -&gt; VisualizationData -&gt; Bool
 (VisualizationData -&gt; VisualizationData -&gt; Bool)
 -&gt; (VisualizationData -&gt; VisualizationData -&gt; Bool)
 -&gt; Eq VisualizationData
@@ -722,7 +722,7 @@ $c== :: VisualizationData -&gt; VisualizationData -&gt; Bool
 == :: VisualizationData -&gt; VisualizationData -&gt; Bool
 $c/= :: VisualizationData -&gt; VisualizationData -&gt; Bool
 /= :: VisualizationData -&gt; VisualizationData -&gt; Bool
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295685"><span id="local-6989586621679295692"><span id="local-6989586621679295696"><span class="annot"><span class="annottext">Int -&gt; VisualizationData -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295715"><span id="local-6989586621679295722"><span id="local-6989586621679295726"><span class="annot"><span class="annottext">Int -&gt; VisualizationData -&gt; ShowS
 [VisualizationData] -&gt; ShowS
 VisualizationData -&gt; String
 (Int -&gt; VisualizationData -&gt; ShowS)
@@ -737,7 +737,7 @@ $cshow :: VisualizationData -&gt; String
 show :: VisualizationData -&gt; String
 $cshowList :: [VisualizationData] -&gt; ShowS
 showList :: [VisualizationData] -&gt; ShowS
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295699"><span id="local-6989586621679295701"><span class="annot"><span class="annottext">(forall x. VisualizationData -&gt; Rep VisualizationData x)
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679295729"><span id="local-6989586621679295731"><span class="annot"><span class="annottext">(forall x. VisualizationData -&gt; Rep VisualizationData x)
 -&gt; (forall x. Rep VisualizationData x -&gt; VisualizationData)
 -&gt; Generic VisualizationData
 forall x. Rep VisualizationData x -&gt; VisualizationData
@@ -750,35 +750,35 @@ $cto :: forall x. Rep VisualizationData x -&gt; VisualizationData
 to :: forall x. Rep VisualizationData x -&gt; VisualizationData
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Generic</span></span></span></span><span class="hs-special">)</span><span>
 </span><span id="line-152"></span><span>
-</span><span id="line-153"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295705"><span id="local-6989586621679295709"><span id="local-6989586621679295712"><span id="local-6989586621679295715"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#VisualizationData"><span class="hs-identifier hs-type">VisualizationData</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-154"></span><span>    </span><span id="local-6989586621679295729"><span class="annot"><span class="annottext">toJSON :: VisualizationData -&gt; Value
-</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#VisualizationData"><span class="hs-identifier hs-type">VisualizationData</span></a></span><span> </span><span id="local-6989586621679295730"><span class="annot"><span class="annottext">TimeSeriesData
-</span><a href="#local-6989586621679295730"><span class="hs-identifier hs-var">ts</span></a></span></span><span> </span><span id="local-6989586621679295731"><span class="annot"><span class="annottext">TagStats
-</span><a href="#local-6989586621679295731"><span class="hs-identifier hs-var">tg</span></a></span></span><span> </span><span id="local-6989586621679295732"><span class="annot"><span class="annottext">[YearData]
-</span><a href="#local-6989586621679295732"><span class="hs-identifier hs-var">yt</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
+</span><span id="line-153"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295735"><span id="local-6989586621679295739"><span id="local-6989586621679295742"><span id="local-6989586621679295745"><span class="annot"><span class="hs-identifier hs-type">ToJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#VisualizationData"><span class="hs-identifier hs-type">VisualizationData</span></a></span></span></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-154"></span><span>    </span><span id="local-6989586621679295759"><span class="annot"><span class="annottext">toJSON :: VisualizationData -&gt; Value
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">toJSON</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.Experience.html#VisualizationData"><span class="hs-identifier hs-type">VisualizationData</span></a></span><span> </span><span id="local-6989586621679295760"><span class="annot"><span class="annottext">TimeSeriesData
+</span><a href="#local-6989586621679295760"><span class="hs-identifier hs-var">ts</span></a></span></span><span> </span><span id="local-6989586621679295761"><span class="annot"><span class="annottext">TagStats
+</span><a href="#local-6989586621679295761"><span class="hs-identifier hs-var">tg</span></a></span></span><span> </span><span id="local-6989586621679295762"><span class="annot"><span class="annottext">[YearData]
+</span><a href="#local-6989586621679295762"><span class="hs-identifier hs-var">yt</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Pair] -&gt; Value
 </span><span class="hs-identifier hs-var">object</span></span><span>
 </span><span id="line-155"></span><span>        </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;timeSeries&quot;</span></span><span>       </span><span class="annot"><span class="annottext">Key -&gt; TimeSeriesData -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">TimeSeriesData
-</span><a href="#local-6989586621679295730"><span class="hs-identifier hs-var">ts</span></a></span><span>
+</span><a href="#local-6989586621679295760"><span class="hs-identifier hs-var">ts</span></a></span><span>
 </span><span id="line-156"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;tagStats&quot;</span></span><span>         </span><span class="annot"><span class="annottext">Key -&gt; TagStats -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">TagStats
-</span><a href="#local-6989586621679295731"><span class="hs-identifier hs-var">tg</span></a></span><span>
+</span><a href="#local-6989586621679295761"><span class="hs-identifier hs-var">tg</span></a></span><span>
 </span><span id="line-157"></span><span>        </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;yearlyTimeSeries&quot;</span></span><span> </span><span class="annot"><span class="annottext">Key -&gt; [YearData] -&gt; Pair
 forall v. ToJSON v =&gt; Key -&gt; v -&gt; Pair
 forall e kv v. (KeyValue e kv, ToJSON v) =&gt; Key -&gt; v -&gt; kv
 </span><span class="hs-operator hs-var">.=</span></span><span> </span><span class="annot"><span class="annottext">[YearData]
-</span><a href="#local-6989586621679295732"><span class="hs-identifier hs-var">yt</span></a></span><span>
+</span><a href="#local-6989586621679295762"><span class="hs-identifier hs-var">yt</span></a></span><span>
 </span><span id="line-158"></span><span>        </span><span class="hs-special">]</span><span>
 </span><span id="line-159"></span><span>
-</span><span id="line-160"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295735"><span id="local-6989586621679295739"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#VisualizationData"><span class="hs-identifier hs-type">VisualizationData</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
-</span><span id="line-161"></span><span>    </span><span id="local-6989586621679295751"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser VisualizationData
+</span><span id="line-160"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679295765"><span id="local-6989586621679295769"><span class="annot"><span class="hs-identifier hs-type">FromJSON</span></span><span> </span><span class="annot"><a href="Data.Disney.Experience.html#VisualizationData"><span class="hs-identifier hs-type">VisualizationData</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-161"></span><span>    </span><span id="local-6989586621679295781"><span class="annot"><span class="annottext">parseJSON :: Value -&gt; Parser VisualizationData
 </span><span class="hs-identifier hs-var hs-var hs-var hs-var">parseJSON</span></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
 -&gt; (Object -&gt; Parser VisualizationData)
 -&gt; Value
@@ -791,15 +791,15 @@ forall a. String -&gt; (Object -&gt; Parser a) -&gt; Value -&gt; Parser a
 -&gt; Value
 -&gt; Parser VisualizationData
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295752"><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295752"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">TimeSeriesData -&gt; TagStats -&gt; [YearData] -&gt; VisualizationData
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679295782"><span class="annot"><span class="annottext">Object
+</span><a href="#local-6989586621679295782"><span class="hs-identifier hs-var">v</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">TimeSeriesData -&gt; TagStats -&gt; [YearData] -&gt; VisualizationData
 </span><a href="Data.Disney.Experience.html#VisualizationData"><span class="hs-identifier hs-var">VisualizationData</span></a></span><span>
 </span><span id="line-162"></span><span>        </span><span class="annot"><span class="annottext">(TimeSeriesData -&gt; TagStats -&gt; [YearData] -&gt; VisualizationData)
 -&gt; Parser TimeSeriesData
 -&gt; Parser (TagStats -&gt; [YearData] -&gt; VisualizationData)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295752"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser TimeSeriesData
+</span><a href="#local-6989586621679295782"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser TimeSeriesData
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;timeSeries&quot;</span></span><span>
@@ -808,7 +808,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295752"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser TagStats
+</span><a href="#local-6989586621679295782"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser TagStats
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;tagStats&quot;</span></span><span>
@@ -817,7 +817,7 @@ forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 forall a b. Parser (a -&gt; b) -&gt; Parser a -&gt; Parser b
 forall (f :: * -&gt; *) a b. Applicative f =&gt; f (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;*&gt;</span></span><span> </span><span class="annot"><span class="annottext">Object
-</span><a href="#local-6989586621679295752"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [YearData]
+</span><a href="#local-6989586621679295782"><span class="hs-identifier hs-var">v</span></a></span><span> </span><span class="annot"><span class="annottext">Object -&gt; Key -&gt; Parser [YearData]
 forall a. FromJSON a =&gt; Object -&gt; Key -&gt; Parser a
 </span><span class="hs-operator hs-var">.:</span></span><span> </span><span class="annot"><span class="annottext">Key
 </span><span class="hs-string">&quot;yearlyTimeSeries&quot;</span></span><span>
