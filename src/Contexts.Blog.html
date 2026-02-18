@@ -8,34 +8,35 @@
 </span><span id="line-8"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Blog.html#footerAdditionalComponent"><span class="hs-identifier">footerAdditionalComponent</span></a></span><span>
 </span><span id="line-9"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Blog.html#tagCloud"><span class="hs-identifier">tagCloud</span></a></span><span>
 </span><span id="line-10"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Blog.html#gSuite"><span class="hs-identifier">gSuite</span></a></span><span>
-</span><span id="line-11"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Blog.html#disqus"><span class="hs-identifier">disqus</span></a></span><span>
+</span><span id="line-11"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Blog.html#giscus"><span class="hs-identifier">giscus</span></a></span><span>
 </span><span id="line-12"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Blog.html#katexJsCtx"><span class="hs-identifier">katexJsCtx</span></a></span><span>
 </span><span id="line-13"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Blog.html#postCtx"><span class="hs-identifier">postCtx</span></a></span><span>
 </span><span id="line-14"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Blog.html#listCtx"><span class="hs-identifier">listCtx</span></a></span><span>
 </span><span id="line-15"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
 </span><span id="line-16"></span><span>
-</span><span id="line-17"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Contexts.Field.html"><span class="hs-identifier">Contexts.Field</span></a></span><span>       </span><span class="hs-special">(</span><span class="annot"><a href="Contexts.Field.html#descriptionField"><span class="hs-identifier">descriptionField</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Field.html#imageField"><span class="hs-identifier">imageField</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-18"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Extra</span></span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">ifM</span></span><span class="hs-special">)</span><span>
-</span><span id="line-19"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Reader</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">asks</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">lift</span></span><span class="hs-special">)</span><span>
-</span><span id="line-20"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span>            </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
-</span><span id="line-21"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text.Lazy</span></span><span>       </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">TL</span></span><span>
-</span><span id="line-22"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>
-</span><span id="line-23"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Lucid.Base</span></span><span>           </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Html</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">ToHtml</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">renderText</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">toHtml</span></span><span class="hs-special">)</span><span>
-</span><span id="line-24"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Lucid.Html5</span></span><span>
-</span><span id="line-25"></span><span>
-</span><span id="line-26"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.Blog.html"><span class="hs-identifier">Config.Blog</span></a></span><span>          </span><span class="hs-special">(</span><span class="annot"><a href="Config.Blog.html#BlogConfig"><span class="hs-identifier">BlogConfig</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-27"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.Site.html"><span class="hs-identifier">Config.Site</span></a></span><span>          </span><span class="hs-special">(</span><span class="annot"><a href="Config.Site.html#GSuite"><span class="hs-identifier">GSuite</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Site.html#gSuiteConf"><span class="hs-identifier">gSuiteConf</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-28"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Contexts.Core.html"><span class="hs-identifier">Contexts.Core</span></a></span><span>
-</span><span id="line-29"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Contexts.Field.html"><span class="hs-identifier">Contexts.Field</span></a></span><span>       </span><span class="hs-special">(</span><span class="annot"><a href="Contexts.Field.html#tagsField%27"><span class="hs-identifier">tagsField'</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-30"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Type.html"><span class="hs-identifier">Rules.Blog.Type</span></a></span><span>
-</span><span id="line-31"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Utils.html"><span class="hs-identifier">Utils</span></a></span><span>                </span><span class="hs-special">(</span><span class="annot"><a href="Utils.Base.html#mconcatM"><span class="hs-identifier">mconcatM</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Utils.Hakyll.html#sanitizeDisqusName"><span class="hs-identifier">sanitizeDisqusName</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-32"></span><span>
-</span><span id="line-33"></span><span class="hs-pragma">{-# INLINE</span><span> </span><span class="annot"><a href="Contexts.Blog.html#toLink"><span class="hs-pragma hs-type">toLink</span></a></span><span> </span><span class="hs-pragma">#-}</span><span>
-</span><span id="line-34"></span><span class="annot"><a href="Contexts.Blog.html#toLink"><span class="hs-identifier hs-type">toLink</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Html</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
-</span><span id="line-35"></span><span id="toLink"><span class="annot"><span class="annottext">toLink :: String -&gt; String -&gt; HtmlT Identity ()
-</span><a href="Contexts.Blog.html#toLink"><span class="hs-identifier hs-var hs-var">toLink</span></a></span></span><span> </span><span id="local-6989586621679300110"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300110"><span class="hs-identifier hs-var">text</span></a></span></span><span> </span><span id="local-6989586621679300111"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300111"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Attribute] -&gt; HtmlT Identity () -&gt; HtmlT Identity ()
+</span><span id="line-17"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Contexts.Field.html"><span class="hs-identifier">Contexts.Field</span></a></span><span>       </span><span class="hs-special">(</span><span class="annot"><a href="Contexts.Field.html#breadcrumbField"><span class="hs-identifier">breadcrumbField</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Field.html#descriptionField"><span class="hs-identifier">descriptionField</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-18"></span><span>                                       </span><span class="annot"><a href="Contexts.Field.html#imageField"><span class="hs-identifier">imageField</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Field.html#jsonLdArticleField"><span class="hs-identifier">jsonLdArticleField</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-19"></span><span>                                       </span><span class="annot"><a href="Contexts.Field.html#ogImageField"><span class="hs-identifier">ogImageField</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Contexts.Field.html#tagsField%27"><span class="hs-identifier">tagsField'</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-20"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Extra</span></span><span>  </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">ifM</span></span><span class="hs-special">)</span><span>
+</span><span id="line-21"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Monad.Reader</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">asks</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">lift</span></span><span class="hs-special">)</span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span>            </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
+</span><span id="line-23"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text.Lazy</span></span><span>       </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">TL</span></span><span>
+</span><span id="line-24"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Hakyll</span></span><span>
+</span><span id="line-25"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Lucid.Base</span></span><span>           </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Html</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">ToHtml</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">renderText</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">toHtml</span></span><span class="hs-special">)</span><span>
+</span><span id="line-26"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Lucid.Html5</span></span><span>
+</span><span id="line-27"></span><span>
+</span><span id="line-28"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.Blog.html"><span class="hs-identifier">Config.Blog</span></a></span><span>          </span><span class="hs-special">(</span><span class="annot"><a href="Config.Blog.html#BlogConfig"><span class="hs-identifier">BlogConfig</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-29"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Config.Site.html"><span class="hs-identifier">Config.Site</span></a></span><span>          </span><span class="hs-special">(</span><span class="annot"><a href="Config.Site.html#GSuite"><span class="hs-identifier">GSuite</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><a href="Config.Site.html#gSuiteConf"><span class="hs-identifier">gSuiteConf</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-30"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Contexts.Core.html"><span class="hs-identifier">Contexts.Core</span></a></span><span>
+</span><span id="line-31"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Rules.Blog.Type.html"><span class="hs-identifier">Rules.Blog.Type</span></a></span><span>
+</span><span id="line-32"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><a href="Utils.html"><span class="hs-identifier">Utils</span></a></span><span>                </span><span class="hs-special">(</span><span class="annot"><a href="Utils.Base.html#mconcatM"><span class="hs-identifier">mconcatM</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-33"></span><span>
+</span><span id="line-34"></span><span class="hs-pragma">{-# INLINE</span><span> </span><span class="annot"><a href="Contexts.Blog.html#toLink"><span class="hs-pragma hs-type">toLink</span></a></span><span> </span><span class="hs-pragma">#-}</span><span>
+</span><span id="line-35"></span><span class="annot"><a href="Contexts.Blog.html#toLink"><span class="hs-identifier hs-type">toLink</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Html</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-36"></span><span id="toLink"><span class="annot"><span class="annottext">toLink :: String -&gt; String -&gt; HtmlT Identity ()
+</span><a href="Contexts.Blog.html#toLink"><span class="hs-identifier hs-var hs-var">toLink</span></a></span></span><span> </span><span id="local-6989586621679302205"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679302205"><span class="hs-identifier hs-var">text</span></a></span></span><span> </span><span id="local-6989586621679302206"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679302206"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Attribute] -&gt; HtmlT Identity () -&gt; HtmlT Identity ()
 forall arg result. Term arg result =&gt; arg -&gt; result
 </span><span class="hs-identifier hs-var">a_</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Attribute
 </span><span class="hs-identifier hs-var">href_</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; Text
@@ -43,7 +44,7 @@ forall arg result. Term arg result =&gt; arg -&gt; result
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String
 </span><span class="hs-identifier hs-var">toUrl</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300111"><span class="hs-identifier hs-var">path</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(HtmlT Identity () -&gt; HtmlT Identity ())
+</span><a href="#local-6989586621679302206"><span class="hs-identifier hs-var">path</span></a></span><span class="hs-special">)</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(HtmlT Identity () -&gt; HtmlT Identity ())
 -&gt; HtmlT Identity () -&gt; HtmlT Identity ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">HtmlT Identity () -&gt; HtmlT Identity ()
@@ -55,10 +56,10 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall a (m :: * -&gt; *). (ToHtml a, Monad m) =&gt; a -&gt; HtmlT m ()
 forall (m :: * -&gt; *). Monad m =&gt; String -&gt; HtmlT m ()
 </span><span class="hs-identifier hs-var">toHtml</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300110"><span class="hs-identifier hs-var">text</span></a></span><span>
-</span><span id="line-36"></span><span>
-</span><span id="line-37"></span><span id="local-6989586621679299968"><span id="local-6989586621679299969"><span class="annot"><a href="Contexts.Blog.html#title"><span class="hs-identifier hs-type">title</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679299968"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679299969"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679299968"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-38"></span><span id="title"><span class="annot"><span class="annottext">title :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+</span><a href="#local-6989586621679302205"><span class="hs-identifier hs-var">text</span></a></span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span id="local-6989586621679302060"><span id="local-6989586621679302061"><span class="annot"><a href="Contexts.Blog.html#title"><span class="hs-identifier hs-type">title</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302060"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302061"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302060"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-39"></span><span id="title"><span class="annot"><span class="annottext">title :: forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#title"><span class="hs-identifier hs-var hs-var">title</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
@@ -73,9 +74,9 @@ forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; String
 forall (m :: * -&gt; *). BlogConfig m -&gt; String
 </span><a href="Config.Blog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
-</span><span id="line-39"></span><span>
-</span><span id="line-40"></span><span id="local-6989586621679300129"><span id="local-6989586621679300130"><span class="annot"><a href="Contexts.Blog.html#font"><span class="hs-identifier hs-type">font</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679300129"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300130"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300129"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-41"></span><span id="font"><span class="annot"><span class="annottext">font :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+</span><span id="line-40"></span><span>
+</span><span id="line-41"></span><span id="local-6989586621679302224"><span id="local-6989586621679302225"><span class="annot"><a href="Contexts.Blog.html#font"><span class="hs-identifier hs-type">font</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302224"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302225"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302224"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-42"></span><span id="font"><span class="annot"><span class="annottext">font :: forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#font"><span class="hs-identifier hs-var hs-var">font</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
@@ -95,9 +96,9 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; HtmlT Identity ()
 forall (m :: * -&gt; *). BlogConfig m -&gt; HtmlT Identity ()
 </span><a href="Config.Blog.html#blogFont"><span class="hs-identifier hs-var">blogFont</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-42"></span><span>
-</span><span id="line-43"></span><span id="local-6989586621679300142"><span id="local-6989586621679300143"><span class="annot"><a href="Contexts.Blog.html#description"><span class="hs-identifier hs-type">description</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679300142"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300143"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300142"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-44"></span><span id="description"><span class="annot"><span class="annottext">description :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+</span><span id="line-43"></span><span>
+</span><span id="line-44"></span><span id="local-6989586621679302237"><span id="local-6989586621679302238"><span class="annot"><a href="Contexts.Blog.html#description"><span class="hs-identifier hs-type">description</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302237"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302238"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302237"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-45"></span><span id="description"><span class="annot"><span class="annottext">description :: forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#description"><span class="hs-identifier hs-var hs-var">description</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
@@ -112,16 +113,16 @@ forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; String
 forall (m :: * -&gt; *). BlogConfig m -&gt; String
 </span><a href="Config.Blog.html#blogDescription"><span class="hs-identifier hs-var">blogDescription</span></a></span><span>
-</span><span id="line-45"></span><span>
-</span><span id="line-46"></span><span id="local-6989586621679300150"><span id="local-6989586621679300151"><span class="annot"><a href="Contexts.Blog.html#beforeContentBodyAdditionalComponent"><span class="hs-identifier hs-type">beforeContentBodyAdditionalComponent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679300150"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300151"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300150"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-47"></span><span id="beforeContentBodyAdditionalComponent"><span class="annot"><span class="annottext">beforeContentBodyAdditionalComponent :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+</span><span id="line-46"></span><span>
+</span><span id="line-47"></span><span id="local-6989586621679302245"><span id="local-6989586621679302246"><span class="annot"><a href="Contexts.Blog.html#beforeContentBodyAdditionalComponent"><span class="hs-identifier hs-type">beforeContentBodyAdditionalComponent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302245"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302246"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302245"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-48"></span><span id="beforeContentBodyAdditionalComponent"><span class="annot"><span class="annottext">beforeContentBodyAdditionalComponent :: forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#beforeContentBodyAdditionalComponent"><span class="hs-identifier hs-var hs-var">beforeContentBodyAdditionalComponent</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;before-content-body-additional-component&quot;</span></span><span>
-</span><span id="line-48"></span><span>    </span><span class="annot"><span class="annottext">(String -&gt; Context String)
+</span><span id="line-49"></span><span>    </span><span class="annot"><span class="annottext">(String -&gt; Context String)
 -&gt; ReaderT (BlogConfig n) m String
 -&gt; ReaderT (BlogConfig n) m (Context String)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
@@ -135,16 +136,16 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; HtmlT Identity ()
 forall (m :: * -&gt; *). BlogConfig m -&gt; HtmlT Identity ()
 </span><a href="Config.Blog.html#blogBeforeContentBodyAdditional"><span class="hs-identifier hs-var">blogBeforeContentBodyAdditional</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-49"></span><span>
-</span><span id="line-50"></span><span id="local-6989586621679300160"><span id="local-6989586621679300161"><span class="annot"><a href="Contexts.Blog.html#headerAdditionalComponent"><span class="hs-identifier hs-type">headerAdditionalComponent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679300160"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300161"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300160"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-51"></span><span id="headerAdditionalComponent"><span class="annot"><span class="annottext">headerAdditionalComponent :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+</span><span id="line-50"></span><span>
+</span><span id="line-51"></span><span id="local-6989586621679302255"><span id="local-6989586621679302256"><span class="annot"><a href="Contexts.Blog.html#headerAdditionalComponent"><span class="hs-identifier hs-type">headerAdditionalComponent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302255"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302256"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302255"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-52"></span><span id="headerAdditionalComponent"><span class="annot"><span class="annottext">headerAdditionalComponent :: forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#headerAdditionalComponent"><span class="hs-identifier hs-var hs-var">headerAdditionalComponent</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;header-additional-component&quot;</span></span><span>
-</span><span id="line-52"></span><span>    </span><span class="annot"><span class="annottext">(String -&gt; Context String)
+</span><span id="line-53"></span><span>    </span><span class="annot"><span class="annottext">(String -&gt; Context String)
 -&gt; ReaderT (BlogConfig n) m String
 -&gt; ReaderT (BlogConfig n) m (Context String)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
@@ -158,16 +159,16 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; HtmlT Identity ()
 forall (m :: * -&gt; *). BlogConfig m -&gt; HtmlT Identity ()
 </span><a href="Config.Blog.html#blogHeaderAdditional"><span class="hs-identifier hs-var">blogHeaderAdditional</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-53"></span><span>
-</span><span id="line-54"></span><span id="local-6989586621679300170"><span id="local-6989586621679300171"><span class="annot"><a href="Contexts.Blog.html#footerAdditionalComponent"><span class="hs-identifier hs-type">footerAdditionalComponent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679300170"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300171"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300170"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-55"></span><span id="footerAdditionalComponent"><span class="annot"><span class="annottext">footerAdditionalComponent :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+</span><span id="line-54"></span><span>
+</span><span id="line-55"></span><span id="local-6989586621679302265"><span id="local-6989586621679302266"><span class="annot"><a href="Contexts.Blog.html#footerAdditionalComponent"><span class="hs-identifier hs-type">footerAdditionalComponent</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302265"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302266"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302265"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-56"></span><span id="footerAdditionalComponent"><span class="annot"><span class="annottext">footerAdditionalComponent :: forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#footerAdditionalComponent"><span class="hs-identifier hs-var hs-var">footerAdditionalComponent</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;footer-additional-component&quot;</span></span><span>
-</span><span id="line-56"></span><span>    </span><span class="annot"><span class="annottext">(String -&gt; Context String)
+</span><span id="line-57"></span><span>    </span><span class="annot"><span class="annottext">(String -&gt; Context String)
 -&gt; ReaderT (BlogConfig n) m String
 -&gt; ReaderT (BlogConfig n) m (Context String)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
@@ -181,13 +182,13 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; HtmlT Identity ()
 forall (m :: * -&gt; *). BlogConfig m -&gt; HtmlT Identity ()
 </span><a href="Config.Blog.html#blogFooterAdditional"><span class="hs-identifier hs-var">blogFooterAdditional</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-57"></span><span>
-</span><span id="line-58"></span><span id="local-6989586621679300008"><span id="local-6989586621679300009"><span class="annot"><a href="Contexts.Blog.html#tagCloud"><span class="hs-identifier hs-type">tagCloud</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679300008"><span class="hs-identifier hs-type">m</span></a></span><span>
-</span><span id="line-59"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300008"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300008"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><a href="#local-6989586621679300009"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-60"></span><span id="tagCloud"><span class="annot"><span class="annottext">tagCloud :: forall (m :: * -&gt; *) a. Monad m =&gt; BlogConfReader m m (Context a)
+</span><span id="line-58"></span><span>
+</span><span id="line-59"></span><span id="local-6989586621679302100"><span id="local-6989586621679302101"><span class="annot"><a href="Contexts.Blog.html#tagCloud"><span class="hs-identifier hs-type">tagCloud</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302100"><span class="hs-identifier hs-type">m</span></a></span><span>
+</span><span id="line-60"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302100"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302100"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><a href="#local-6989586621679302101"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-61"></span><span id="tagCloud"><span class="annot"><span class="annottext">tagCloud :: forall (m :: * -&gt; *) a. Monad m =&gt; BlogConfReader m m (Context a)
 </span><a href="Contexts.Blog.html#tagCloud"><span class="hs-identifier hs-var hs-var">tagCloud</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-61"></span><span>    </span><span id="local-6989586621679300201"><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679300201"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; m Tags) -&gt; ReaderT (BlogConfig m) m (m Tags)
+</span><span id="line-62"></span><span>    </span><span id="local-6989586621679302296"><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679302296"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig m -&gt; m Tags) -&gt; ReaderT (BlogConfig m) m (m Tags)
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig m -&gt; m Tags
 forall (m :: * -&gt; *). BlogConfig m -&gt; m Tags
@@ -206,7 +207,7 @@ forall (t :: (* -&gt; *) -&gt; * -&gt; *) (m :: * -&gt; *) a.
 (MonadTrans t, Monad m) =&gt;
 m a -&gt; t m a
 </span><span class="hs-identifier hs-var">lift</span></span><span>
-</span><span id="line-62"></span><span>    </span><span class="annot"><span class="annottext">Context a -&gt; BlogConfReader m m (Context a)
+</span><span id="line-63"></span><span>    </span><span class="annot"><span class="annottext">Context a -&gt; BlogConfReader m m (Context a)
 forall a. a -&gt; ReaderT (BlogConfig m) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context a -&gt; BlogConfReader m m (Context a))
@@ -224,7 +225,7 @@ forall a b. a -&gt; b -&gt; a
 -&gt; Compiler String -&gt; Item a -&gt; Compiler String
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
-</span><span id="line-63"></span><span>        </span><span class="annot"><span class="annottext">Text -&gt; String
+</span><span id="line-64"></span><span>        </span><span class="annot"><span class="annottext">Text -&gt; String
 </span><span class="hs-identifier hs-var">TL.unpack</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; String) -&gt; (String -&gt; Text) -&gt; String -&gt; String
 forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">HtmlT Identity () -&gt; Text
@@ -243,21 +244,21 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 forall a (m :: * -&gt; *). (ToHtml a, Monad m) =&gt; a -&gt; HtmlT m ()
 forall (m :: * -&gt; *). Monad m =&gt; String -&gt; HtmlT m ()
 </span><span class="hs-identifier hs-var">toHtmlRaw</span></span><span>
-</span><span id="line-64"></span><span>            </span><span class="annot"><span class="annottext">(String -&gt; String) -&gt; Compiler String -&gt; Compiler String
+</span><span id="line-65"></span><span>            </span><span class="annot"><span class="annottext">(String -&gt; String) -&gt; Compiler String -&gt; Compiler String
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
 </span><span class="hs-operator hs-var">&lt;$&gt;</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; String -&gt; Int -&gt; Int -&gt; Int -&gt; String)
 -&gt; ([String] -&gt; String) -&gt; Tags -&gt; Compiler String
 </span><span class="hs-identifier hs-var">renderTags</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Int -&gt; Int -&gt; Int -&gt; String
 forall {b} {b} {b}. String -&gt; String -&gt; b -&gt; b -&gt; b -&gt; String
-</span><a href="#local-6989586621679300210"><span class="hs-identifier hs-var">toLink'</span></a></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
+</span><a href="#local-6989586621679302305"><span class="hs-identifier hs-var">toLink'</span></a></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
 forall (t :: * -&gt; *) a. Foldable t =&gt; t [a] -&gt; [a]
 </span><span class="hs-identifier hs-var">concat</span></span><span> </span><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679300201"><span class="hs-identifier hs-var">tags</span></a></span><span>
-</span><span id="line-65"></span><span>    </span><span class="hs-keyword">where</span><span>
-</span><span id="line-66"></span><span>        </span><span id="local-6989586621679300210"><span class="annot"><span class="annottext">toLink' :: String -&gt; String -&gt; b -&gt; b -&gt; b -&gt; String
-</span><a href="#local-6989586621679300210"><span class="hs-identifier hs-var hs-var">toLink'</span></a></span></span><span> </span><span id="local-6989586621679300216"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300216"><span class="hs-identifier hs-var">tag</span></a></span></span><span> </span><span id="local-6989586621679300217"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300217"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(b -&gt; b -&gt; String) -&gt; b -&gt; b -&gt; b -&gt; String
+</span><a href="#local-6989586621679302296"><span class="hs-identifier hs-var">tags</span></a></span><span>
+</span><span id="line-66"></span><span>    </span><span class="hs-keyword">where</span><span>
+</span><span id="line-67"></span><span>        </span><span id="local-6989586621679302305"><span class="annot"><span class="annottext">toLink' :: String -&gt; String -&gt; b -&gt; b -&gt; b -&gt; String
+</span><a href="#local-6989586621679302305"><span class="hs-identifier hs-var hs-var">toLink'</span></a></span></span><span> </span><span id="local-6989586621679302311"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679302311"><span class="hs-identifier hs-var">tag</span></a></span></span><span> </span><span id="local-6989586621679302312"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679302312"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(b -&gt; b -&gt; String) -&gt; b -&gt; b -&gt; b -&gt; String
 forall a b. a -&gt; b -&gt; a
 </span><span class="hs-identifier hs-var">const</span></span><span> </span><span class="annot"><span class="annottext">((b -&gt; b -&gt; String) -&gt; b -&gt; b -&gt; b -&gt; String)
 -&gt; (b -&gt; b -&gt; String) -&gt; b -&gt; b -&gt; b -&gt; String
@@ -272,7 +273,7 @@ forall a b. a -&gt; b -&gt; a
 </span><span class="hs-identifier hs-var">const</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; b -&gt; String) -&gt; String -&gt; b -&gt; String
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
-</span><span id="line-67"></span><span>            </span><span class="annot"><span class="annottext">Text -&gt; String
+</span><span id="line-68"></span><span>            </span><span class="annot"><span class="annottext">Text -&gt; String
 </span><span class="hs-identifier hs-var">TL.unpack</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; String) -&gt; Text -&gt; String
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">HtmlT Identity () -&gt; Text
@@ -280,7 +281,7 @@ forall a. Html a -&gt; Text
 </span><span class="hs-identifier hs-var">renderText</span></span><span> </span><span class="annot"><span class="annottext">(HtmlT Identity () -&gt; Text) -&gt; HtmlT Identity () -&gt; Text
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
-</span><span id="line-68"></span><span>                </span><span class="annot"><span class="annottext">[Attribute] -&gt; HtmlT Identity () -&gt; HtmlT Identity ()
+</span><span id="line-69"></span><span>                </span><span class="annot"><span class="annottext">[Attribute] -&gt; HtmlT Identity () -&gt; HtmlT Identity ()
 forall arg result. Term arg result =&gt; arg -&gt; result
 </span><span class="hs-identifier hs-var">span_</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Attribute
 </span><span class="hs-identifier hs-var">class_</span></span><span> </span><span class="annot"><span class="annottext">Text
@@ -289,18 +290,18 @@ forall arg result. Term arg result =&gt; arg -&gt; result
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; HtmlT Identity ()
 </span><a href="Contexts.Blog.html#toLink"><span class="hs-identifier hs-var">toLink</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300216"><span class="hs-identifier hs-var">tag</span></a></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300217"><span class="hs-identifier hs-var">path</span></a></span><span>
-</span><span id="line-69"></span><span>
-</span><span id="line-70"></span><span id="local-6989586621679300218"><span id="local-6989586621679300219"><span class="annot"><a href="Contexts.Blog.html#gSuite"><span class="hs-identifier hs-type">gSuite</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679300218"><span class="hs-identifier hs-type">m</span></a></span><span>
-</span><span id="line-71"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300219"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300218"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-72"></span><span id="gSuite"><span class="annot"><span class="annottext">gSuite :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+</span><a href="#local-6989586621679302311"><span class="hs-identifier hs-var">tag</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679302312"><span class="hs-identifier hs-var">path</span></a></span><span>
+</span><span id="line-70"></span><span>
+</span><span id="line-71"></span><span id="local-6989586621679302313"><span id="local-6989586621679302314"><span class="annot"><a href="Contexts.Blog.html#gSuite"><span class="hs-identifier hs-type">gSuite</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302313"><span class="hs-identifier hs-type">m</span></a></span><span>
+</span><span id="line-72"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302314"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302313"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-73"></span><span id="gSuite"><span class="annot"><span class="annottext">gSuite :: forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#gSuite"><span class="hs-identifier hs-var hs-var">gSuite</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; Context String -&gt; Context String
 forall a. Semigroup a =&gt; a -&gt; a -&gt; a
 </span><span class="hs-operator hs-var">(&lt;&gt;)</span></span><span>
-</span><span id="line-73"></span><span>    </span><span class="annot"><span class="annottext">(Context String -&gt; Context String -&gt; Context String)
+</span><span id="line-74"></span><span>    </span><span class="annot"><span class="annottext">(Context String -&gt; Context String -&gt; Context String)
 -&gt; ReaderT (BlogConfig n) m (Context String)
 -&gt; ReaderT (BlogConfig n) m (Context String -&gt; Context String)
 forall (f :: * -&gt; *) a b. Functor f =&gt; (a -&gt; b) -&gt; f a -&gt; f b
@@ -326,7 +327,7 @@ forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
 </span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; String
 forall (m :: * -&gt; *). BlogConfig m -&gt; String
 </span><a href="Config.Blog.html#blogGoogleCx"><span class="hs-identifier hs-var">blogGoogleCx</span></a></span><span class="hs-special">)</span><span>
-</span><span id="line-74"></span><span>    </span><span class="annot"><span class="annottext">ReaderT (BlogConfig n) m (Context String -&gt; Context String)
+</span><span id="line-75"></span><span>    </span><span class="annot"><span class="annottext">ReaderT (BlogConfig n) m (Context String -&gt; Context String)
 -&gt; ReaderT (BlogConfig n) m (Context String)
 -&gt; ReaderT (BlogConfig n) m (Context String)
 forall a b.
@@ -342,13 +343,13 @@ forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-string">&quot;google-site-verification&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">GSuite -&gt; String
 </span><a href="Config.Site.html#gSiteVerifyKey"><span class="hs-identifier hs-var">gSiteVerifyKey</span></a></span><span> </span><span class="annot"><span class="annottext">GSuite
 </span><a href="Config.Site.html#gSuiteConf"><span class="hs-identifier hs-var">gSuiteConf</span></a></span><span class="hs-special">)</span><span class="hs-special">)</span><span>
-</span><span id="line-75"></span><span>
-</span><span id="line-76"></span><span id="local-6989586621679300238"><span id="local-6989586621679300239"><span class="annot"><a href="Contexts.Blog.html#disqus"><span class="hs-identifier hs-type">disqus</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679300238"><span class="hs-identifier hs-type">m</span></a></span><span>
-</span><span id="line-77"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300239"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300238"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-78"></span><span id="disqus"><span class="annot"><span class="annottext">disqus :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+</span><span id="line-76"></span><span>
+</span><span id="line-77"></span><span id="local-6989586621679302333"><span id="local-6989586621679302334"><span class="annot"><a href="Contexts.Blog.html#giscus"><span class="hs-identifier hs-type">giscus</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302333"><span class="hs-identifier hs-type">m</span></a></span><span>
+</span><span id="line-78"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302334"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302333"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-79"></span><span id="giscus"><span class="annot"><span class="annottext">giscus :: forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
-</span><a href="Contexts.Blog.html#disqus"><span class="hs-identifier hs-var hs-var">disqus</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; Context String)
+</span><a href="Contexts.Blog.html#giscus"><span class="hs-identifier hs-var hs-var">giscus</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; Context String)
 -&gt; ReaderT (BlogConfig n) m (Context String)
 forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 </span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">((BlogConfig n -&gt; Context String)
@@ -356,23 +357,43 @@ forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
 -&gt; (BlogConfig n -&gt; Context String)
 -&gt; ReaderT (BlogConfig n) m (Context String)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679302339"><span class="annot"><span class="annottext">BlogConfig n
+</span><a href="#local-6989586621679302339"><span class="hs-identifier hs-var">cfg</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">[Context String] -&gt; Context String
+forall a. Monoid a =&gt; [a] -&gt; a
+</span><span class="hs-identifier hs-var">mconcat</span></span><span>
+</span><span id="line-80"></span><span>    </span><span class="hs-special">[</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><span class="hs-string">&quot;disqus&quot;</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Context String)
--&gt; (BlogConfig n -&gt; String) -&gt; BlogConfig n -&gt; Context String
-forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
-</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String
-</span><a href="Utils.Hakyll.html#sanitizeDisqusName"><span class="hs-identifier hs-var">sanitizeDisqusName</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; String)
--&gt; (BlogConfig n -&gt; String) -&gt; BlogConfig n -&gt; String
-forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
-</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; String
+</span><span class="hs-string">&quot;giscus-repo&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">BlogConfig n -&gt; String
 forall (m :: * -&gt; *). BlogConfig m -&gt; String
-</span><a href="Config.Blog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span>
-</span><span id="line-79"></span><span>
-</span><span id="line-80"></span><span id="local-6989586621679300242"><span id="local-6989586621679300243"><span class="annot"><a href="Contexts.Blog.html#katexJsCtx"><span class="hs-identifier hs-type">katexJsCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679300242"><span class="hs-identifier hs-type">m</span></a></span><span>
-</span><span id="line-81"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300243"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300242"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-82"></span><span id="katexJsCtx"><span class="annot"><span class="annottext">katexJsCtx :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+</span><a href="Config.Blog.html#blogGiscusRepo"><span class="hs-identifier hs-var">blogGiscusRepo</span></a></span><span> </span><span class="annot"><span class="annottext">BlogConfig n
+</span><a href="#local-6989586621679302339"><span class="hs-identifier hs-var">cfg</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-81"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
+forall a. String -&gt; String -&gt; Context a
+</span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;giscus-repo-id&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">BlogConfig n -&gt; String
+forall (m :: * -&gt; *). BlogConfig m -&gt; String
+</span><a href="Config.Blog.html#blogGiscusRepoId"><span class="hs-identifier hs-var">blogGiscusRepoId</span></a></span><span> </span><span class="annot"><span class="annottext">BlogConfig n
+</span><a href="#local-6989586621679302339"><span class="hs-identifier hs-var">cfg</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-82"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
+forall a. String -&gt; String -&gt; Context a
+</span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;giscus-category&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">BlogConfig n -&gt; String
+forall (m :: * -&gt; *). BlogConfig m -&gt; String
+</span><a href="Config.Blog.html#blogGiscusCategory"><span class="hs-identifier hs-var">blogGiscusCategory</span></a></span><span> </span><span class="annot"><span class="annottext">BlogConfig n
+</span><a href="#local-6989586621679302339"><span class="hs-identifier hs-var">cfg</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-83"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
+forall a. String -&gt; String -&gt; Context a
+</span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;giscus-category-id&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">BlogConfig n -&gt; String
+forall (m :: * -&gt; *). BlogConfig m -&gt; String
+</span><a href="Config.Blog.html#blogGiscusCategoryId"><span class="hs-identifier hs-var">blogGiscusCategoryId</span></a></span><span> </span><span class="annot"><span class="annottext">BlogConfig n
+</span><a href="#local-6989586621679302339"><span class="hs-identifier hs-var">cfg</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-84"></span><span>    </span><span class="hs-special">]</span><span>
+</span><span id="line-85"></span><span>
+</span><span id="line-86"></span><span id="local-6989586621679302344"><span id="local-6989586621679302345"><span class="annot"><a href="Contexts.Blog.html#katexJsCtx"><span class="hs-identifier hs-type">katexJsCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302344"><span class="hs-identifier hs-type">m</span></a></span><span>
+</span><span id="line-87"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302345"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302344"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-88"></span><span id="katexJsCtx"><span class="annot"><span class="annottext">katexJsCtx :: forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#katexJsCtx"><span class="hs-identifier hs-var hs-var">katexJsCtx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">ReaderT (BlogConfig n) m Bool
@@ -407,7 +428,7 @@ forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 -&gt; Context String -&gt; ReaderT (BlogConfig n) m (Context String)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
-</span><span id="line-83"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
+</span><span id="line-89"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
 forall a. String -&gt; String -&gt; Context a
 </span><span class="hs-identifier hs-var">constField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;katex-script&quot;</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Context String) -&gt; String -&gt; Context String
@@ -420,7 +441,7 @@ forall a. Html a -&gt; Text
 </span><span class="hs-identifier hs-var">renderText</span></span><span> </span><span class="annot"><span class="annottext">(HtmlT Identity () -&gt; Text) -&gt; HtmlT Identity () -&gt; Text
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-84"></span><span>        </span><span class="annot"><span class="annottext">[Attribute] -&gt; Text -&gt; HtmlT Identity ()
+</span><span id="line-90"></span><span>        </span><span class="annot"><span class="annottext">[Attribute] -&gt; Text -&gt; HtmlT Identity ()
 forall arg result. TermRaw arg result =&gt; arg -&gt; result
 </span><span class="hs-identifier hs-var">script_</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Attribute
 </span><span class="hs-identifier hs-var">defer_</span></span><span> </span><span class="annot"><span class="annottext">Text
@@ -430,7 +451,7 @@ forall arg result. TermRaw arg result =&gt; arg -&gt; result
 </span><span class="hs-identifier hs-var">src_</span></span><span> </span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;/vendor/katex/katex.min.js&quot;</span></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">Text
 </span><span class="hs-identifier hs-var">TL.empty</span></span><span>
-</span><span id="line-85"></span><span>        </span><span class="annot"><span class="annottext">[Attribute] -&gt; Text -&gt; HtmlT Identity ()
+</span><span id="line-91"></span><span>        </span><span class="annot"><span class="annottext">[Attribute] -&gt; Text -&gt; HtmlT Identity ()
 forall arg result. TermRaw arg result =&gt; arg -&gt; result
 </span><span class="hs-identifier hs-var">script_</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Attribute
 </span><span class="hs-identifier hs-var">defer_</span></span><span> </span><span class="annot"><span class="annottext">Text
@@ -440,97 +461,146 @@ forall arg result. TermRaw arg result =&gt; arg -&gt; result
 </span><span class="hs-identifier hs-var">src_</span></span><span> </span><span class="annot"><span class="annottext">Text
 </span><span class="hs-string">&quot;/vendor/katex/auto-render.min.js&quot;</span></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">Text
 </span><span class="hs-identifier hs-var">TL.empty</span></span><span>
-</span><span id="line-86"></span><span>
-</span><span id="line-87"></span><span id="local-6989586621679300064"><span id="local-6989586621679300065"><span class="annot"><a href="Contexts.Blog.html#postCtx"><span class="hs-identifier hs-type">postCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679300064"><span class="hs-identifier hs-type">m</span></a></span><span>
-</span><span id="line-88"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Tags</span></span><span>
-</span><span id="line-89"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300065"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300064"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-90"></span><span id="postCtx"><span class="annot"><span class="annottext">postCtx :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+</span><span id="line-92"></span><span>
+</span><span id="line-93"></span><span id="local-6989586621679302156"><span id="local-6989586621679302157"><span class="annot"><a href="Contexts.Blog.html#postCtx"><span class="hs-identifier hs-type">postCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302156"><span class="hs-identifier hs-type">m</span></a></span><span>
+</span><span id="line-94"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Tags</span></span><span>
+</span><span id="line-95"></span><span>    </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302157"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302156"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-96"></span><span id="postCtx"><span class="annot"><span class="annottext">postCtx :: forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 Tags -&gt; BlogConfReader n m (Context String)
-</span><a href="Contexts.Blog.html#postCtx"><span class="hs-identifier hs-var hs-var">postCtx</span></a></span></span><span> </span><span id="local-6989586621679300286"><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679300286"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[ReaderT (BlogConfig n) m (Context String)]
--&gt; ReaderT (BlogConfig n) m (Context String)
+</span><a href="Contexts.Blog.html#postCtx"><span class="hs-identifier hs-var hs-var">postCtx</span></a></span></span><span> </span><span id="local-6989586621679302403"><span class="annot"><span class="annottext">Tags
+</span><a href="#local-6989586621679302403"><span class="hs-identifier hs-var">tags</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-97"></span><span>    </span><span id="local-6989586621679302404"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679302404"><span class="hs-identifier hs-var">defaultOgImage</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(BlogConfig n -&gt; String) -&gt; ReaderT (BlogConfig n) m String
+forall r (m :: * -&gt; *) a. MonadReader r m =&gt; (r -&gt; a) -&gt; m a
+</span><span class="hs-identifier hs-var">asks</span></span><span> </span><span class="annot"><span class="annottext">((BlogConfig n -&gt; String) -&gt; ReaderT (BlogConfig n) m String)
+-&gt; (BlogConfig n -&gt; String) -&gt; ReaderT (BlogConfig n) m String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679302405"><span class="annot"><span class="annottext">BlogConfig n
+</span><a href="#local-6989586621679302405"><span class="hs-identifier hs-var">bc</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">BlogConfig n -&gt; String
+forall (m :: * -&gt; *). BlogConfig m -&gt; String
+</span><a href="Config.Blog.html#blogName"><span class="hs-identifier hs-var">blogName</span></a></span><span> </span><span class="annot"><span class="annottext">BlogConfig n
+</span><a href="#local-6989586621679302405"><span class="hs-identifier hs-var">bc</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-98"></span><span>        </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;roki.log&quot;</span></span><span>   </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;/images/ogp/roki-log-default.png&quot;</span></span><span>
+</span><span id="line-99"></span><span>        </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;roki.diary&quot;</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;/images/ogp/roki-diary-default.png&quot;</span></span><span>
+</span><span id="line-100"></span><span>        </span><span class="annot"><span class="annottext">String
+</span><span class="hs-identifier">_</span></span><span>            </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;/images/ogp/default.png&quot;</span></span><span>
+</span><span id="line-101"></span><span>    </span><span class="annot"><span class="annottext">[BlogConfReader n m (Context String)]
+-&gt; BlogConfReader n m (Context String)
 forall (m :: * -&gt; *) b. (Monad m, Monoid b) =&gt; [m b] -&gt; m b
 </span><a href="Utils.Base.html#mconcatM"><span class="hs-identifier hs-var">mconcatM</span></a></span><span> </span><span class="hs-special">[</span><span>
-</span><span id="line-91"></span><span>    </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-102"></span><span>        </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader n m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
-</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
--&gt; Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; BlogConfReader n m (Context String))
+-&gt; Context String -&gt; BlogConfReader n m (Context String)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Context String
 </span><a href="Contexts.Core.html#dateCtx"><span class="hs-identifier hs-var">dateCtx</span></a></span><span>
-</span><span id="line-92"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-103"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader n m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
-</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
--&gt; Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; BlogConfReader n m (Context String))
+-&gt; Context String -&gt; BlogConfReader n m (Context String)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Tags -&gt; Context String
 forall a. String -&gt; Tags -&gt; Context a
 </span><a href="Contexts.Field.html#tagsField%27"><span class="hs-identifier hs-var">tagsField'</span></a></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;tags&quot;</span></span><span> </span><span class="annot"><span class="annottext">Tags
-</span><a href="#local-6989586621679300286"><span class="hs-identifier hs-var">tags</span></a></span><span>
-</span><span id="line-93"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><a href="#local-6989586621679302403"><span class="hs-identifier hs-var">tags</span></a></span><span>
+</span><span id="line-104"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader n m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
-</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
--&gt; Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; BlogConfReader n m (Context String))
+-&gt; Context String -&gt; BlogConfReader n m (Context String)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Int -&gt; Context String
 </span><a href="Contexts.Field.html#descriptionField"><span class="hs-identifier hs-var">descriptionField</span></a></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;description&quot;</span></span><span> </span><span class="annot"><span class="annottext">Int
 </span><span class="hs-number">150</span></span><span>
-</span><span id="line-94"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-105"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader n m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
-</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
--&gt; Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; BlogConfReader n m (Context String))
+-&gt; Context String -&gt; BlogConfReader n m (Context String)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Context String
 </span><a href="Contexts.Field.html#imageField"><span class="hs-identifier hs-var">imageField</span></a></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;image&quot;</span></span><span>
-</span><span id="line-95"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-106"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader n m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
-</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
--&gt; Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; BlogConfReader n m (Context String))
+-&gt; Context String -&gt; BlogConfReader n m (Context String)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Context String
+</span><a href="Contexts.Field.html#ogImageField"><span class="hs-identifier hs-var">ogImageField</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;og-image&quot;</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679302404"><span class="hs-identifier hs-var">defaultOgImage</span></a></span><span>
+</span><span id="line-107"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader n m (Context String)
+forall a. a -&gt; ReaderT (BlogConfig n) m a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; BlogConfReader n m (Context String))
+-&gt; Context String -&gt; BlogConfReader n m (Context String)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Context String
+</span><a href="Contexts.Field.html#jsonLdArticleField"><span class="hs-identifier hs-var">jsonLdArticleField</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;json-ld-article&quot;</span></span><span>
+</span><span id="line-108"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader n m (Context String)
+forall a. a -&gt; ReaderT (BlogConfig n) m a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; BlogConfReader n m (Context String))
+-&gt; Context String -&gt; BlogConfReader n m (Context String)
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Context String
+</span><a href="Contexts.Field.html#breadcrumbField"><span class="hs-identifier hs-var">breadcrumbField</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;json-ld-breadcrumb&quot;</span></span><span>
+</span><span id="line-109"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader n m (Context String)
+forall a. a -&gt; ReaderT (BlogConfig n) m a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; BlogConfReader n m (Context String))
+-&gt; Context String -&gt; BlogConfReader n m (Context String)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Context String
 </span><a href="Contexts.Core.html#siteCtx"><span class="hs-identifier hs-var">siteCtx</span></a></span><span>
-</span><span id="line-96"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-110"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader n m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
-</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
--&gt; Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; BlogConfReader n m (Context String))
+-&gt; Context String -&gt; BlogConfReader n m (Context String)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Context String
 </span><a href="Contexts.Core.html#jsPathCtx"><span class="hs-identifier hs-var">jsPathCtx</span></a></span><span>
-</span><span id="line-97"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-111"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; BlogConfReader n m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
-</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
--&gt; Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; BlogConfReader n m (Context String))
+-&gt; Context String -&gt; BlogConfReader n m (Context String)
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Context String
 </span><span class="hs-identifier hs-var">defaultContext</span></span><span>
-</span><span id="line-98"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-112"></span><span>      </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">BlogConfReader n m (Context String)
 forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#katexJsCtx"><span class="hs-identifier hs-var">katexJsCtx</span></a></span><span>
-</span><span id="line-99"></span><span>  </span><span class="hs-special">]</span><span>
-</span><span id="line-100"></span><span>
-</span><span id="line-101"></span><span id="local-6989586621679300291"><span id="local-6989586621679300292"><span class="annot"><a href="Contexts.Blog.html#listCtx"><span class="hs-identifier hs-type">listCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679300291"><span class="hs-identifier hs-type">m</span></a></span><span>
-</span><span id="line-102"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300292"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679300291"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
-</span><span id="line-103"></span><span id="listCtx"><span class="annot"><span class="annottext">listCtx :: forall (m :: * -&gt; *) (n :: * -&gt; *).
+</span><span id="line-113"></span><span>      </span><span class="hs-special">]</span><span>
+</span><span id="line-114"></span><span>
+</span><span id="line-115"></span><span id="local-6989586621679302410"><span id="local-6989586621679302411"><span class="annot"><a href="Contexts.Blog.html#listCtx"><span class="hs-identifier hs-type">listCtx</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Monad</span></span><span> </span><span class="annot"><a href="#local-6989586621679302410"><span class="hs-identifier hs-type">m</span></a></span><span>
+</span><span id="line-116"></span><span>    </span><span class="hs-glyph">=&gt;</span><span> </span><span class="annot"><a href="Rules.Blog.Type.html#BlogConfReader"><span class="hs-identifier hs-type">BlogConfReader</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302411"><span class="hs-identifier hs-type">n</span></a></span><span> </span><span class="annot"><a href="#local-6989586621679302410"><span class="hs-identifier hs-type">m</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier hs-type">Context</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">)</span></span></span><span>
+</span><span id="line-117"></span><span id="listCtx"><span class="annot"><span class="annottext">listCtx :: forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#listCtx"><span class="hs-identifier hs-var hs-var">listCtx</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[ReaderT (BlogConfig n) m (Context String)]
 -&gt; ReaderT (BlogConfig n) m (Context String)
 forall (m :: * -&gt; *) b. (Monad m, Monoid b) =&gt; [m b] -&gt; m b
 </span><a href="Utils.Base.html#mconcatM"><span class="hs-identifier hs-var">mconcatM</span></a></span><span> </span><span class="hs-special">[</span><span>
-</span><span id="line-104"></span><span>    </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-118"></span><span>    </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
@@ -538,7 +608,7 @@ forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Context String
 </span><a href="Contexts.Core.html#siteCtx"><span class="hs-identifier hs-var">siteCtx</span></a></span><span>
-</span><span id="line-105"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-119"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
@@ -547,7 +617,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Context String
 </span><span class="hs-identifier hs-var">bodyField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;body&quot;</span></span><span>
-</span><span id="line-106"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-120"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
@@ -556,7 +626,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Context String
 forall a. Context a
 </span><span class="hs-identifier hs-var">metadataField</span></span><span>
-</span><span id="line-107"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-121"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
@@ -566,7 +636,7 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall a. String -&gt; Context a
 </span><span class="hs-identifier hs-var">pathField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;path&quot;</span></span><span>
-</span><span id="line-108"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-122"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">Context String -&gt; ReaderT (BlogConfig n) m (Context String)
 forall a. a -&gt; ReaderT (BlogConfig n) m a
 forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
 </span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Context String -&gt; ReaderT (BlogConfig n) m (Context String))
@@ -576,10 +646,10 @@ forall a b. (a -&gt; b) -&gt; a -&gt; b
 forall a. String -&gt; Context a
 </span><span class="hs-identifier hs-var">urlField</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;url&quot;</span></span><span>
-</span><span id="line-109"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ReaderT (BlogConfig n) m (Context String)
+</span><span id="line-123"></span><span>  </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">ReaderT (BlogConfig n) m (Context String)
 forall (m :: * -&gt; *) (n :: * -&gt; *).
 Monad m =&gt;
 BlogConfReader n m (Context String)
 </span><a href="Contexts.Blog.html#katexJsCtx"><span class="hs-identifier hs-var">katexJsCtx</span></a></span><span>
-</span><span id="line-110"></span><span>  </span><span class="hs-special">]</span><span>
-</span><span id="line-111"></span></pre></body></html>
+</span><span id="line-124"></span><span>  </span><span class="hs-special">]</span><span>
+</span><span id="line-125"></span></pre></body></html>

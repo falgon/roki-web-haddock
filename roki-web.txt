@@ -17,6 +17,29 @@ archivesRules :: Archives a -> (a -> Pattern -> Rules ()) -> Rules ()
 buildYearlyArchives :: (MonadMetadata m, MonadFail m) => TimeLocale -> TimeZone -> Pattern -> (String -> Identifier) -> m YearlyArchives
 buildMonthlyArchives :: (MonadMetadata m, MonadFail m) => TimeLocale -> TimeZone -> Pattern -> ((String, String) -> Identifier) -> m MonthlyArchives
 
+module Config.Author
+
+-- | 著者名
+authorName :: String
+
+-- | 職業
+authorJobTitle :: String
+
+-- | GitHubアカウント
+authorGithub :: String
+
+-- | Twitterアカウント
+authorTwitter :: String
+
+-- | Stack OverflowユーザーID
+authorStackOverflow :: String
+
+-- | 説明文（英語）
+authorDescriptionEn :: String
+
+-- | 説明文（日本語）
+authorDescriptionJa :: String
+
 module Config.Program
 contentsRoot :: FilePath
 templatesRoot :: FilePath
@@ -34,6 +57,7 @@ dd :: FilePath
 
 module Config.Site
 siteName :: String
+baseUrl :: String
 timeZoneJST :: TimeZone
 defaultTimeLocale' :: TimeLocale
 data GSuite
@@ -53,10 +77,27 @@ topPageConfig :: TopPageConfig
 
 module Contexts.Field
 localDateField :: TimeLocale -> TimeZone -> String -> String -> Context a
+iso8601DateField :: String -> Context String
+
+-- | JSON-LD Article Schema (BlogPosting) を生成するフィールド
+--   schema.org仕様に準拠したJSON-LDを出力
+jsonLdArticleField :: String -> Context String
+
+-- | JSON-LD Person Schema を生成するフィールド サイト著者の構造化データを出力
+--   langメタデータに応じてdescriptionを多言語切り替え
+jsonLdPersonField :: String -> Context String
+
+-- | JSON-LD WebSite Schema を生成するフィールド サイト全体の構造化データと検索機能を出力
+jsonLdWebSiteField :: String -> Context String
+
+-- | JSON-LD BreadcrumbList スキーマを生成するフィールド パス構造から階層的なパンくずリストを構築し、schema.org
+--   仕様に準拠した JSON-LD を出力
+breadcrumbField :: String -> Context String
 tagsField' :: String -> Tags -> Context a
 tagCloudField' :: String -> Tags -> Context a
 descriptionField :: String -> Int -> Context String
 imageField :: String -> Context String
+ogImageField :: String -> String -> Context String
 yearMonthArchiveField :: String -> YearlyArchives -> MonthlyArchives -> Maybe String -> Context a
 searchBoxResultField :: Context String
 
@@ -216,7 +257,7 @@ instance GHC.Show.Show Hakyll.Web.Feed.Extra.FeedConfiguration
 
 module Config.Blog
 data BlogConfig m
-BlogConfig :: Bool -> String -> String -> Html () -> Int -> Int -> Int -> Html () -> Html () -> Html () -> m Tags -> (FilePath -> FilePath) -> Pattern -> Pattern -> FeedConfiguration -> String -> m YearlyArchives -> m MonthlyArchives -> (FilePath -> FilePath) -> ((FilePath, FilePath) -> FilePath) -> WriterOptions -> String -> BlogConfig m
+BlogConfig :: Bool -> String -> String -> Html () -> Int -> Int -> Int -> Html () -> Html () -> Html () -> m Tags -> (FilePath -> FilePath) -> Pattern -> Pattern -> FeedConfiguration -> String -> m YearlyArchives -> m MonthlyArchives -> (FilePath -> FilePath) -> ((FilePath, FilePath) -> FilePath) -> WriterOptions -> String -> String -> String -> String -> String -> BlogConfig m
 [blogIsPreview] :: BlogConfig m -> Bool
 [blogName] :: BlogConfig m -> String
 [blogDescription] :: BlogConfig m -> String
@@ -239,6 +280,10 @@ BlogConfig :: Bool -> String -> String -> Html () -> Int -> Int -> Int -> Html (
 [blogMonthlyPagePath] :: BlogConfig m -> (FilePath, FilePath) -> FilePath
 [blogWriterOptions] :: BlogConfig m -> WriterOptions
 [blogGoogleCx] :: BlogConfig m -> String
+[blogGiscusRepo] :: BlogConfig m -> String
+[blogGiscusRepoId] :: BlogConfig m -> String
+[blogGiscusCategory] :: BlogConfig m -> String
+[blogGiscusCategoryId] :: BlogConfig m -> String
 
 module Media.JS
 compressJsCompiler :: Compiler (Item String)
@@ -293,7 +338,6 @@ module Utils.Hakyll
 absolutizeUrls :: Item String -> Compiler (Item String)
 modifyExternalLinkAttr :: Item String -> Compiler (Item String)
 sanitizeTagName :: String -> String
-sanitizeDisqusName :: String -> String
 makePageIdentifier :: FilePath -> PageNumber -> Identifier
 getStringField :: String -> Context String -> Compiler (Maybe String)
 injectTableOfContents :: Pandoc -> Pandoc
@@ -329,6 +373,10 @@ yearlyPagePath :: FilePath -> FilePath
 buildYearlyArchives :: (MonadMetadata m, MonadFail m) => m YearlyArchives
 monthlyPagePath :: (FilePath, FilePath) -> FilePath
 buildMonthlyArchives :: (MonadMetadata m, MonadFail m) => m MonthlyArchives
+giscusRepo :: String
+giscusRepoId :: String
+giscusCategory :: String
+giscusCategoryId :: String
 
 module Config.Blogs.AnotherBlog
 blogName :: FilePath
@@ -343,6 +391,10 @@ yearlyPagePath :: FilePath -> FilePath
 buildYearlyArchives :: (MonadMetadata m, MonadFail m) => m YearlyArchives
 monthlyPagePath :: (FilePath, FilePath) -> FilePath
 buildMonthlyArchives :: (MonadMetadata m, MonadFail m) => m MonthlyArchives
+giscusRepo :: String
+giscusRepoId :: String
+giscusCategory :: String
+giscusCategoryId :: String
 
 module Utils.Stack
 getStackYaml :: IO (HashMap Text Value)
@@ -450,6 +502,7 @@ module Contexts.Core
 dateCtx :: Context String
 jsPathCtx :: Context String
 siteMapDateCtx :: Context String
+canonicalUrlField :: Context a
 siteCtx :: Context String
 
 module Contexts.Blog
@@ -461,7 +514,7 @@ headerAdditionalComponent :: Monad m => BlogConfReader n m (Context String)
 footerAdditionalComponent :: Monad m => BlogConfReader n m (Context String)
 tagCloud :: Monad m => BlogConfReader m m (Context a)
 gSuite :: Monad m => BlogConfReader n m (Context String)
-disqus :: Monad m => BlogConfReader n m (Context String)
+giscus :: Monad m => BlogConfReader n m (Context String)
 katexJsCtx :: Monad m => BlogConfReader n m (Context String)
 postCtx :: Monad m => Tags -> BlogConfReader n m (Context String)
 listCtx :: Monad m => BlogConfReader n m (Context String)
@@ -558,7 +611,7 @@ build :: FontAwesomeIcons -> Context String -> BlogConfReader m Rules Snapshot
 
 module Rules.Blog.Core
 data BlogConfig m
-BlogConfig :: Bool -> String -> String -> Html () -> Int -> Int -> Int -> Html () -> Html () -> Html () -> m Tags -> (FilePath -> FilePath) -> Pattern -> Pattern -> FeedConfiguration -> String -> m YearlyArchives -> m MonthlyArchives -> (FilePath -> FilePath) -> ((FilePath, FilePath) -> FilePath) -> WriterOptions -> String -> BlogConfig m
+BlogConfig :: Bool -> String -> String -> Html () -> Int -> Int -> Int -> Html () -> Html () -> Html () -> m Tags -> (FilePath -> FilePath) -> Pattern -> Pattern -> FeedConfiguration -> String -> m YearlyArchives -> m MonthlyArchives -> (FilePath -> FilePath) -> ((FilePath, FilePath) -> FilePath) -> WriterOptions -> String -> String -> String -> String -> String -> BlogConfig m
 [blogIsPreview] :: BlogConfig m -> Bool
 [blogName] :: BlogConfig m -> String
 [blogDescription] :: BlogConfig m -> String
@@ -581,6 +634,10 @@ BlogConfig :: Bool -> String -> String -> Html () -> Int -> Int -> Int -> Html (
 [blogMonthlyPagePath] :: BlogConfig m -> (FilePath, FilePath) -> FilePath
 [blogWriterOptions] :: BlogConfig m -> WriterOptions
 [blogGoogleCx] :: BlogConfig m -> String
+[blogGiscusRepo] :: BlogConfig m -> String
+[blogGiscusRepoId] :: BlogConfig m -> String
+[blogGiscusCategory] :: BlogConfig m -> String
+[blogGiscusCategoryId] :: BlogConfig m -> String
 rules :: FontAwesomeIcons -> BlogConfReader Rules Rules ()
 
 module Rules.Blog
