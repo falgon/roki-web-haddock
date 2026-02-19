@@ -601,6 +601,7 @@ instance GHC.Show.Show Rules.DisneyExperienceSummary.TagInfo
 instance GHC.Generics.Generic Rules.DisneyExperienceSummary.TagInfo
 instance GHC.Show.Show Rules.DisneyExperienceSummary.TagConfig
 instance GHC.Generics.Generic Rules.DisneyExperienceSummary.TagConfig
+instance GHC.Show.Show Rules.DisneyExperienceSummary.LogImage
 instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.TagConfig
 instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.TagInfo
 instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.HotelRaw
