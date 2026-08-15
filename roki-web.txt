@@ -241,6 +241,63 @@ aggregateByYear :: [ExperienceRecord] -> [YearData]
 -- | メタデータから体験記録をパースする
 parseLogMetadata :: Metadata -> Maybe ExperienceRecord
 
+module Data.Disney.HotelStay
+data Hotel
+data HotelConfigException
+HotelConfigException :: FilePath -> HotelConfigError -> HotelConfigException
+data HotelConfigError
+EmptyHotels :: HotelConfigError
+EmptyHotelCode :: Int -> HotelConfigError
+InvalidUtf8 :: String -> HotelConfigError
+InvalidHotelCode :: String -> HotelConfigError
+DuplicateHotelCode :: String -> HotelConfigError
+InvalidHotelColor :: String -> String -> HotelConfigError
+EmptyHotelDetails :: String -> HotelConfigError
+EmptyDetailPath :: String -> HotelConfigError
+EmptyDetailLabel :: String -> [String] -> HotelConfigError
+ZeroStayCount :: String -> [String] -> HotelConfigError
+DuplicateDetailPath :: String -> [String] -> HotelConfigError
+ConflictingDetailPath :: String -> [String] -> [String] -> HotelConfigError
+data HotelDetail
+HDStay :: String -> Natural -> HotelDetail
+HDNode :: String -> [HotelDetail] -> HotelDetail
+data HotelRaw
+HotelRaw :: String -> [HotelStayRaw] -> String -> HotelRaw
+[hotelCodeRaw] :: HotelRaw -> String
+[detailsRaw] :: HotelRaw -> [HotelStayRaw]
+[hotelColorRaw] :: HotelRaw -> String
+data HotelStayRaw
+HotelStayRaw :: [String] -> Natural -> HotelStayRaw
+[detailPathRaw] :: HotelStayRaw -> [String]
+[stayCountRaw] :: HotelStayRaw -> Natural
+describeHotelConfigError :: FilePath -> HotelConfigError -> String
+details :: Hotel -> [HotelDetail]
+deriveHotels :: [HotelRaw] -> Either HotelConfigError [Hotel]
+formatStayLabel :: String -> Natural -> String
+hotelCode :: Hotel -> String
+hotelColor :: Hotel -> String
+hotelStayCount :: Hotel -> Natural
+loadHotels :: FilePath -> IO [Hotel]
+productionHotelsPath :: FilePath
+renderHotelDetailsHtml :: [HotelDetail] -> String
+instance GHC.Show.Show Data.Disney.HotelStay.HotelDetail
+instance GHC.Classes.Eq Data.Disney.HotelStay.HotelDetail
+instance GHC.Show.Show Data.Disney.HotelStay.Hotel
+instance GHC.Classes.Eq Data.Disney.HotelStay.Hotel
+instance GHC.Show.Show Data.Disney.HotelStay.HotelStayRaw
+instance GHC.Generics.Generic Data.Disney.HotelStay.HotelStayRaw
+instance GHC.Classes.Eq Data.Disney.HotelStay.HotelStayRaw
+instance GHC.Show.Show Data.Disney.HotelStay.HotelRaw
+instance GHC.Generics.Generic Data.Disney.HotelStay.HotelRaw
+instance GHC.Classes.Eq Data.Disney.HotelStay.HotelRaw
+instance GHC.Show.Show Data.Disney.HotelStay.HotelConfigError
+instance GHC.Classes.Eq Data.Disney.HotelStay.HotelConfigError
+instance GHC.Classes.Eq Data.Disney.HotelStay.HotelConfigException
+instance GHC.Show.Show Data.Disney.HotelStay.HotelConfigException
+instance GHC.Exception.Type.Exception Data.Disney.HotelStay.HotelConfigException
+instance Dhall.Marshal.Decode.FromDhall Data.Disney.HotelStay.HotelRaw
+instance Dhall.Marshal.Decode.FromDhall Data.Disney.HotelStay.HotelStayRaw
+
 module Hakyll.Web.Feed.Extra
 data FeedConfiguration
 FeedConfiguration :: String -> String -> String -> String -> String -> String -> FeedConfiguration
@@ -592,11 +649,6 @@ module Rules.DisneyExperienceSummary
 rules :: PageConfReader Rules ()
 instance GHC.Show.Show Rules.DisneyExperienceSummary.Favorite
 instance GHC.Generics.Generic Rules.DisneyExperienceSummary.Favorite
-instance GHC.Show.Show Rules.DisneyExperienceSummary.HotelDetail
-instance GHC.Generics.Generic Rules.DisneyExperienceSummary.HotelDetail
-instance GHC.Show.Show Rules.DisneyExperienceSummary.Hotel
-instance GHC.Show.Show Rules.DisneyExperienceSummary.HotelRaw
-instance GHC.Generics.Generic Rules.DisneyExperienceSummary.HotelRaw
 instance GHC.Show.Show Rules.DisneyExperienceSummary.TagInfo
 instance GHC.Generics.Generic Rules.DisneyExperienceSummary.TagInfo
 instance GHC.Show.Show Rules.DisneyExperienceSummary.TagConfig
@@ -604,7 +656,6 @@ instance GHC.Generics.Generic Rules.DisneyExperienceSummary.TagConfig
 instance GHC.Show.Show Rules.DisneyExperienceSummary.LogImage
 instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.TagConfig
 instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.TagInfo
-instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.HotelRaw
 instance Dhall.Marshal.Decode.FromDhall Rules.DisneyExperienceSummary.Favorite
 
 module Rules.Blog.EachPosts

@@ -17,23 +17,23 @@
 </span><span id="line-16"></span><span>    </span><span class="annot"><span class="annottext">IO () -&gt; Rules ()
 forall a. IO a -&gt; Rules a
 </span><span class="hs-identifier hs-var">preprocess</span></span><span> </span><span class="annot"><span class="annottext">IO ()
-</span><a href="#local-6989586621679300448"><span class="hs-identifier hs-var">cleanupStaleJsOutputs</span></a></span><span>
-</span><span id="line-17"></span><span>    </span><span id="local-6989586621679300449"><span class="annot"><span class="annottext">Dependency
-</span><a href="#local-6989586621679300449"><span class="hs-identifier hs-var">viteDependency</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Rules Dependency
+</span><a href="#local-6989586621679303201"><span class="hs-identifier hs-var">cleanupStaleJsOutputs</span></a></span><span>
+</span><span id="line-17"></span><span>    </span><span id="local-6989586621679303202"><span class="annot"><span class="annottext">Dependency
+</span><a href="#local-6989586621679303202"><span class="hs-identifier hs-var">viteDependency</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Rules Dependency
 forall (m :: * -&gt; *). MonadMetadata m =&gt; Pattern -&gt; m Dependency
 </span><span class="hs-identifier hs-var">makePatternDependency</span></span><span> </span><span class="annot"><span class="annottext">(Pattern -&gt; Rules Dependency) -&gt; Pattern -&gt; Rules Dependency
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300451"><span class="hs-identifier hs-var">viteDependencyPath</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
+</span><a href="#local-6989586621679303204"><span class="hs-identifier hs-var">viteDependencyPath</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
 </span><span class="hs-operator hs-var">.||.</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300453"><span class="hs-identifier hs-var">viteConfigPath</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
+</span><a href="#local-6989586621679303206"><span class="hs-identifier hs-var">viteConfigPath</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
 </span><span class="hs-operator hs-var">.||.</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300454"><span class="hs-identifier hs-var">tsconfigPath</span></a></span><span>
+</span><a href="#local-6989586621679303207"><span class="hs-identifier hs-var">tsconfigPath</span></a></span><span>
 </span><span id="line-18"></span><span>
 </span><span id="line-19"></span><span>    </span><span class="hs-comment">-- Vite/TypeScript&#35373;&#23450;&#12501;&#12449;&#12452;&#12523;&#12392;&#21487;&#35222;&#21270;&#21521;&#12369;&#22411;&#23450;&#32681;&#12399;&#20844;&#38283;&#12375;&#12394;&#12356;&#12364;&#12289;&#22793;&#26356;&#26178;&#12395;&#12496;&#12531;&#12489;&#12523;&#12434;&#20877;&#29983;&#25104;&#12373;&#12379;&#12427;</span><span>
 </span><span id="line-20"></span><span>    </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300453"><span class="hs-identifier hs-var">viteConfigPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679303206"><span class="hs-identifier hs-var">viteConfigPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; Rules ()
 forall a.
@@ -43,7 +43,7 @@ Compiler (Item a) -&gt; Rules ()
 </span><span class="hs-identifier hs-var">getResourceBody</span></span><span>
 </span><span id="line-21"></span><span>    </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300454"><span class="hs-identifier hs-var">tsconfigPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679303207"><span class="hs-identifier hs-var">tsconfigPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; Rules ()
 forall a.
@@ -53,7 +53,7 @@ Compiler (Item a) -&gt; Rules ()
 </span><span class="hs-identifier hs-var">getResourceBody</span></span><span>
 </span><span id="line-22"></span><span>    </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300458"><span class="hs-identifier hs-var">visualizationTypesPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679303211"><span class="hs-identifier hs-var">visualizationTypesPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; Rules ()
 forall a.
@@ -66,17 +66,17 @@ Compiler (Item a) -&gt; Rules ()
 </span><span id="line-25"></span><span>    </span><span class="annot"><span class="annottext">[Dependency] -&gt; Rules () -&gt; Rules ()
 forall a. [Dependency] -&gt; Rules a -&gt; Rules a
 </span><span class="hs-identifier hs-var">rulesExtraDependencies</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Dependency
-</span><a href="#local-6989586621679300449"><span class="hs-identifier hs-var">viteDependency</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679303202"><span class="hs-identifier hs-var">viteDependency</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span>
 </span><span id="line-26"></span><span>        </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300460"><span class="hs-identifier hs-var">visualizationEntryPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679303213"><span class="hs-identifier hs-var">visualizationEntryPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-27"></span><span>            </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
 </span><span class="hs-identifier hs-var">route</span></span><span> </span><span class="annot"><span class="annottext">Routes
-</span><a href="#local-6989586621679300462"><span class="hs-identifier hs-var">tsRoute</span></a></span><span>
+</span><a href="#local-6989586621679303215"><span class="hs-identifier hs-var">tsRoute</span></a></span><span>
 </span><span id="line-28"></span><span>            </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; Rules ()
 forall a.
 (Binary a, Typeable a, Writable a) =&gt;
@@ -87,18 +87,18 @@ Compiler (Item a) -&gt; Rules ()
 </span><span id="line-30"></span><span>    </span><span class="hs-comment">-- TypeScript&#12501;&#12449;&#12452;&#12523;&#12398;&#20966;&#29702;&#65288;&#20844;&#38283;&#19981;&#35201;&#12501;&#12449;&#12452;&#12523;&#12392;Vite&#12496;&#12531;&#12489;&#12523;&#23550;&#35937;&#12434;&#38500;&#22806;&#65289;</span><span>
 </span><span id="line-31"></span><span>    </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300463"><span class="hs-identifier hs-var">runtimeTsPath</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
+</span><a href="#local-6989586621679303216"><span class="hs-identifier hs-var">runtimeTsPath</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
 </span><span class="hs-operator hs-var">.&amp;&amp;.</span></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern
 </span><span class="hs-identifier hs-var">complement</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300466"><span class="hs-identifier hs-var">visualizationBundledSourcePath</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
+</span><a href="#local-6989586621679303219"><span class="hs-identifier hs-var">visualizationBundledSourcePath</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
 </span><span class="hs-operator hs-var">.&amp;&amp;.</span></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern
 </span><span class="hs-identifier hs-var">complement</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300460"><span class="hs-identifier hs-var">visualizationEntryPath</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679303213"><span class="hs-identifier hs-var">visualizationEntryPath</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-32"></span><span>        </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
 </span><span class="hs-identifier hs-var">route</span></span><span> </span><span class="annot"><span class="annottext">Routes
-</span><a href="#local-6989586621679300462"><span class="hs-identifier hs-var">tsRoute</span></a></span><span>
+</span><a href="#local-6989586621679303215"><span class="hs-identifier hs-var">tsRoute</span></a></span><span>
 </span><span id="line-33"></span><span>        </span><span class="annot"><span class="annottext">Compiler (Item String) -&gt; Rules ()
 forall a.
 (Binary a, Typeable a, Writable a) =&gt;
@@ -109,7 +109,7 @@ Compiler (Item a) -&gt; Rules ()
 </span><span id="line-35"></span><span>    </span><span class="hs-comment">-- JavaScript&#12501;&#12449;&#12452;&#12523;&#12398;&#20966;&#29702;&#65288;&#25163;&#21205;&#12391;&#20316;&#25104;&#12373;&#12428;&#12383;&#12418;&#12398;&#65289;</span><span>
 </span><span id="line-36"></span><span>    </span><span class="annot"><span class="annottext">Pattern -&gt; Rules () -&gt; Rules ()
 </span><span class="hs-identifier hs-var">match</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300467"><span class="hs-identifier hs-var">jsPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
+</span><a href="#local-6989586621679303220"><span class="hs-identifier hs-var">jsPath</span></a></span><span> </span><span class="annot"><span class="annottext">(Rules () -&gt; Rules ()) -&gt; Rules () -&gt; Rules ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
 </span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-keyword">do</span><span>
 </span><span id="line-37"></span><span>        </span><span class="annot"><span class="annottext">Routes -&gt; Rules ()
@@ -131,8 +131,8 @@ Compiler (Item a) -&gt; Rules ()
 </span><span class="hs-identifier hs-var">compile</span></span><span> </span><span class="annot"><span class="annottext">Compiler (Item String)
 </span><a href="Media.JS.html#compressJsCompiler"><span class="hs-identifier hs-var">compressJsCompiler</span></a></span><span>
 </span><span id="line-39"></span><span>  </span><span class="hs-keyword">where</span><span>
-</span><span id="line-40"></span><span>    </span><span id="local-6989586621679300462"><span class="annot"><span class="annottext">tsRoute :: Routes
-</span><a href="#local-6989586621679300462"><span class="hs-identifier hs-var hs-var">tsRoute</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (String -&gt; String) -&gt; Routes
+</span><span id="line-40"></span><span>    </span><span id="local-6989586621679303215"><span class="annot"><span class="annottext">tsRoute :: Routes
+</span><a href="#local-6989586621679303215"><span class="hs-identifier hs-var hs-var">tsRoute</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; (String -&gt; String) -&gt; Routes
 </span><span class="hs-identifier hs-var">gsubRoute</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;contents/ts/&quot;</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 forall a b. a -&gt; b -&gt; a
@@ -141,102 +141,102 @@ forall a b. a -&gt; b -&gt; a
 </span><span class="hs-operator hs-var">`composeRoutes`</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Routes
 </span><span class="hs-identifier hs-var">setExtension</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;js&quot;</span></span><span>
-</span><span id="line-41"></span><span>    </span><span id="local-6989586621679300472"><span class="annot"><span class="annottext">tsPath :: Pattern
-</span><a href="#local-6989586621679300472"><span class="hs-identifier hs-var hs-var">tsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-41"></span><span>    </span><span id="local-6989586621679303225"><span class="annot"><span class="annottext">tsPath :: Pattern
+</span><a href="#local-6989586621679303225"><span class="hs-identifier hs-var hs-var">tsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromRegex</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;^contents/ts/.+\\.ts$&quot;</span></span><span>
-</span><span id="line-42"></span><span>    </span><span id="local-6989586621679300474"><span class="annot"><span class="annottext">testTsPath :: Pattern
-</span><a href="#local-6989586621679300474"><span class="hs-identifier hs-var hs-var">testTsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-42"></span><span>    </span><span id="local-6989586621679303227"><span class="annot"><span class="annottext">testTsPath :: Pattern
+</span><a href="#local-6989586621679303227"><span class="hs-identifier hs-var hs-var">testTsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromRegex</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;^contents/ts/(.*/)?__tests__/.*|^contents/ts/.+\\.test\\.ts$&quot;</span></span><span>
-</span><span id="line-43"></span><span>    </span><span id="local-6989586621679300475"><span class="annot"><span class="annottext">declarationTsPath :: Pattern
-</span><a href="#local-6989586621679300475"><span class="hs-identifier hs-var hs-var">declarationTsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-43"></span><span>    </span><span id="local-6989586621679303228"><span class="annot"><span class="annottext">declarationTsPath :: Pattern
+</span><a href="#local-6989586621679303228"><span class="hs-identifier hs-var hs-var">declarationTsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromRegex</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;^contents/ts/.+\\.d\\.ts$&quot;</span></span><span>
-</span><span id="line-44"></span><span>    </span><span id="local-6989586621679300476"><span class="annot"><span class="annottext">declarationOnlyTsPath :: Pattern
-</span><a href="#local-6989586621679300476"><span class="hs-identifier hs-var hs-var">declarationOnlyTsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-44"></span><span>    </span><span id="local-6989586621679303229"><span class="annot"><span class="annottext">declarationOnlyTsPath :: Pattern
+</span><a href="#local-6989586621679303229"><span class="hs-identifier hs-var hs-var">declarationOnlyTsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromRegex</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;^contents/ts/types/.+\\.ts$&quot;</span></span><span>
-</span><span id="line-45"></span><span>    </span><span id="local-6989586621679300463"><span class="annot"><span class="annottext">runtimeTsPath :: Pattern
-</span><a href="#local-6989586621679300463"><span class="hs-identifier hs-var hs-var">runtimeTsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-45"></span><span>    </span><span id="local-6989586621679303216"><span class="annot"><span class="annottext">runtimeTsPath :: Pattern
+</span><a href="#local-6989586621679303216"><span class="hs-identifier hs-var hs-var">runtimeTsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-46"></span><span>        </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300472"><span class="hs-identifier hs-var">tsPath</span></a></span><span>
+</span><a href="#local-6989586621679303225"><span class="hs-identifier hs-var">tsPath</span></a></span><span>
 </span><span id="line-47"></span><span>            </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
 </span><span class="hs-operator hs-var">.&amp;&amp;.</span></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern
 </span><span class="hs-identifier hs-var">complement</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300474"><span class="hs-identifier hs-var">testTsPath</span></a></span><span>
+</span><a href="#local-6989586621679303227"><span class="hs-identifier hs-var">testTsPath</span></a></span><span>
 </span><span id="line-48"></span><span>            </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
 </span><span class="hs-operator hs-var">.&amp;&amp;.</span></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern
 </span><span class="hs-identifier hs-var">complement</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300475"><span class="hs-identifier hs-var">declarationTsPath</span></a></span><span>
+</span><a href="#local-6989586621679303228"><span class="hs-identifier hs-var">declarationTsPath</span></a></span><span>
 </span><span id="line-49"></span><span>            </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
 </span><span class="hs-operator hs-var">.&amp;&amp;.</span></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern
 </span><span class="hs-identifier hs-var">complement</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300476"><span class="hs-identifier hs-var">declarationOnlyTsPath</span></a></span><span>
-</span><span id="line-50"></span><span>    </span><span id="local-6989586621679300460"><span class="annot"><span class="annottext">visualizationEntryPath :: Pattern
-</span><a href="#local-6989586621679300460"><span class="hs-identifier hs-var hs-var">visualizationEntryPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><a href="#local-6989586621679303229"><span class="hs-identifier hs-var">declarationOnlyTsPath</span></a></span><span>
+</span><span id="line-50"></span><span>    </span><span id="local-6989586621679303213"><span class="annot"><span class="annottext">visualizationEntryPath :: Pattern
+</span><a href="#local-6989586621679303213"><span class="hs-identifier hs-var hs-var">visualizationEntryPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromRegex</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;^contents/ts/disney-experience-visualizations\\.ts$&quot;</span></span><span>
-</span><span id="line-51"></span><span>    </span><span id="local-6989586621679300477"><span class="annot"><span class="annottext">visualizationSupportPath :: Pattern
-</span><a href="#local-6989586621679300477"><span class="hs-identifier hs-var hs-var">visualizationSupportPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-51"></span><span>    </span><span id="local-6989586621679303230"><span class="annot"><span class="annottext">visualizationSupportPath :: Pattern
+</span><a href="#local-6989586621679303230"><span class="hs-identifier hs-var hs-var">visualizationSupportPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromRegex</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;^contents/ts/(disney-hotel-card-navigation|disney-tab-manager)\\.ts$&quot;</span></span><span>
-</span><span id="line-52"></span><span>    </span><span id="local-6989586621679300478"><span class="annot"><span class="annottext">visualizationsPath :: Pattern
-</span><a href="#local-6989586621679300478"><span class="hs-identifier hs-var hs-var">visualizationsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-52"></span><span>    </span><span id="local-6989586621679303231"><span class="annot"><span class="annottext">visualizationsPath :: Pattern
+</span><a href="#local-6989586621679303231"><span class="hs-identifier hs-var hs-var">visualizationsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromRegex</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;^contents/ts/visualizations/.+\\.ts$&quot;</span></span><span>
-</span><span id="line-53"></span><span>    </span><span id="local-6989586621679300466"><span class="annot"><span class="annottext">visualizationBundledSourcePath :: Pattern
-</span><a href="#local-6989586621679300466"><span class="hs-identifier hs-var hs-var">visualizationBundledSourcePath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300478"><span class="hs-identifier hs-var">visualizationsPath</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
+</span><span id="line-53"></span><span>    </span><span id="local-6989586621679303219"><span class="annot"><span class="annottext">visualizationBundledSourcePath :: Pattern
+</span><a href="#local-6989586621679303219"><span class="hs-identifier hs-var hs-var">visualizationBundledSourcePath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Pattern
+</span><a href="#local-6989586621679303231"><span class="hs-identifier hs-var">visualizationsPath</span></a></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
 </span><span class="hs-operator hs-var">.&amp;&amp;.</span></span><span> </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern
 </span><span class="hs-identifier hs-var">complement</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300474"><span class="hs-identifier hs-var">testTsPath</span></a></span><span>
-</span><span id="line-54"></span><span>    </span><span id="local-6989586621679300458"><span class="annot"><span class="annottext">visualizationTypesPath :: Pattern
-</span><a href="#local-6989586621679300458"><span class="hs-identifier hs-var hs-var">visualizationTypesPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><a href="#local-6989586621679303227"><span class="hs-identifier hs-var">testTsPath</span></a></span><span>
+</span><span id="line-54"></span><span>    </span><span id="local-6989586621679303211"><span class="annot"><span class="annottext">visualizationTypesPath :: Pattern
+</span><a href="#local-6989586621679303211"><span class="hs-identifier hs-var hs-var">visualizationTypesPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromRegex</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;^contents/ts/types\\.d\\.ts$&quot;</span></span><span>
-</span><span id="line-55"></span><span>    </span><span id="local-6989586621679300451"><span class="annot"><span class="annottext">viteDependencyPath :: Pattern
-</span><a href="#local-6989586621679300451"><span class="hs-identifier hs-var hs-var">viteDependencyPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-55"></span><span>    </span><span id="local-6989586621679303204"><span class="annot"><span class="annottext">viteDependencyPath :: Pattern
+</span><a href="#local-6989586621679303204"><span class="hs-identifier hs-var hs-var">viteDependencyPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
 </span><span id="line-56"></span><span>        </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300477"><span class="hs-identifier hs-var">visualizationSupportPath</span></a></span><span>
+</span><a href="#local-6989586621679303230"><span class="hs-identifier hs-var">visualizationSupportPath</span></a></span><span>
 </span><span id="line-57"></span><span>            </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
 </span><span class="hs-operator hs-var">.||.</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300466"><span class="hs-identifier hs-var">visualizationBundledSourcePath</span></a></span><span>
+</span><a href="#local-6989586621679303219"><span class="hs-identifier hs-var">visualizationBundledSourcePath</span></a></span><span>
 </span><span id="line-58"></span><span>            </span><span class="annot"><span class="annottext">Pattern -&gt; Pattern -&gt; Pattern
 </span><span class="hs-operator hs-var">.||.</span></span><span> </span><span class="annot"><span class="annottext">Pattern
-</span><a href="#local-6989586621679300458"><span class="hs-identifier hs-var">visualizationTypesPath</span></a></span><span>
-</span><span id="line-59"></span><span>    </span><span id="local-6989586621679300453"><span class="annot"><span class="annottext">viteConfigPath :: Pattern
-</span><a href="#local-6989586621679300453"><span class="hs-identifier hs-var hs-var">viteConfigPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><a href="#local-6989586621679303211"><span class="hs-identifier hs-var">visualizationTypesPath</span></a></span><span>
+</span><span id="line-59"></span><span>    </span><span id="local-6989586621679303206"><span class="annot"><span class="annottext">viteConfigPath :: Pattern
+</span><a href="#local-6989586621679303206"><span class="hs-identifier hs-var hs-var">viteConfigPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromRegex</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;^vite\\.config\\.production\\.ts$&quot;</span></span><span>
-</span><span id="line-60"></span><span>    </span><span id="local-6989586621679300454"><span class="annot"><span class="annottext">tsconfigPath :: Pattern
-</span><a href="#local-6989586621679300454"><span class="hs-identifier hs-var hs-var">tsconfigPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-60"></span><span>    </span><span id="local-6989586621679303207"><span class="annot"><span class="annottext">tsconfigPath :: Pattern
+</span><a href="#local-6989586621679303207"><span class="hs-identifier hs-var hs-var">tsconfigPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromRegex</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;^tsconfig\\.json$&quot;</span></span><span>
-</span><span id="line-61"></span><span>    </span><span id="local-6989586621679300467"><span class="annot"><span class="annottext">jsPath :: Pattern
-</span><a href="#local-6989586621679300467"><span class="hs-identifier hs-var hs-var">jsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
+</span><span id="line-61"></span><span>    </span><span id="local-6989586621679303220"><span class="annot"><span class="annottext">jsPath :: Pattern
+</span><a href="#local-6989586621679303220"><span class="hs-identifier hs-var hs-var">jsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Pattern
 </span><span class="hs-identifier hs-var">fromRegex</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;^contents/js/.+$&quot;</span></span><span>
-</span><span id="line-62"></span><span>    </span><span id="local-6989586621679300448"><span class="annot"><span class="annottext">cleanupStaleJsOutputs :: IO ()
-</span><a href="#local-6989586621679300448"><span class="hs-identifier hs-var hs-var">cleanupStaleJsOutputs</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
-</span><span id="line-63"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679300486"><span class="annot"><span class="annottext">jsRoot :: String
-</span><a href="#local-6989586621679300486"><span class="hs-identifier hs-var hs-var">jsRoot</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Configuration -&gt; String
+</span><span id="line-62"></span><span>    </span><span id="local-6989586621679303201"><span class="annot"><span class="annottext">cleanupStaleJsOutputs :: IO ()
+</span><a href="#local-6989586621679303201"><span class="hs-identifier hs-var hs-var">cleanupStaleJsOutputs</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-63"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679303239"><span class="annot"><span class="annottext">jsRoot :: String
+</span><a href="#local-6989586621679303239"><span class="hs-identifier hs-var hs-var">jsRoot</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Configuration -&gt; String
 </span><span class="hs-identifier hs-var">destinationDirectory</span></span><span> </span><span class="annot"><span class="annottext">Configuration
 </span><a href="Config.Program.html#hakyllConfig"><span class="hs-identifier hs-var">hakyllConfig</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 </span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;js&quot;</span></span><span>
-</span><span id="line-64"></span><span>            </span><span id="local-6989586621679300488"><span class="annot"><span class="annottext">staleOutputs :: [String]
-</span><a href="#local-6989586621679300488"><span class="hs-identifier hs-var hs-var">staleOutputs</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span>
+</span><span id="line-64"></span><span>            </span><span id="local-6989586621679303241"><span class="annot"><span class="annottext">staleOutputs :: [String]
+</span><a href="#local-6989586621679303241"><span class="hs-identifier hs-var hs-var">staleOutputs</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span>
 </span><span id="line-65"></span><span>                </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300486"><span class="hs-identifier hs-var">jsRoot</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="#local-6989586621679303239"><span class="hs-identifier hs-var">jsRoot</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 </span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;__tests__&quot;</span></span><span>
 </span><span id="line-66"></span><span>              </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300486"><span class="hs-identifier hs-var">jsRoot</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="#local-6989586621679303239"><span class="hs-identifier hs-var">jsRoot</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 </span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;types.d.js&quot;</span></span><span>
 </span><span id="line-67"></span><span>              </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300486"><span class="hs-identifier hs-var">jsRoot</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
+</span><a href="#local-6989586621679303239"><span class="hs-identifier hs-var">jsRoot</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 </span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
 </span><span class="hs-string">&quot;types&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; String
 </span><span class="hs-operator hs-var">&lt;/&gt;</span></span><span> </span><span class="annot"><span class="annottext">String
@@ -247,13 +247,13 @@ forall (t :: * -&gt; *) (m :: * -&gt; *) a b.
 (Foldable t, Monad m) =&gt;
 t a -&gt; (a -&gt; m b) -&gt; m ()
 </span><span class="hs-identifier hs-var">forM_</span></span><span> </span><span class="annot"><span class="annottext">[String]
-</span><a href="#local-6989586621679300488"><span class="hs-identifier hs-var">staleOutputs</span></a></span><span> </span><span class="annot"><span class="annottext">((String -&gt; IO ()) -&gt; IO ()) -&gt; (String -&gt; IO ()) -&gt; IO ()
+</span><a href="#local-6989586621679303241"><span class="hs-identifier hs-var">staleOutputs</span></a></span><span> </span><span class="annot"><span class="annottext">((String -&gt; IO ()) -&gt; IO ()) -&gt; (String -&gt; IO ()) -&gt; IO ()
 forall a b. (a -&gt; b) -&gt; a -&gt; b
-</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679300489"><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300489"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="hs-glyph">\</span><span id="local-6989586621679303242"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679303242"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span>
 </span><span id="line-70"></span><span>            </span><span class="annot"><span class="annottext">String -&gt; IO Bool
 </span><span class="hs-identifier hs-var">doesPathExist</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300489"><span class="hs-identifier hs-var">path</span></a></span><span> </span><span class="annot"><span class="annottext">IO Bool -&gt; (Bool -&gt; IO ()) -&gt; IO ()
+</span><a href="#local-6989586621679303242"><span class="hs-identifier hs-var">path</span></a></span><span> </span><span class="annot"><span class="annottext">IO Bool -&gt; (Bool -&gt; IO ()) -&gt; IO ()
 forall a b. IO a -&gt; (a -&gt; IO b) -&gt; IO b
 forall (m :: * -&gt; *) a b. Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b
 </span><span class="hs-operator hs-var">&gt;&gt;=</span></span><span> </span><span class="annot"><span class="annottext">(Bool -&gt; IO () -&gt; IO ()) -&gt; IO () -&gt; Bool -&gt; IO ()
@@ -262,5 +262,5 @@ forall a b c. (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c
 forall (f :: * -&gt; *). Applicative f =&gt; Bool -&gt; f () -&gt; f ()
 </span><span class="hs-identifier hs-var">when</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">String -&gt; IO ()
 </span><span class="hs-identifier hs-var">removePathForcibly</span></span><span> </span><span class="annot"><span class="annottext">String
-</span><a href="#local-6989586621679300489"><span class="hs-identifier hs-var">path</span></a></span><span class="hs-special">)</span><span>
+</span><a href="#local-6989586621679303242"><span class="hs-identifier hs-var">path</span></a></span><span class="hs-special">)</span><span>
 </span><span id="line-71"></span></pre></body></html>

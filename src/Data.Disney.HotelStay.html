@@ -1,0 +1,1214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-pragma">{-# LANGUAGE DeriveGeneric #-}</span><span>
+</span><span id="line-2"></span><span>
+</span><span id="line-3"></span><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Data.Disney.HotelStay</span><span> </span><span class="hs-special">(</span><span>
+</span><span id="line-4"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier">Hotel</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-5"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigException"><span class="hs-identifier">HotelConfigException</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-6"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigError"><span class="hs-identifier">HotelConfigError</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-7"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier">HotelDetail</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-8"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelRaw"><span class="hs-identifier">HotelRaw</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-9"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier">HotelStayRaw</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">,</span><span>
+</span><span id="line-10"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#describeHotelConfigError"><span class="hs-identifier">describeHotelConfigError</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-11"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#details"><span class="hs-identifier">details</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-12"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#deriveHotels"><span class="hs-identifier">deriveHotels</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-13"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#formatStayLabel"><span class="hs-identifier">formatStayLabel</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-14"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#hotelCode"><span class="hs-identifier">hotelCode</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-15"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#hotelColor"><span class="hs-identifier">hotelColor</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-16"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#hotelStayCount"><span class="hs-identifier">hotelStayCount</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-17"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#loadHotels"><span class="hs-identifier">loadHotels</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-18"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#productionHotelsPath"><span class="hs-identifier">productionHotelsPath</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-19"></span><span>    </span><span class="annot"><a href="Data.Disney.HotelStay.html#renderHotelDetailsHtml"><span class="hs-identifier">renderHotelDetailsHtml</span></a></span><span class="hs-special">,</span><span>
+</span><span id="line-20"></span><span class="hs-special">)</span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-21"></span><span>
+</span><span id="line-22"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Control.Exception</span></span><span>     </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Exception</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">displayException</span></span><span class="hs-special">)</span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">throwIO</span></span><span class="hs-special">)</span><span>
+</span><span id="line-23"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.ByteString</span></span><span>       </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">BS</span></span><span>
+</span><span id="line-24"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Char</span></span><span>             </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">isHexDigit</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">isSpace</span></span><span class="hs-special">)</span><span>
+</span><span id="line-25"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Foldable</span></span><span>         </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">traverse_</span></span><span class="hs-special">)</span><span>
+</span><span id="line-26"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.Functor.Identity</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">Identity</span></span><span> </span><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><span id="line-27"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Data.List</span></span><span>             </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">findIndex</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">foldl'</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">intercalate</span></span><span class="hs-special">,</span><span>
+</span><span id="line-28"></span><span>                                        </span><span class="annot"><span class="hs-identifier">isPrefixOf</span></span><span class="hs-special">)</span><span>
+</span><span id="line-29"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text</span></span><span>             </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">T</span></span><span>
+</span><span id="line-30"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text.Encoding</span></span><span>    </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">TE</span></span><span>
+</span><span id="line-31"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Data.Text.Lazy</span></span><span>        </span><span class="hs-keyword">as</span><span> </span><span class="annot"><span class="hs-identifier">TL</span></span><span>
+</span><span id="line-32"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">Dhall</span></span><span>                 </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">FromDhall</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">Generic</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">Natural</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">auto</span></span><span class="hs-special">,</span><span>
+</span><span id="line-33"></span><span>                                        </span><span class="annot"><span class="hs-identifier">defaultInputSettings</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">inputWithSettings</span></span><span class="hs-special">,</span><span>
+</span><span id="line-34"></span><span>                                        </span><span class="annot"><span class="hs-identifier">rootDirectory</span></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="hs-identifier">sourceName</span></span><span class="hs-special">)</span><span>
+</span><span id="line-35"></span><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><span class="annot"><span class="hs-identifier">Lucid</span></span><span>
+</span><span id="line-36"></span><span class="hs-keyword">import</span><span>           </span><span class="annot"><span class="hs-identifier">System.FilePath</span></span><span>       </span><span class="hs-special">(</span><span class="annot"><span class="hs-identifier">takeDirectory</span></span><span class="hs-special">)</span><span>
+</span><span id="line-37"></span><span>
+</span><span id="line-38"></span><span class="hs-keyword">data</span><span> </span><span id="HotelDetail"><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-var">HotelDetail</span></a></span></span><span>
+</span><span id="line-39"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="HDStay"><span class="annot"><a href="Data.Disney.HotelStay.html#HDStay"><span class="hs-identifier hs-var">HDStay</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Natural</span></span><span>
+</span><span id="line-40"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="HDNode"><span class="annot"><a href="Data.Disney.HotelStay.html#HDNode"><span class="hs-identifier hs-var">HDNode</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-type">HotelDetail</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-41"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301260"><span id="local-6989586621679301267"><span class="annot"><span class="annottext">HotelDetail -&gt; HotelDetail -&gt; Bool
+(HotelDetail -&gt; HotelDetail -&gt; Bool)
+-&gt; (HotelDetail -&gt; HotelDetail -&gt; Bool) -&gt; Eq HotelDetail
+forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
+$c== :: HotelDetail -&gt; HotelDetail -&gt; Bool
+== :: HotelDetail -&gt; HotelDetail -&gt; Bool
+$c/= :: HotelDetail -&gt; HotelDetail -&gt; Bool
+/= :: HotelDetail -&gt; HotelDetail -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679301272"><span id="local-6989586621679301284"><span id="local-6989586621679301288"><span class="annot"><span class="annottext">Int -&gt; HotelDetail -&gt; ShowS
+[HotelDetail] -&gt; ShowS
+HotelDetail -&gt; String
+(Int -&gt; HotelDetail -&gt; ShowS)
+-&gt; (HotelDetail -&gt; String)
+-&gt; ([HotelDetail] -&gt; ShowS)
+-&gt; Show HotelDetail
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+$cshowsPrec :: Int -&gt; HotelDetail -&gt; ShowS
+showsPrec :: Int -&gt; HotelDetail -&gt; ShowS
+$cshow :: HotelDetail -&gt; String
+show :: HotelDetail -&gt; String
+$cshowList :: [HotelDetail] -&gt; ShowS
+showList :: [HotelDetail] -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-42"></span><span>
+</span><span id="line-43"></span><span class="hs-keyword">data</span><span> </span><span id="Hotel"><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-var">Hotel</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="Hotel"><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-var">Hotel</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-type">HotelDetail</span></a></span><span class="hs-special">]</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-44"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301294"><span id="local-6989586621679301300"><span class="annot"><span class="annottext">Hotel -&gt; Hotel -&gt; Bool
+(Hotel -&gt; Hotel -&gt; Bool) -&gt; (Hotel -&gt; Hotel -&gt; Bool) -&gt; Eq Hotel
+forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
+$c== :: Hotel -&gt; Hotel -&gt; Bool
+== :: Hotel -&gt; Hotel -&gt; Bool
+$c/= :: Hotel -&gt; Hotel -&gt; Bool
+/= :: Hotel -&gt; Hotel -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679301304"><span id="local-6989586621679301312"><span id="local-6989586621679301316"><span class="annot"><span class="annottext">Int -&gt; Hotel -&gt; ShowS
+[Hotel] -&gt; ShowS
+Hotel -&gt; String
+(Int -&gt; Hotel -&gt; ShowS)
+-&gt; (Hotel -&gt; String) -&gt; ([Hotel] -&gt; ShowS) -&gt; Show Hotel
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+$cshowsPrec :: Int -&gt; Hotel -&gt; ShowS
+showsPrec :: Int -&gt; Hotel -&gt; ShowS
+$cshow :: Hotel -&gt; String
+show :: Hotel -&gt; String
+$cshowList :: [Hotel] -&gt; ShowS
+showList :: [Hotel] -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-45"></span><span>
+</span><span id="line-46"></span><span class="annot"><a href="Data.Disney.HotelStay.html#hotelCode"><span class="hs-identifier hs-type">hotelCode</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-type">Hotel</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-47"></span><span id="hotelCode"><span class="annot"><span class="annottext">hotelCode :: Hotel -&gt; String
+</span><a href="Data.Disney.HotelStay.html#hotelCode"><span class="hs-identifier hs-var hs-var">hotelCode</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-type">Hotel</span></a></span><span> </span><span id="local-6989586621679301318"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301318"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><span class="hs-identifier">_</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301318"><span class="hs-identifier hs-var">code</span></a></span><span>
+</span><span id="line-48"></span><span>
+</span><span id="line-49"></span><span class="annot"><a href="Data.Disney.HotelStay.html#details"><span class="hs-identifier hs-type">details</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-type">Hotel</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-type">HotelDetail</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-50"></span><span id="details"><span class="annot"><span class="annottext">details :: Hotel -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#details"><span class="hs-identifier hs-var hs-var">details</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-type">Hotel</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-identifier">_</span></span><span> </span><span id="local-6989586621679301319"><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301319"><span class="hs-identifier hs-var">hotelDetails</span></a></span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301319"><span class="hs-identifier hs-var">hotelDetails</span></a></span><span>
+</span><span id="line-51"></span><span>
+</span><span id="line-52"></span><span class="annot"><a href="Data.Disney.HotelStay.html#hotelColor"><span class="hs-identifier hs-type">hotelColor</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-type">Hotel</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-53"></span><span id="hotelColor"><span class="annot"><span class="annottext">hotelColor :: Hotel -&gt; String
+</span><a href="Data.Disney.HotelStay.html#hotelColor"><span class="hs-identifier hs-var hs-var">hotelColor</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-type">Hotel</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-identifier">_</span></span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><span class="hs-identifier">_</span></span><span> </span><span id="local-6989586621679301320"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301320"><span class="hs-identifier hs-var">color</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301320"><span class="hs-identifier hs-var">color</span></a></span><span>
+</span><span id="line-54"></span><span>
+</span><span id="line-55"></span><span class="hs-keyword">data</span><span> </span><span id="HotelStayRaw"><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-var">HotelStayRaw</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="HotelStayRaw"><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-var">HotelStayRaw</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-56"></span><span>    </span><span id="detailPathRaw"><span class="annot"><span class="annottext">HotelStayRaw -&gt; [String]
+</span><a href="Data.Disney.HotelStay.html#detailPathRaw"><span class="hs-identifier hs-var hs-var">detailPathRaw</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
+</span><span id="line-57"></span><span>  </span><span class="hs-special">,</span><span> </span><span id="stayCountRaw"><span class="annot"><span class="annottext">HotelStayRaw -&gt; Natural
+</span><a href="Data.Disney.HotelStay.html#stayCountRaw"><span class="hs-identifier hs-var hs-var">stayCountRaw</span></a></span></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Natural</span></span><span>
+</span><span id="line-58"></span><span>  </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301325"><span id="local-6989586621679301329"><span class="annot"><span class="annottext">HotelStayRaw -&gt; HotelStayRaw -&gt; Bool
+(HotelStayRaw -&gt; HotelStayRaw -&gt; Bool)
+-&gt; (HotelStayRaw -&gt; HotelStayRaw -&gt; Bool) -&gt; Eq HotelStayRaw
+forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
+$c== :: HotelStayRaw -&gt; HotelStayRaw -&gt; Bool
+== :: HotelStayRaw -&gt; HotelStayRaw -&gt; Bool
+$c/= :: HotelStayRaw -&gt; HotelStayRaw -&gt; Bool
+/= :: HotelStayRaw -&gt; HotelStayRaw -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679301333"><span id="local-6989586621679301335"><span class="annot"><span class="annottext">(forall x. HotelStayRaw -&gt; Rep HotelStayRaw x)
+-&gt; (forall x. Rep HotelStayRaw x -&gt; HotelStayRaw)
+-&gt; Generic HotelStayRaw
+forall x. Rep HotelStayRaw x -&gt; HotelStayRaw
+forall x. HotelStayRaw -&gt; Rep HotelStayRaw x
+forall a.
+(forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
+$cfrom :: forall x. HotelStayRaw -&gt; Rep HotelStayRaw x
+from :: forall x. HotelStayRaw -&gt; Rep HotelStayRaw x
+$cto :: forall x. Rep HotelStayRaw x -&gt; HotelStayRaw
+to :: forall x. Rep HotelStayRaw x -&gt; HotelStayRaw
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Generic</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679301339"><span id="local-6989586621679301345"><span id="local-6989586621679301349"><span class="annot"><span class="annottext">Int -&gt; HotelStayRaw -&gt; ShowS
+[HotelStayRaw] -&gt; ShowS
+HotelStayRaw -&gt; String
+(Int -&gt; HotelStayRaw -&gt; ShowS)
+-&gt; (HotelStayRaw -&gt; String)
+-&gt; ([HotelStayRaw] -&gt; ShowS)
+-&gt; Show HotelStayRaw
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+$cshowsPrec :: Int -&gt; HotelStayRaw -&gt; ShowS
+showsPrec :: Int -&gt; HotelStayRaw -&gt; ShowS
+$cshow :: HotelStayRaw -&gt; String
+show :: HotelStayRaw -&gt; String
+$cshowList :: [HotelStayRaw] -&gt; ShowS
+showList :: [HotelStayRaw] -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-59"></span><span>
+</span><span id="line-60"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679301353"><span class="annot"><span class="hs-identifier hs-type">FromDhall</span></span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-type">HotelStayRaw</span></a></span></span><span>
+</span><span id="line-61"></span><span>
+</span><span id="line-62"></span><span class="hs-keyword">data</span><span> </span><span id="HotelRaw"><span class="annot"><a href="Data.Disney.HotelStay.html#HotelRaw"><span class="hs-identifier hs-var">HotelRaw</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="HotelRaw"><span class="annot"><a href="Data.Disney.HotelStay.html#HotelRaw"><span class="hs-identifier hs-var">HotelRaw</span></a></span></span><span> </span><span class="hs-special">{</span><span>
+</span><span id="line-63"></span><span>    </span><span id="hotelCodeRaw"><span class="annot"><span class="annottext">HotelRaw -&gt; String
+</span><a href="Data.Disney.HotelStay.html#hotelCodeRaw"><span class="hs-identifier hs-var hs-var">hotelCodeRaw</span></a></span></span><span>  </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-64"></span><span>  </span><span class="hs-special">,</span><span> </span><span id="detailsRaw"><span class="annot"><span class="annottext">HotelRaw -&gt; [HotelStayRaw]
+</span><a href="Data.Disney.HotelStay.html#detailsRaw"><span class="hs-identifier hs-var hs-var">detailsRaw</span></a></span></span><span>    </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-type">HotelStayRaw</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-65"></span><span>  </span><span class="hs-special">,</span><span> </span><span id="hotelColorRaw"><span class="annot"><span class="annottext">HotelRaw -&gt; String
+</span><a href="Data.Disney.HotelStay.html#hotelColorRaw"><span class="hs-identifier hs-var hs-var">hotelColorRaw</span></a></span></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-66"></span><span>  </span><span class="hs-special">}</span><span> </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301392"><span id="local-6989586621679301398"><span class="annot"><span class="annottext">HotelRaw -&gt; HotelRaw -&gt; Bool
+(HotelRaw -&gt; HotelRaw -&gt; Bool)
+-&gt; (HotelRaw -&gt; HotelRaw -&gt; Bool) -&gt; Eq HotelRaw
+forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
+$c== :: HotelRaw -&gt; HotelRaw -&gt; Bool
+== :: HotelRaw -&gt; HotelRaw -&gt; Bool
+$c/= :: HotelRaw -&gt; HotelRaw -&gt; Bool
+/= :: HotelRaw -&gt; HotelRaw -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679301402"><span id="local-6989586621679301404"><span class="annot"><span class="annottext">(forall x. HotelRaw -&gt; Rep HotelRaw x)
+-&gt; (forall x. Rep HotelRaw x -&gt; HotelRaw) -&gt; Generic HotelRaw
+forall x. Rep HotelRaw x -&gt; HotelRaw
+forall x. HotelRaw -&gt; Rep HotelRaw x
+forall a.
+(forall x. a -&gt; Rep a x) -&gt; (forall x. Rep a x -&gt; a) -&gt; Generic a
+$cfrom :: forall x. HotelRaw -&gt; Rep HotelRaw x
+from :: forall x. HotelRaw -&gt; Rep HotelRaw x
+$cto :: forall x. Rep HotelRaw x -&gt; HotelRaw
+to :: forall x. Rep HotelRaw x -&gt; HotelRaw
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Generic</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679301407"><span id="local-6989586621679301415"><span id="local-6989586621679301419"><span class="annot"><span class="annottext">Int -&gt; HotelRaw -&gt; ShowS
+[HotelRaw] -&gt; ShowS
+HotelRaw -&gt; String
+(Int -&gt; HotelRaw -&gt; ShowS)
+-&gt; (HotelRaw -&gt; String) -&gt; ([HotelRaw] -&gt; ShowS) -&gt; Show HotelRaw
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+$cshowsPrec :: Int -&gt; HotelRaw -&gt; ShowS
+showsPrec :: Int -&gt; HotelRaw -&gt; ShowS
+$cshow :: HotelRaw -&gt; String
+show :: HotelRaw -&gt; String
+$cshowList :: [HotelRaw] -&gt; ShowS
+showList :: [HotelRaw] -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-67"></span><span>
+</span><span id="line-68"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679301422"><span class="annot"><span class="hs-identifier hs-type">FromDhall</span></span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelRaw"><span class="hs-identifier hs-type">HotelRaw</span></a></span></span><span>
+</span><span id="line-69"></span><span>
+</span><span id="line-70"></span><span class="hs-keyword">data</span><span> </span><span id="HotelConfigError"><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigError"><span class="hs-identifier hs-var">HotelConfigError</span></a></span></span><span>
+</span><span id="line-71"></span><span>  </span><span class="hs-glyph">=</span><span> </span><span id="EmptyHotels"><span class="annot"><a href="Data.Disney.HotelStay.html#EmptyHotels"><span class="hs-identifier hs-var">EmptyHotels</span></a></span></span><span>
+</span><span id="line-72"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EmptyHotelCode"><span class="annot"><a href="Data.Disney.HotelStay.html#EmptyHotelCode"><span class="hs-identifier hs-var">EmptyHotelCode</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">Int</span></span><span>
+</span><span id="line-73"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="InvalidUtf8"><span class="annot"><a href="Data.Disney.HotelStay.html#InvalidUtf8"><span class="hs-identifier hs-var">InvalidUtf8</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-74"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="InvalidHotelCode"><span class="annot"><a href="Data.Disney.HotelStay.html#InvalidHotelCode"><span class="hs-identifier hs-var">InvalidHotelCode</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-75"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DuplicateHotelCode"><span class="annot"><a href="Data.Disney.HotelStay.html#DuplicateHotelCode"><span class="hs-identifier hs-var">DuplicateHotelCode</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-76"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="InvalidHotelColor"><span class="annot"><a href="Data.Disney.HotelStay.html#InvalidHotelColor"><span class="hs-identifier hs-var">InvalidHotelColor</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-77"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EmptyHotelDetails"><span class="annot"><a href="Data.Disney.HotelStay.html#EmptyHotelDetails"><span class="hs-identifier hs-var">EmptyHotelDetails</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-78"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EmptyDetailPath"><span class="annot"><a href="Data.Disney.HotelStay.html#EmptyDetailPath"><span class="hs-identifier hs-var">EmptyDetailPath</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-79"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="EmptyDetailLabel"><span class="annot"><a href="Data.Disney.HotelStay.html#EmptyDetailLabel"><span class="hs-identifier hs-var">EmptyDetailLabel</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
+</span><span id="line-80"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="ZeroStayCount"><span class="annot"><a href="Data.Disney.HotelStay.html#ZeroStayCount"><span class="hs-identifier hs-var">ZeroStayCount</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
+</span><span id="line-81"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="DuplicateDetailPath"><span class="annot"><a href="Data.Disney.HotelStay.html#DuplicateDetailPath"><span class="hs-identifier hs-var">DuplicateDetailPath</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
+</span><span id="line-82"></span><span>  </span><span class="hs-glyph">|</span><span> </span><span id="ConflictingDetailPath"><span class="annot"><a href="Data.Disney.HotelStay.html#ConflictingDetailPath"><span class="hs-identifier hs-var">ConflictingDetailPath</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span>
+</span><span id="line-83"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301462"><span id="local-6989586621679301481"><span class="annot"><span class="annottext">HotelConfigError -&gt; HotelConfigError -&gt; Bool
+(HotelConfigError -&gt; HotelConfigError -&gt; Bool)
+-&gt; (HotelConfigError -&gt; HotelConfigError -&gt; Bool)
+-&gt; Eq HotelConfigError
+forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
+$c== :: HotelConfigError -&gt; HotelConfigError -&gt; Bool
+== :: HotelConfigError -&gt; HotelConfigError -&gt; Bool
+$c/= :: HotelConfigError -&gt; HotelConfigError -&gt; Bool
+/= :: HotelConfigError -&gt; HotelConfigError -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679301485"><span id="local-6989586621679301517"><span id="local-6989586621679301521"><span class="annot"><span class="annottext">Int -&gt; HotelConfigError -&gt; ShowS
+[HotelConfigError] -&gt; ShowS
+HotelConfigError -&gt; String
+(Int -&gt; HotelConfigError -&gt; ShowS)
+-&gt; (HotelConfigError -&gt; String)
+-&gt; ([HotelConfigError] -&gt; ShowS)
+-&gt; Show HotelConfigError
+forall a.
+(Int -&gt; a -&gt; ShowS) -&gt; (a -&gt; String) -&gt; ([a] -&gt; ShowS) -&gt; Show a
+$cshowsPrec :: Int -&gt; HotelConfigError -&gt; ShowS
+showsPrec :: Int -&gt; HotelConfigError -&gt; ShowS
+$cshow :: HotelConfigError -&gt; String
+show :: HotelConfigError -&gt; String
+$cshowList :: [HotelConfigError] -&gt; ShowS
+showList :: [HotelConfigError] -&gt; ShowS
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var hs-var hs-var">Show</span></span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-84"></span><span>
+</span><span id="line-85"></span><span class="hs-keyword">data</span><span> </span><span id="HotelConfigException"><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigException"><span class="hs-identifier hs-var">HotelConfigException</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span id="HotelConfigException"><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigException"><span class="hs-identifier hs-var">HotelConfigException</span></a></span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigError"><span class="hs-identifier hs-type">HotelConfigError</span></a></span><span>
+</span><span id="line-86"></span><span>  </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301526"><span id="local-6989586621679301530"><span class="annot"><span class="annottext">HotelConfigException -&gt; HotelConfigException -&gt; Bool
+(HotelConfigException -&gt; HotelConfigException -&gt; Bool)
+-&gt; (HotelConfigException -&gt; HotelConfigException -&gt; Bool)
+-&gt; Eq HotelConfigException
+forall a. (a -&gt; a -&gt; Bool) -&gt; (a -&gt; a -&gt; Bool) -&gt; Eq a
+$c== :: HotelConfigException -&gt; HotelConfigException -&gt; Bool
+== :: HotelConfigException -&gt; HotelConfigException -&gt; Bool
+$c/= :: HotelConfigException -&gt; HotelConfigException -&gt; Bool
+/= :: HotelConfigException -&gt; HotelConfigException -&gt; Bool
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var hs-var hs-var">Eq</span></span></span></span><span class="hs-special">)</span><span>
+</span><span id="line-87"></span><span>
+</span><span id="line-88"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679301534"><span id="local-6989586621679301539"><span class="annot"><span class="hs-identifier hs-type">Show</span></span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigException"><span class="hs-identifier hs-type">HotelConfigException</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-89"></span><span>    </span><span id="local-6989586621679301541"><span class="annot"><span class="annottext">show :: HotelConfigException -&gt; String
+</span><a href="#local-6989586621679301541"><span class="hs-identifier hs-var hs-var hs-var hs-var">show</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigException"><span class="hs-identifier hs-type">HotelConfigException</span></a></span><span> </span><span id="local-6989586621679301543"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301543"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span id="local-6989586621679301544"><span class="annot"><span class="annottext">HotelConfigError
+</span><a href="#local-6989586621679301544"><span class="hs-identifier hs-var">configError</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-90"></span><span>        </span><span class="annot"><span class="annottext">String -&gt; HotelConfigError -&gt; String
+</span><a href="Data.Disney.HotelStay.html#describeHotelConfigError"><span class="hs-identifier hs-var">describeHotelConfigError</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301543"><span class="hs-identifier hs-var">path</span></a></span><span> </span><span class="annot"><span class="annottext">HotelConfigError
+</span><a href="#local-6989586621679301544"><span class="hs-identifier hs-var">configError</span></a></span><span>
+</span><span id="line-91"></span><span>
+</span><span id="line-92"></span><span class="hs-keyword">instance</span><span> </span><span id="local-6989586621679301550"><span id="local-6989586621679301553"><span class="annot"><span class="hs-identifier hs-type">Exception</span></span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigException"><span class="hs-identifier hs-type">HotelConfigException</span></a></span></span></span><span> </span><span class="hs-keyword">where</span><span>
+</span><span id="line-93"></span><span>    </span><span id="local-6989586621679301557"><span class="annot"><span class="annottext">displayException :: HotelConfigException -&gt; String
+</span><span class="hs-identifier hs-var hs-var hs-var hs-var">displayException</span></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigException"><span class="hs-identifier hs-type">HotelConfigException</span></a></span><span> </span><span id="local-6989586621679301558"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301558"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span id="local-6989586621679301559"><span class="annot"><span class="annottext">HotelConfigError
+</span><a href="#local-6989586621679301559"><span class="hs-identifier hs-var">configError</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-94"></span><span>        </span><span class="annot"><span class="annottext">String -&gt; HotelConfigError -&gt; String
+</span><a href="Data.Disney.HotelStay.html#describeHotelConfigError"><span class="hs-identifier hs-var">describeHotelConfigError</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301558"><span class="hs-identifier hs-var">path</span></a></span><span> </span><span class="annot"><span class="annottext">HotelConfigError
+</span><a href="#local-6989586621679301559"><span class="hs-identifier hs-var">configError</span></a></span><span>
+</span><span id="line-95"></span><span>
+</span><span id="line-96"></span><span class="annot"><a href="Data.Disney.HotelStay.html#productionHotelsPath"><span class="hs-identifier hs-type">productionHotelsPath</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span>
+</span><span id="line-97"></span><span id="productionHotelsPath"><span class="annot"><span class="annottext">productionHotelsPath :: String
+</span><a href="Data.Disney.HotelStay.html#productionHotelsPath"><span class="hs-identifier hs-var hs-var">productionHotelsPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;contents/config/disney/Hotels.dhall&quot;</span></span><span>
+</span><span id="line-98"></span><span>
+</span><span id="line-99"></span><span class="annot"><a href="Data.Disney.HotelStay.html#loadHotels"><span class="hs-identifier hs-type">loadHotels</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">IO</span></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-type">Hotel</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-100"></span><span id="loadHotels"><span class="annot"><span class="annottext">loadHotels :: String -&gt; IO [Hotel]
+</span><a href="Data.Disney.HotelStay.html#loadHotels"><span class="hs-identifier hs-var hs-var">loadHotels</span></a></span></span><span> </span><span id="local-6989586621679301560"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301560"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-101"></span><span>    </span><span id="local-6989586621679301561"><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679301561"><span class="hs-identifier hs-var">bytes</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">String -&gt; IO ByteString
+</span><span class="hs-identifier hs-var">BS.readFile</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301560"><span class="hs-identifier hs-var">path</span></a></span><span>
+</span><span id="line-102"></span><span>    </span><span id="local-6989586621679301563"><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679301563"><span class="hs-identifier hs-var">source</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(UnicodeException -&gt; IO Text)
+-&gt; (Text -&gt; IO Text) -&gt; Either UnicodeException Text -&gt; IO Text
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><span class="hs-identifier hs-var">either</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">HotelConfigException -&gt; IO Text
+forall e a. Exception e =&gt; e -&gt; IO a
+</span><span class="hs-identifier hs-var">throwIO</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigException -&gt; IO Text)
+-&gt; (UnicodeException -&gt; HotelConfigException)
+-&gt; UnicodeException
+-&gt; IO Text
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; HotelConfigError -&gt; HotelConfigException
+</span><a href="Data.Disney.HotelStay.html#HotelConfigException"><span class="hs-identifier hs-var">HotelConfigException</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301560"><span class="hs-identifier hs-var">path</span></a></span><span> </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; HotelConfigException)
+-&gt; (UnicodeException -&gt; HotelConfigError)
+-&gt; UnicodeException
+-&gt; HotelConfigException
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#InvalidUtf8"><span class="hs-identifier hs-var">InvalidUtf8</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; HotelConfigError)
+-&gt; (UnicodeException -&gt; String)
+-&gt; UnicodeException
+-&gt; HotelConfigError
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">UnicodeException -&gt; String
+forall a. Show a =&gt; a -&gt; String
+</span><span class="hs-identifier hs-var">show</span></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">Text -&gt; IO Text
+forall a. a -&gt; IO a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Either UnicodeException Text -&gt; IO Text)
+-&gt; Either UnicodeException Text -&gt; IO Text
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span>
+</span><span id="line-103"></span><span>        </span><span class="annot"><span class="annottext">ByteString -&gt; Either UnicodeException Text
+</span><span class="hs-identifier hs-var">TE.decodeUtf8'</span></span><span> </span><span class="annot"><span class="annottext">ByteString
+</span><a href="#local-6989586621679301561"><span class="hs-identifier hs-var">bytes</span></a></span><span>
+</span><span id="line-104"></span><span>    </span><span id="local-6989586621679301567"><span class="annot"><span class="annottext">[HotelRaw]
+</span><a href="#local-6989586621679301567"><span class="hs-identifier hs-var">rawHotels</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">InputSettings -&gt; Decoder [HotelRaw] -&gt; Text -&gt; IO [HotelRaw]
+forall a. InputSettings -&gt; Decoder a -&gt; Text -&gt; IO a
+</span><span class="hs-identifier hs-var">inputWithSettings</span></span><span> </span><span class="annot"><span class="annottext">InputSettings
+</span><a href="#local-6989586621679301568"><span class="hs-identifier hs-var">settings</span></a></span><span> </span><span class="annot"><span class="annottext">Decoder [HotelRaw]
+forall a. FromDhall a =&gt; Decoder a
+</span><span class="hs-identifier hs-var">auto</span></span><span> </span><span class="annot"><span class="annottext">Text
+</span><a href="#local-6989586621679301563"><span class="hs-identifier hs-var">source</span></a></span><span>
+</span><span id="line-105"></span><span>    </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; IO [Hotel])
+-&gt; ([Hotel] -&gt; IO [Hotel])
+-&gt; Either HotelConfigError [Hotel]
+-&gt; IO [Hotel]
+forall a c b. (a -&gt; c) -&gt; (b -&gt; c) -&gt; Either a b -&gt; c
+</span><span class="hs-identifier hs-var">either</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">HotelConfigException -&gt; IO [Hotel]
+forall e a. Exception e =&gt; e -&gt; IO a
+</span><span class="hs-identifier hs-var">throwIO</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigException -&gt; IO [Hotel])
+-&gt; (HotelConfigError -&gt; HotelConfigException)
+-&gt; HotelConfigError
+-&gt; IO [Hotel]
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; HotelConfigError -&gt; HotelConfigException
+</span><a href="Data.Disney.HotelStay.html#HotelConfigException"><span class="hs-identifier hs-var">HotelConfigException</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301560"><span class="hs-identifier hs-var">path</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[Hotel] -&gt; IO [Hotel]
+forall a. a -&gt; IO a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Either HotelConfigError [Hotel] -&gt; IO [Hotel])
+-&gt; Either HotelConfigError [Hotel] -&gt; IO [Hotel]
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span>
+</span><span id="line-106"></span><span>        </span><span class="annot"><span class="annottext">[HotelRaw] -&gt; Either HotelConfigError [Hotel]
+</span><a href="Data.Disney.HotelStay.html#deriveHotels"><span class="hs-identifier hs-var">deriveHotels</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelRaw]
+</span><a href="#local-6989586621679301567"><span class="hs-identifier hs-var">rawHotels</span></a></span><span>
+</span><span id="line-107"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-108"></span><span>    </span><span id="local-6989586621679301568"><span class="annot"><span class="annottext">settings :: InputSettings
+</span><a href="#local-6989586621679301568"><span class="hs-identifier hs-var hs-var">settings</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-109"></span><span>        </span><span class="annot"><span class="annottext">((String -&gt; Identity String)
+ -&gt; InputSettings -&gt; Identity InputSettings)
+-&gt; String -&gt; InputSettings -&gt; InputSettings
+forall {b} {a} {a} {c}.
+((b -&gt; Identity a) -&gt; a -&gt; Identity c) -&gt; a -&gt; a -&gt; c
+</span><a href="#local-6989586621679301572"><span class="hs-identifier hs-var">set</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Identity String)
+-&gt; InputSettings -&gt; Identity InputSettings
+forall (f :: * -&gt; *). Functor f =&gt; LensLike' f InputSettings String
+</span><span class="hs-identifier hs-var">sourceName</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301560"><span class="hs-identifier hs-var">path</span></a></span><span> </span><span class="annot"><span class="annottext">(InputSettings -&gt; InputSettings) -&gt; InputSettings -&gt; InputSettings
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span>
+</span><span id="line-110"></span><span>            </span><span class="annot"><span class="annottext">((String -&gt; Identity String)
+ -&gt; InputSettings -&gt; Identity InputSettings)
+-&gt; String -&gt; InputSettings -&gt; InputSettings
+forall {b} {a} {a} {c}.
+((b -&gt; Identity a) -&gt; a -&gt; Identity c) -&gt; a -&gt; a -&gt; c
+</span><a href="#local-6989586621679301572"><span class="hs-identifier hs-var">set</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Identity String)
+-&gt; InputSettings -&gt; Identity InputSettings
+forall (f :: * -&gt; *). Functor f =&gt; LensLike' f InputSettings String
+</span><span class="hs-identifier hs-var">rootDirectory</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">ShowS
+</span><span class="hs-identifier hs-var">takeDirectory</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301560"><span class="hs-identifier hs-var">path</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">InputSettings
+</span><span class="hs-identifier hs-var">defaultInputSettings</span></span><span>
+</span><span id="line-111"></span><span>
+</span><span id="line-112"></span><span>    </span><span id="local-6989586621679301572"><span class="annot"><span class="annottext">set :: ((b -&gt; Identity a) -&gt; a -&gt; Identity c) -&gt; a -&gt; a -&gt; c
+</span><a href="#local-6989586621679301572"><span class="hs-identifier hs-var hs-var">set</span></a></span></span><span> </span><span id="local-6989586621679301573"><span class="annot"><span class="annottext">(b -&gt; Identity a) -&gt; a -&gt; Identity c
+</span><a href="#local-6989586621679301573"><span class="hs-identifier hs-var">lens</span></a></span></span><span> </span><span id="local-6989586621679301574"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679301574"><span class="hs-identifier hs-var">value</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Identity c -&gt; c
+forall a. Identity a -&gt; a
+</span><span class="hs-identifier hs-var">runIdentity</span></span><span> </span><span class="annot"><span class="annottext">(Identity c -&gt; c) -&gt; (a -&gt; Identity c) -&gt; a -&gt; c
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(b -&gt; Identity a) -&gt; a -&gt; Identity c
+</span><a href="#local-6989586621679301573"><span class="hs-identifier hs-var">lens</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Identity a -&gt; b -&gt; Identity a
+forall a b. a -&gt; b -&gt; a
+</span><span class="hs-identifier hs-var">const</span></span><span> </span><span class="annot"><span class="annottext">(Identity a -&gt; b -&gt; Identity a) -&gt; Identity a -&gt; b -&gt; Identity a
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">a -&gt; Identity a
+forall a. a -&gt; Identity a
+</span><span class="hs-identifier hs-var">Identity</span></span><span> </span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679301574"><span class="hs-identifier hs-var">value</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-113"></span><span>
+</span><span id="line-114"></span><span class="annot"><a href="Data.Disney.HotelStay.html#deriveHotels"><span class="hs-identifier hs-type">deriveHotels</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelRaw"><span class="hs-identifier hs-type">HotelRaw</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigError"><span class="hs-identifier hs-type">HotelConfigError</span></a></span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-type">Hotel</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-115"></span><span id="deriveHotels"><span class="annot"><span class="annottext">deriveHotels :: [HotelRaw] -&gt; Either HotelConfigError [Hotel]
+</span><a href="Data.Disney.HotelStay.html#deriveHotels"><span class="hs-identifier hs-var hs-var">deriveHotels</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HotelConfigError -&gt; Either HotelConfigError [Hotel]
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#EmptyHotels"><span class="hs-identifier hs-var">EmptyHotels</span></a></span><span>
+</span><span id="line-116"></span><span class="annot"><a href="Data.Disney.HotelStay.html#deriveHotels"><span class="hs-identifier hs-var">deriveHotels</span></a></span><span> </span><span id="local-6989586621679301578"><span class="annot"><span class="annottext">[HotelRaw]
+</span><a href="#local-6989586621679301578"><span class="hs-identifier hs-var">rawHotels</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-117"></span><span>    </span><span class="annot"><span class="annottext">[String] -&gt; Either HotelConfigError ()
+</span><a href="Data.Disney.HotelStay.html#validateHotelCodes"><span class="hs-identifier hs-var">validateHotelCodes</span></a></span><span> </span><span class="annot"><span class="annottext">([String] -&gt; Either HotelConfigError ())
+-&gt; [String] -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">(HotelRaw -&gt; String) -&gt; [HotelRaw] -&gt; [String]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">HotelRaw -&gt; String
+</span><a href="Data.Disney.HotelStay.html#hotelCodeRaw"><span class="hs-identifier hs-var">hotelCodeRaw</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelRaw]
+</span><a href="#local-6989586621679301578"><span class="hs-identifier hs-var">rawHotels</span></a></span><span>
+</span><span id="line-118"></span><span>    </span><span class="annot"><span class="annottext">(HotelRaw -&gt; Either HotelConfigError Hotel)
+-&gt; [HotelRaw] -&gt; Either HotelConfigError [Hotel]
+forall (t :: * -&gt; *) (f :: * -&gt; *) a b.
+(Traversable t, Applicative f) =&gt;
+(a -&gt; f b) -&gt; t a -&gt; f (t b)
+forall (f :: * -&gt; *) a b.
+Applicative f =&gt;
+(a -&gt; f b) -&gt; [a] -&gt; f [b]
+</span><span class="hs-identifier hs-var">traverse</span></span><span> </span><span class="annot"><span class="annottext">HotelRaw -&gt; Either HotelConfigError Hotel
+</span><a href="Data.Disney.HotelStay.html#deriveHotel"><span class="hs-identifier hs-var">deriveHotel</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelRaw]
+</span><a href="#local-6989586621679301578"><span class="hs-identifier hs-var">rawHotels</span></a></span><span>
+</span><span id="line-119"></span><span>
+</span><span id="line-120"></span><span class="annot"><a href="Data.Disney.HotelStay.html#validateHotelCodes"><span class="hs-identifier hs-type">validateHotelCodes</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigError"><span class="hs-identifier hs-type">HotelConfigError</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-121"></span><span id="validateHotelCodes"><span class="annot"><span class="annottext">validateHotelCodes :: [String] -&gt; Either HotelConfigError ()
+</span><a href="Data.Disney.HotelStay.html#validateHotelCodes"><span class="hs-identifier hs-var hs-var">validateHotelCodes</span></a></span></span><span> </span><span id="local-6989586621679301582"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301582"><span class="hs-identifier hs-var">codes</span></a></span></span><span>
+</span><span id="line-122"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679301583"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679301583"><span class="hs-identifier hs-var">index</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">(String -&gt; Bool) -&gt; [String] -&gt; Maybe Int
+forall a. (a -&gt; Bool) -&gt; [a] -&gt; Maybe Int
+</span><span class="hs-identifier hs-var">findIndex</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Bool
+</span><a href="Data.Disney.HotelStay.html#isBlank"><span class="hs-identifier hs-var">isBlank</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301582"><span class="hs-identifier hs-var">codes</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; Either HotelConfigError ())
+-&gt; HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">Int -&gt; HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#EmptyHotelCode"><span class="hs-identifier hs-var">EmptyHotelCode</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679301583"><span class="hs-identifier hs-var">index</span></a></span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Int
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">+</span></span><span> </span><span class="annot"><span class="annottext">Int
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span>
+</span><span id="line-123"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679301586"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301586"><span class="hs-identifier hs-var">invalidCode</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[String] -&gt; Maybe String
+</span><a href="Data.Disney.HotelStay.html#firstInvalidHotelCode"><span class="hs-identifier hs-var">firstInvalidHotelCode</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301582"><span class="hs-identifier hs-var">codes</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; Either HotelConfigError ())
+-&gt; HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#InvalidHotelCode"><span class="hs-identifier hs-var">InvalidHotelCode</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301586"><span class="hs-identifier hs-var">invalidCode</span></a></span><span>
+</span><span id="line-124"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">otherwise</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">[String] -&gt; Maybe String
+forall a. Eq a =&gt; [a] -&gt; Maybe a
+</span><a href="Data.Disney.HotelStay.html#firstDuplicate"><span class="hs-identifier hs-var">firstDuplicate</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301582"><span class="hs-identifier hs-var">codes</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-125"></span><span>        </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679301589"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301589"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; Either HotelConfigError ())
+-&gt; HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#DuplicateHotelCode"><span class="hs-identifier hs-var">DuplicateHotelCode</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301589"><span class="hs-identifier hs-var">code</span></a></span><span>
+</span><span id="line-126"></span><span>        </span><span class="annot"><span class="annottext">Maybe String
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>   </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">() -&gt; Either HotelConfigError ()
+forall a b. b -&gt; Either a b
+</span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-127"></span><span>
+</span><span id="line-128"></span><span class="annot"><a href="Data.Disney.HotelStay.html#deriveHotel"><span class="hs-identifier hs-type">deriveHotel</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelRaw"><span class="hs-identifier hs-type">HotelRaw</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigError"><span class="hs-identifier hs-type">HotelConfigError</span></a></span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-type">Hotel</span></a></span><span>
+</span><span id="line-129"></span><span id="deriveHotel"><span class="annot"><span class="annottext">deriveHotel :: HotelRaw -&gt; Either HotelConfigError Hotel
+</span><a href="Data.Disney.HotelStay.html#deriveHotel"><span class="hs-identifier hs-var hs-var">deriveHotel</span></a></span></span><span> </span><span id="local-6989586621679301590"><span class="annot"><span class="annottext">HotelRaw
+</span><a href="#local-6989586621679301590"><span class="hs-identifier hs-var">rawHotel</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-130"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Either HotelConfigError ()
+</span><a href="Data.Disney.HotelStay.html#validateHotelColor"><span class="hs-identifier hs-var">validateHotelColor</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301592"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Either HotelConfigError ())
+-&gt; String -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">HotelRaw -&gt; String
+</span><a href="Data.Disney.HotelStay.html#hotelColorRaw"><span class="hs-identifier hs-var">hotelColorRaw</span></a></span><span> </span><span class="annot"><span class="annottext">HotelRaw
+</span><a href="#local-6989586621679301590"><span class="hs-identifier hs-var">rawHotel</span></a></span><span>
+</span><span id="line-131"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; [HotelStayRaw] -&gt; Either HotelConfigError ()
+</span><a href="Data.Disney.HotelStay.html#validateStayDetails"><span class="hs-identifier hs-var">validateStayDetails</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301592"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelStayRaw]
+</span><a href="#local-6989586621679301594"><span class="hs-identifier hs-var">rawDetails</span></a></span><span>
+</span><span id="line-132"></span><span>    </span><span class="annot"><span class="annottext">Hotel -&gt; Either HotelConfigError Hotel
+forall a. a -&gt; Either HotelConfigError a
+forall (f :: * -&gt; *) a. Applicative f =&gt; a -&gt; f a
+</span><span class="hs-identifier hs-var">pure</span></span><span> </span><span class="annot"><span class="annottext">(Hotel -&gt; Either HotelConfigError Hotel)
+-&gt; Hotel -&gt; Either HotelConfigError Hotel
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; [HotelDetail] -&gt; String -&gt; Hotel
+</span><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-var">Hotel</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301592"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[HotelStayRaw] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#buildHotelDetails"><span class="hs-identifier hs-var">buildHotelDetails</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelStayRaw]
+</span><a href="#local-6989586621679301594"><span class="hs-identifier hs-var">rawDetails</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">HotelRaw -&gt; String
+</span><a href="Data.Disney.HotelStay.html#hotelColorRaw"><span class="hs-identifier hs-var">hotelColorRaw</span></a></span><span> </span><span class="annot"><span class="annottext">HotelRaw
+</span><a href="#local-6989586621679301590"><span class="hs-identifier hs-var">rawHotel</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-133"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-134"></span><span>    </span><span id="local-6989586621679301592"><span class="annot"><span class="annottext">code :: String
+</span><a href="#local-6989586621679301592"><span class="hs-identifier hs-var hs-var">code</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HotelRaw -&gt; String
+</span><a href="Data.Disney.HotelStay.html#hotelCodeRaw"><span class="hs-identifier hs-var">hotelCodeRaw</span></a></span><span> </span><span class="annot"><span class="annottext">HotelRaw
+</span><a href="#local-6989586621679301590"><span class="hs-identifier hs-var">rawHotel</span></a></span><span>
+</span><span id="line-135"></span><span>    </span><span id="local-6989586621679301594"><span class="annot"><span class="annottext">rawDetails :: [HotelStayRaw]
+</span><a href="#local-6989586621679301594"><span class="hs-identifier hs-var hs-var">rawDetails</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HotelRaw -&gt; [HotelStayRaw]
+</span><a href="Data.Disney.HotelStay.html#detailsRaw"><span class="hs-identifier hs-var">detailsRaw</span></a></span><span> </span><span class="annot"><span class="annottext">HotelRaw
+</span><a href="#local-6989586621679301590"><span class="hs-identifier hs-var">rawHotel</span></a></span><span>
+</span><span id="line-136"></span><span>
+</span><span id="line-137"></span><span class="annot"><a href="Data.Disney.HotelStay.html#validateStayDetails"><span class="hs-identifier hs-type">validateStayDetails</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-type">HotelStayRaw</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigError"><span class="hs-identifier hs-type">HotelConfigError</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-138"></span><span id="validateStayDetails"><span class="annot"><span class="annottext">validateStayDetails :: String -&gt; [HotelStayRaw] -&gt; Either HotelConfigError ()
+</span><a href="Data.Disney.HotelStay.html#validateStayDetails"><span class="hs-identifier hs-var hs-var">validateStayDetails</span></a></span></span><span> </span><span id="local-6989586621679301596"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301596"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span id="local-6989586621679301597"><span class="annot"><span class="annottext">[HotelStayRaw]
+</span><a href="#local-6989586621679301597"><span class="hs-identifier hs-var">rawDetails</span></a></span></span><span>
+</span><span id="line-139"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">[HotelStayRaw] -&gt; Bool
+forall a. [a] -&gt; Bool
+forall (t :: * -&gt; *) a. Foldable t =&gt; t a -&gt; Bool
+</span><span class="hs-identifier hs-var">null</span></span><span> </span><span class="annot"><span class="annottext">[HotelStayRaw]
+</span><a href="#local-6989586621679301597"><span class="hs-identifier hs-var">rawDetails</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; Either HotelConfigError ())
+-&gt; HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#EmptyHotelDetails"><span class="hs-identifier hs-var">EmptyHotelDetails</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301596"><span class="hs-identifier hs-var">code</span></a></span><span>
+</span><span id="line-140"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">otherwise</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">do</span><span>
+</span><span id="line-141"></span><span>        </span><span class="annot"><span class="annottext">(HotelStayRaw -&gt; Either HotelConfigError ())
+-&gt; [HotelStayRaw] -&gt; Either HotelConfigError ()
+forall (t :: * -&gt; *) (f :: * -&gt; *) a b.
+(Foldable t, Applicative f) =&gt;
+(a -&gt; f b) -&gt; t a -&gt; f ()
+</span><span class="hs-identifier hs-var">traverse_</span></span><span> </span><span class="annot"><span class="annottext">HotelStayRaw -&gt; Either HotelConfigError ()
+</span><a href="#local-6989586621679301599"><span class="hs-identifier hs-var">validateDetail</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelStayRaw]
+</span><a href="#local-6989586621679301597"><span class="hs-identifier hs-var">rawDetails</span></a></span><span>
+</span><span id="line-142"></span><span>        </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">[[String]] -&gt; Maybe [String]
+forall a. Eq a =&gt; [a] -&gt; Maybe a
+</span><a href="Data.Disney.HotelStay.html#firstDuplicate"><span class="hs-identifier hs-var">firstDuplicate</span></a></span><span> </span><span class="annot"><span class="annottext">[[String]]
+</span><a href="#local-6989586621679301600"><span class="hs-identifier hs-var">paths</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-143"></span><span>            </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span id="local-6989586621679301601"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301601"><span class="hs-identifier hs-var">duplicatePath</span></a></span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; Either HotelConfigError ())
+-&gt; HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#DuplicateDetailPath"><span class="hs-identifier hs-var">DuplicateDetailPath</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301596"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301601"><span class="hs-identifier hs-var">duplicatePath</span></a></span><span>
+</span><span id="line-144"></span><span>            </span><span class="annot"><span class="annottext">Maybe [String]
+</span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">[[String]] -&gt; Maybe ([String], [String])
+forall a. Eq a =&gt; [[a]] -&gt; Maybe ([a], [a])
+</span><a href="Data.Disney.HotelStay.html#firstPathConflict"><span class="hs-identifier hs-var">firstPathConflict</span></a></span><span> </span><span class="annot"><span class="annottext">[[String]]
+</span><a href="#local-6989586621679301600"><span class="hs-identifier hs-var">paths</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-145"></span><span>                </span><span class="annot"><span class="hs-identifier hs-type">Just</span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301603"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301603"><span class="hs-identifier hs-var">shorterPath</span></a></span></span><span class="hs-special">,</span><span> </span><span id="local-6989586621679301604"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301604"><span class="hs-identifier hs-var">longerPath</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">-&gt;</span><span>
+</span><span id="line-146"></span><span>                    </span><span class="annot"><span class="annottext">HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; Either HotelConfigError ())
+-&gt; HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; [String] -&gt; HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#ConflictingDetailPath"><span class="hs-identifier hs-var">ConflictingDetailPath</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301596"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301603"><span class="hs-identifier hs-var">shorterPath</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301604"><span class="hs-identifier hs-var">longerPath</span></a></span><span>
+</span><span id="line-147"></span><span>                </span><span class="annot"><span class="annottext">Maybe ([String], [String])
+</span><span class="hs-identifier hs-var">Nothing</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">() -&gt; Either HotelConfigError ()
+forall a b. b -&gt; Either a b
+</span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-148"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-149"></span><span>    </span><span id="local-6989586621679301600"><span class="annot"><span class="annottext">paths :: [[String]]
+</span><a href="#local-6989586621679301600"><span class="hs-identifier hs-var hs-var">paths</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(HotelStayRaw -&gt; [String]) -&gt; [HotelStayRaw] -&gt; [[String]]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">HotelStayRaw -&gt; [String]
+</span><a href="Data.Disney.HotelStay.html#detailPathRaw"><span class="hs-identifier hs-var">detailPathRaw</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelStayRaw]
+</span><a href="#local-6989586621679301597"><span class="hs-identifier hs-var">rawDetails</span></a></span><span>
+</span><span id="line-150"></span><span>    </span><span id="local-6989586621679301599"><span class="annot"><span class="annottext">validateDetail :: HotelStayRaw -&gt; Either HotelConfigError ()
+</span><a href="#local-6989586621679301599"><span class="hs-identifier hs-var hs-var">validateDetail</span></a></span></span><span> </span><span id="local-6989586621679301609"><span class="annot"><span class="annottext">HotelStayRaw
+</span><a href="#local-6989586621679301609"><span class="hs-identifier hs-var">rawDetail</span></a></span></span><span>
+</span><span id="line-151"></span><span>        </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">[String] -&gt; Bool
+forall a. [a] -&gt; Bool
+forall (t :: * -&gt; *) a. Foldable t =&gt; t a -&gt; Bool
+</span><span class="hs-identifier hs-var">null</span></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301610"><span class="hs-identifier hs-var">path</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; Either HotelConfigError ())
+-&gt; HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#EmptyDetailPath"><span class="hs-identifier hs-var">EmptyDetailPath</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301596"><span class="hs-identifier hs-var">code</span></a></span><span>
+</span><span id="line-152"></span><span>        </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">(String -&gt; Bool) -&gt; [String] -&gt; Bool
+forall (t :: * -&gt; *) a. Foldable t =&gt; (a -&gt; Bool) -&gt; t a -&gt; Bool
+</span><span class="hs-identifier hs-var">any</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Bool
+</span><a href="Data.Disney.HotelStay.html#isBlank"><span class="hs-identifier hs-var">isBlank</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301610"><span class="hs-identifier hs-var">path</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; Either HotelConfigError ())
+-&gt; HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#EmptyDetailLabel"><span class="hs-identifier hs-var">EmptyDetailLabel</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301596"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301610"><span class="hs-identifier hs-var">path</span></a></span><span>
+</span><span id="line-153"></span><span>        </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">HotelStayRaw -&gt; Natural
+</span><a href="Data.Disney.HotelStay.html#stayCountRaw"><span class="hs-identifier hs-var">stayCountRaw</span></a></span><span> </span><span class="annot"><span class="annottext">HotelStayRaw
+</span><a href="#local-6989586621679301609"><span class="hs-identifier hs-var">rawDetail</span></a></span><span> </span><span class="annot"><span class="annottext">Natural -&gt; Natural -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">Natural
+</span><span class="hs-number">0</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; Either HotelConfigError ())
+-&gt; HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#ZeroStayCount"><span class="hs-identifier hs-var">ZeroStayCount</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301596"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301610"><span class="hs-identifier hs-var">path</span></a></span><span>
+</span><span id="line-154"></span><span>        </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">otherwise</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">() -&gt; Either HotelConfigError ()
+forall a b. b -&gt; Either a b
+</span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-155"></span><span>      </span><span class="hs-keyword">where</span><span>
+</span><span id="line-156"></span><span>        </span><span id="local-6989586621679301610"><span class="annot"><span class="annottext">path :: [String]
+</span><a href="#local-6989586621679301610"><span class="hs-identifier hs-var hs-var">path</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HotelStayRaw -&gt; [String]
+</span><a href="Data.Disney.HotelStay.html#detailPathRaw"><span class="hs-identifier hs-var">detailPathRaw</span></a></span><span> </span><span class="annot"><span class="annottext">HotelStayRaw
+</span><a href="#local-6989586621679301609"><span class="hs-identifier hs-var">rawDetail</span></a></span><span>
+</span><span id="line-157"></span><span>
+</span><span id="line-158"></span><span class="annot"><a href="Data.Disney.HotelStay.html#buildHotelDetails"><span class="hs-identifier hs-type">buildHotelDetails</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-type">HotelStayRaw</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-type">HotelDetail</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-159"></span><span id="buildHotelDetails"><span class="annot"><span class="annottext">buildHotelDetails :: [HotelStayRaw] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#buildHotelDetails"><span class="hs-identifier hs-var hs-var">buildHotelDetails</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">([HotelDetail] -&gt; HotelStayRaw -&gt; [HotelDetail])
+-&gt; [HotelDetail] -&gt; [HotelStayRaw] -&gt; [HotelDetail]
+forall b a. (b -&gt; a -&gt; b) -&gt; b -&gt; [a] -&gt; b
+forall (t :: * -&gt; *) b a.
+Foldable t =&gt;
+(b -&gt; a -&gt; b) -&gt; b -&gt; t a -&gt; b
+</span><span class="hs-identifier hs-var">foldl'</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">(HotelStayRaw -&gt; [HotelDetail] -&gt; [HotelDetail])
+-&gt; [HotelDetail] -&gt; HotelStayRaw -&gt; [HotelDetail]
+forall a b c. (a -&gt; b -&gt; c) -&gt; b -&gt; a -&gt; c
+</span><span class="hs-identifier hs-var">flip</span></span><span> </span><span class="annot"><span class="annottext">HotelStayRaw -&gt; [HotelDetail] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#insertStayPath"><span class="hs-identifier hs-var">insertStayPath</span></a></span><span class="hs-special">)</span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span>
+</span><span id="line-160"></span><span>
+</span><span id="line-161"></span><span class="annot"><a href="Data.Disney.HotelStay.html#insertStayPath"><span class="hs-identifier hs-type">insertStayPath</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-type">HotelStayRaw</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-type">HotelDetail</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-type">HotelDetail</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-162"></span><span class="hs-comment">-- Empty paths are rejected by validateStayDetails before this internal builder runs.</span><span>
+</span><span id="line-163"></span><span id="insertStayPath"><span class="annot"><span class="annottext">insertStayPath :: HotelStayRaw -&gt; [HotelDetail] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#insertStayPath"><span class="hs-identifier hs-var hs-var">insertStayPath</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-type">HotelStayRaw</span></a></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">Natural
+</span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span id="local-6989586621679301614"><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301614"><span class="hs-identifier hs-var">forest</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301614"><span class="hs-identifier hs-var">forest</span></a></span><span>
+</span><span id="line-164"></span><span class="annot"><a href="Data.Disney.HotelStay.html#insertStayPath"><span class="hs-identifier hs-var">insertStayPath</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-type">HotelStayRaw</span></a></span><span> </span><span class="hs-special">[</span><span id="local-6989586621679301615"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301615"><span class="hs-identifier hs-var">leaf</span></a></span></span><span class="hs-special">]</span><span> </span><span id="local-6989586621679301616"><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301616"><span class="hs-identifier hs-var">count</span></a></span></span><span class="hs-special">)</span><span> </span><span id="local-6989586621679301617"><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301617"><span class="hs-identifier hs-var">forest</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; Natural -&gt; [HotelDetail] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#insertStay"><span class="hs-identifier hs-var">insertStay</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301615"><span class="hs-identifier hs-var">leaf</span></a></span><span> </span><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301616"><span class="hs-identifier hs-var">count</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301617"><span class="hs-identifier hs-var">forest</span></a></span><span>
+</span><span id="line-165"></span><span class="annot"><a href="Data.Disney.HotelStay.html#insertStayPath"><span class="hs-identifier hs-var">insertStayPath</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-type">HotelStayRaw</span></a></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301619"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301619"><span class="hs-keyword hs-var">label</span></a></span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span id="local-6989586621679301620"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301620"><span class="hs-identifier hs-var">rest</span></a></span></span><span class="hs-special">)</span><span> </span><span id="local-6989586621679301621"><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301621"><span class="hs-identifier hs-var">count</span></a></span></span><span class="hs-special">)</span><span> </span><span id="local-6989586621679301622"><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301622"><span class="hs-identifier hs-var">forest</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-166"></span><span>    </span><span class="annot"><span class="annottext">String -&gt; HotelStayRaw -&gt; [HotelDetail] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#insertBranch"><span class="hs-identifier hs-var">insertBranch</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301619"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[String] -&gt; Natural -&gt; HotelStayRaw
+</span><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-var">HotelStayRaw</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301620"><span class="hs-identifier hs-var">rest</span></a></span><span> </span><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301621"><span class="hs-identifier hs-var">count</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301622"><span class="hs-identifier hs-var">forest</span></a></span><span>
+</span><span id="line-167"></span><span>
+</span><span id="line-168"></span><span class="annot"><a href="Data.Disney.HotelStay.html#insertStay"><span class="hs-identifier hs-type">insertStay</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Natural</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-type">HotelDetail</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-type">HotelDetail</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-169"></span><span id="insertStay"><span class="annot"><span class="annottext">insertStay :: String -&gt; Natural -&gt; [HotelDetail] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#insertStay"><span class="hs-identifier hs-var hs-var">insertStay</span></a></span></span><span> </span><span id="local-6989586621679301624"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301624"><span class="hs-keyword hs-var">label</span></a></span></span><span> </span><span id="local-6989586621679301625"><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301625"><span class="hs-identifier hs-var">count</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span>            </span><span class="hs-glyph">=</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String -&gt; Natural -&gt; HotelDetail
+</span><a href="Data.Disney.HotelStay.html#HDStay"><span class="hs-identifier hs-var">HDStay</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301624"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301625"><span class="hs-identifier hs-var">count</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-170"></span><span class="annot"><a href="Data.Disney.HotelStay.html#insertStay"><span class="hs-identifier hs-var">insertStay</span></a></span><span> </span><span id="local-6989586621679301626"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301626"><span class="hs-keyword hs-var">label</span></a></span></span><span> </span><span id="local-6989586621679301627"><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301627"><span class="hs-identifier hs-var">count</span></a></span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301628"><span class="annot"><span class="annottext">HotelDetail
+</span><a href="#local-6989586621679301628"><span class="hs-identifier hs-var">detail</span></a></span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span id="local-6989586621679301629"><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301629"><span class="hs-identifier hs-var">rest</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">HotelDetail
+</span><a href="#local-6989586621679301628"><span class="hs-identifier hs-var">detail</span></a></span><span> </span><span class="annot"><span class="annottext">HotelDetail -&gt; [HotelDetail] -&gt; [HotelDetail]
+forall a. a -&gt; [a] -&gt; [a]
+</span><span class="hs-glyph hs-var">:</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Natural -&gt; [HotelDetail] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#insertStay"><span class="hs-identifier hs-var">insertStay</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301626"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301627"><span class="hs-identifier hs-var">count</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301629"><span class="hs-identifier hs-var">rest</span></a></span><span>
+</span><span id="line-171"></span><span>
+</span><span id="line-172"></span><span class="annot"><a href="Data.Disney.HotelStay.html#insertBranch"><span class="hs-identifier hs-type">insertBranch</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelStayRaw"><span class="hs-identifier hs-type">HotelStayRaw</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-type">HotelDetail</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-type">HotelDetail</span></a></span><span class="hs-special">]</span><span>
+</span><span id="line-173"></span><span id="insertBranch"><span class="annot"><span class="annottext">insertBranch :: String -&gt; HotelStayRaw -&gt; [HotelDetail] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#insertBranch"><span class="hs-identifier hs-var hs-var">insertBranch</span></a></span></span><span> </span><span id="local-6989586621679301630"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301630"><span class="hs-keyword hs-var">label</span></a></span></span><span> </span><span id="local-6989586621679301631"><span class="annot"><span class="annottext">HotelStayRaw
+</span><a href="#local-6989586621679301631"><span class="hs-identifier hs-var">rawDetail</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-174"></span><span>    </span><span class="hs-special">[</span><span class="annot"><span class="annottext">String -&gt; [HotelDetail] -&gt; HotelDetail
+</span><a href="Data.Disney.HotelStay.html#HDNode"><span class="hs-identifier hs-var">HDNode</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301630"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">HotelStayRaw -&gt; [HotelDetail] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#insertStayPath"><span class="hs-identifier hs-var">insertStayPath</span></a></span><span> </span><span class="annot"><span class="annottext">HotelStayRaw
+</span><a href="#local-6989586621679301631"><span class="hs-identifier hs-var">rawDetail</span></a></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span class="hs-special">)</span><span class="hs-special">]</span><span>
+</span><span id="line-175"></span><span class="annot"><a href="Data.Disney.HotelStay.html#insertBranch"><span class="hs-identifier hs-var">insertBranch</span></a></span><span> </span><span id="local-6989586621679301632"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301632"><span class="hs-keyword hs-var">label</span></a></span></span><span> </span><span id="local-6989586621679301633"><span class="annot"><span class="annottext">HotelStayRaw
+</span><a href="#local-6989586621679301633"><span class="hs-identifier hs-var">rawDetail</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#HDNode"><span class="hs-identifier hs-type">HDNode</span></a></span><span> </span><span id="local-6989586621679301634"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301634"><span class="hs-identifier hs-var">nodeLabel</span></a></span></span><span> </span><span id="local-6989586621679301635"><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301635"><span class="hs-identifier hs-var">children</span></a></span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span id="local-6989586621679301636"><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301636"><span class="hs-identifier hs-var">rest</span></a></span></span><span class="hs-special">)</span><span>
+</span><span id="line-176"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301634"><span class="hs-identifier hs-var">nodeLabel</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301632"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; [HotelDetail] -&gt; HotelDetail
+</span><a href="Data.Disney.HotelStay.html#HDNode"><span class="hs-identifier hs-var">HDNode</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301632"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">HotelStayRaw -&gt; [HotelDetail] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#insertStayPath"><span class="hs-identifier hs-var">insertStayPath</span></a></span><span> </span><span class="annot"><span class="annottext">HotelStayRaw
+</span><a href="#local-6989586621679301633"><span class="hs-identifier hs-var">rawDetail</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301635"><span class="hs-identifier hs-var">children</span></a></span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">HotelDetail -&gt; [HotelDetail] -&gt; [HotelDetail]
+forall a. a -&gt; [a] -&gt; [a]
+</span><span class="hs-glyph hs-var">:</span></span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301636"><span class="hs-identifier hs-var">rest</span></a></span><span>
+</span><span id="line-177"></span><span class="annot"><a href="Data.Disney.HotelStay.html#insertBranch"><span class="hs-identifier hs-var">insertBranch</span></a></span><span> </span><span id="local-6989586621679301637"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301637"><span class="hs-keyword hs-var">label</span></a></span></span><span> </span><span id="local-6989586621679301638"><span class="annot"><span class="annottext">HotelStayRaw
+</span><a href="#local-6989586621679301638"><span class="hs-identifier hs-var">rawDetail</span></a></span></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301639"><span class="annot"><span class="annottext">HotelDetail
+</span><a href="#local-6989586621679301639"><span class="hs-identifier hs-var">detail</span></a></span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span id="local-6989586621679301640"><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301640"><span class="hs-identifier hs-var">rest</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-178"></span><span>    </span><span class="annot"><span class="annottext">HotelDetail
+</span><a href="#local-6989586621679301639"><span class="hs-identifier hs-var">detail</span></a></span><span> </span><span class="annot"><span class="annottext">HotelDetail -&gt; [HotelDetail] -&gt; [HotelDetail]
+forall a. a -&gt; [a] -&gt; [a]
+</span><span class="hs-glyph hs-var">:</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; HotelStayRaw -&gt; [HotelDetail] -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#insertBranch"><span class="hs-identifier hs-var">insertBranch</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301637"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">HotelStayRaw
+</span><a href="#local-6989586621679301638"><span class="hs-identifier hs-var">rawDetail</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301640"><span class="hs-identifier hs-var">rest</span></a></span><span>
+</span><span id="line-179"></span><span>
+</span><span id="line-180"></span><span class="annot"><a href="Data.Disney.HotelStay.html#hotelStayCount"><span class="hs-identifier hs-type">hotelStayCount</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#Hotel"><span class="hs-identifier hs-type">Hotel</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Natural</span></span><span>
+</span><span id="line-181"></span><span id="hotelStayCount"><span class="annot"><span class="annottext">hotelStayCount :: Hotel -&gt; Natural
+</span><a href="Data.Disney.HotelStay.html#hotelStayCount"><span class="hs-identifier hs-var hs-var">hotelStayCount</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Natural] -&gt; Natural
+forall a. Num a =&gt; [a] -&gt; a
+forall (t :: * -&gt; *) a. (Foldable t, Num a) =&gt; t a -&gt; a
+</span><span class="hs-identifier hs-var">sum</span></span><span> </span><span class="annot"><span class="annottext">([Natural] -&gt; Natural) -&gt; (Hotel -&gt; [Natural]) -&gt; Hotel -&gt; Natural
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(HotelDetail -&gt; Natural) -&gt; [HotelDetail] -&gt; [Natural]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">HotelDetail -&gt; Natural
+</span><a href="#local-6989586621679301642"><span class="hs-identifier hs-var">detailStayCount</span></a></span><span> </span><span class="annot"><span class="annottext">([HotelDetail] -&gt; [Natural])
+-&gt; (Hotel -&gt; [HotelDetail]) -&gt; Hotel -&gt; [Natural]
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">Hotel -&gt; [HotelDetail]
+</span><a href="Data.Disney.HotelStay.html#details"><span class="hs-identifier hs-var">details</span></a></span><span>
+</span><span id="line-182"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-183"></span><span>    </span><span id="local-6989586621679301642"><span class="annot"><span class="annottext">detailStayCount :: HotelDetail -&gt; Natural
+</span><a href="#local-6989586621679301642"><span class="hs-identifier hs-var hs-var">detailStayCount</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#HDStay"><span class="hs-identifier hs-type">HDStay</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-identifier">_</span></span><span> </span><span id="local-6989586621679301645"><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301645"><span class="hs-identifier hs-var">count</span></a></span></span><span class="hs-special">)</span><span>    </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301645"><span class="hs-identifier hs-var">count</span></a></span><span>
+</span><span id="line-184"></span><span>    </span><span class="annot"><a href="#local-6989586621679301642"><span class="hs-identifier hs-var">detailStayCount</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#HDNode"><span class="hs-identifier hs-type">HDNode</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-identifier">_</span></span><span> </span><span id="local-6989586621679301646"><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301646"><span class="hs-identifier hs-var">children</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[Natural] -&gt; Natural
+forall a. Num a =&gt; [a] -&gt; a
+forall (t :: * -&gt; *) a. (Foldable t, Num a) =&gt; t a -&gt; a
+</span><span class="hs-identifier hs-var">sum</span></span><span> </span><span class="annot"><span class="annottext">([Natural] -&gt; Natural) -&gt; [Natural] -&gt; Natural
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">(HotelDetail -&gt; Natural) -&gt; [HotelDetail] -&gt; [Natural]
+forall a b. (a -&gt; b) -&gt; [a] -&gt; [b]
+</span><span class="hs-identifier hs-var">map</span></span><span> </span><span class="annot"><span class="annottext">HotelDetail -&gt; Natural
+</span><a href="#local-6989586621679301642"><span class="hs-identifier hs-var">detailStayCount</span></a></span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301646"><span class="hs-identifier hs-var">children</span></a></span><span>
+</span><span id="line-185"></span><span>
+</span><span id="line-186"></span><span class="annot"><a href="Data.Disney.HotelStay.html#formatStayLabel"><span class="hs-identifier hs-type">formatStayLabel</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Natural</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-187"></span><span id="formatStayLabel"><span class="annot"><span class="annottext">formatStayLabel :: String -&gt; Natural -&gt; String
+</span><a href="Data.Disney.HotelStay.html#formatStayLabel"><span class="hs-identifier hs-var hs-var">formatStayLabel</span></a></span></span><span> </span><span id="local-6989586621679301647"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301647"><span class="hs-keyword hs-var">label</span></a></span></span><span> </span><span class="annot"><span class="annottext">Natural
+</span><span class="hs-number">1</span></span><span>     </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301647"><span class="hs-keyword hs-var">label</span></a></span><span>
+</span><span id="line-188"></span><span class="annot"><a href="Data.Disney.HotelStay.html#formatStayLabel"><span class="hs-identifier hs-var">formatStayLabel</span></a></span><span> </span><span id="local-6989586621679301648"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301648"><span class="hs-keyword hs-var">label</span></a></span></span><span> </span><span id="local-6989586621679301649"><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301649"><span class="hs-identifier hs-var">count</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301648"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; &#215;&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Natural -&gt; String
+forall a. Show a =&gt; a -&gt; String
+</span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301649"><span class="hs-identifier hs-var">count</span></a></span><span>
+</span><span id="line-189"></span><span>
+</span><span id="line-190"></span><span class="annot"><a href="Data.Disney.HotelStay.html#describeHotelConfigError"><span class="hs-identifier hs-type">describeHotelConfigError</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">FilePath</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigError"><span class="hs-identifier hs-type">HotelConfigError</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-191"></span><span id="describeHotelConfigError"><span class="annot"><span class="annottext">describeHotelConfigError :: String -&gt; HotelConfigError -&gt; String
+</span><a href="Data.Disney.HotelStay.html#describeHotelConfigError"><span class="hs-identifier hs-var hs-var">describeHotelConfigError</span></a></span></span><span> </span><span id="local-6989586621679301650"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301650"><span class="hs-identifier hs-var">path</span></a></span></span><span> </span><span id="local-6989586621679301651"><span class="annot"><span class="annottext">HotelConfigError
+</span><a href="#local-6989586621679301651"><span class="hs-identifier hs-var">configError</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-192"></span><span>    </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;Invalid hotel configuration in &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301650"><span class="hs-identifier hs-var">path</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;: &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">HotelConfigError -&gt; String
+</span><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="annot"><span class="annottext">HotelConfigError
+</span><a href="#local-6989586621679301651"><span class="hs-identifier hs-var">configError</span></a></span><span>
+</span><span id="line-193"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-194"></span><span>    </span><span id="local-6989586621679301652"><span class="annot"><span class="annottext">describe :: HotelConfigError -&gt; String
+</span><a href="#local-6989586621679301652"><span class="hs-identifier hs-var hs-var">describe</span></a></span></span><span> </span><span class="annot"><span class="annottext">HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#EmptyHotels"><span class="hs-identifier hs-var">EmptyHotels</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;at least one hotel is required&quot;</span></span><span>
+</span><span id="line-195"></span><span>    </span><span class="annot"><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#EmptyHotelCode"><span class="hs-identifier hs-type">EmptyHotelCode</span></a></span><span> </span><span id="local-6989586621679301654"><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679301654"><span class="hs-identifier hs-var">index</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-196"></span><span>        </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;hotel at index &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">Int -&gt; String
+forall a. Show a =&gt; a -&gt; String
+</span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">Int
+</span><a href="#local-6989586621679301654"><span class="hs-identifier hs-var">index</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; has an empty code&quot;</span></span><span>
+</span><span id="line-197"></span><span>    </span><span class="annot"><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#InvalidUtf8"><span class="hs-identifier hs-type">InvalidUtf8</span></a></span><span> </span><span id="local-6989586621679301655"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301655"><span class="hs-identifier hs-var">reason</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;file is not valid UTF-8: &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301655"><span class="hs-identifier hs-var">reason</span></a></span><span>
+</span><span id="line-198"></span><span>    </span><span class="annot"><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#InvalidHotelCode"><span class="hs-identifier hs-type">InvalidHotelCode</span></a></span><span> </span><span id="local-6989586621679301656"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301656"><span class="hs-identifier hs-var">code</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-199"></span><span>        </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;hotel code must contain only A-Z, 0-9, '_' or '-': &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301656"><span class="hs-identifier hs-var">code</span></a></span><span>
+</span><span id="line-200"></span><span>    </span><span class="annot"><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#DuplicateHotelCode"><span class="hs-identifier hs-type">DuplicateHotelCode</span></a></span><span> </span><span id="local-6989586621679301657"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301657"><span class="hs-identifier hs-var">code</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;duplicate hotel code: &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301657"><span class="hs-identifier hs-var">code</span></a></span><span>
+</span><span id="line-201"></span><span>    </span><span class="annot"><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#InvalidHotelColor"><span class="hs-identifier hs-type">InvalidHotelColor</span></a></span><span> </span><span id="local-6989586621679301658"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301658"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span id="local-6989586621679301659"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301659"><span class="hs-identifier hs-var">color</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-202"></span><span>        </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;hotel &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301658"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; has an invalid #RRGGBB color: &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301659"><span class="hs-identifier hs-var">color</span></a></span><span>
+</span><span id="line-203"></span><span>    </span><span class="annot"><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#EmptyHotelDetails"><span class="hs-identifier hs-type">EmptyHotelDetails</span></a></span><span> </span><span id="local-6989586621679301660"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301660"><span class="hs-identifier hs-var">code</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;hotel &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301660"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; has no stay details&quot;</span></span><span>
+</span><span id="line-204"></span><span>    </span><span class="annot"><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#EmptyDetailPath"><span class="hs-identifier hs-type">EmptyDetailPath</span></a></span><span> </span><span id="local-6989586621679301661"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301661"><span class="hs-identifier hs-var">code</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;hotel &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301661"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; has an empty detail path&quot;</span></span><span>
+</span><span id="line-205"></span><span>    </span><span class="annot"><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#EmptyDetailLabel"><span class="hs-identifier hs-type">EmptyDetailLabel</span></a></span><span> </span><span id="local-6989586621679301662"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301662"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span id="local-6989586621679301663"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301663"><span class="hs-identifier hs-var">detailPath</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-206"></span><span>        </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;hotel &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301662"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; has an empty label in path: &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
+</span><a href="#local-6989586621679301664"><span class="hs-identifier hs-var">displayPath</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301663"><span class="hs-identifier hs-var">detailPath</span></a></span><span>
+</span><span id="line-207"></span><span>    </span><span class="annot"><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#ZeroStayCount"><span class="hs-identifier hs-type">ZeroStayCount</span></a></span><span> </span><span id="local-6989586621679301665"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301665"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span id="local-6989586621679301666"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301666"><span class="hs-identifier hs-var">detailPath</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-208"></span><span>        </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;hotel &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301665"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; has zero stays at path: &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
+</span><a href="#local-6989586621679301664"><span class="hs-identifier hs-var">displayPath</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301666"><span class="hs-identifier hs-var">detailPath</span></a></span><span>
+</span><span id="line-209"></span><span>    </span><span class="annot"><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#DuplicateDetailPath"><span class="hs-identifier hs-type">DuplicateDetailPath</span></a></span><span> </span><span id="local-6989586621679301667"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301667"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span id="local-6989586621679301668"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301668"><span class="hs-identifier hs-var">detailPath</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-210"></span><span>        </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;hotel &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301667"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; has a duplicate path: &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
+</span><a href="#local-6989586621679301664"><span class="hs-identifier hs-var">displayPath</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301668"><span class="hs-identifier hs-var">detailPath</span></a></span><span>
+</span><span id="line-211"></span><span>    </span><span class="annot"><a href="#local-6989586621679301652"><span class="hs-identifier hs-var">describe</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#ConflictingDetailPath"><span class="hs-identifier hs-type">ConflictingDetailPath</span></a></span><span> </span><span id="local-6989586621679301669"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301669"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span id="local-6989586621679301670"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301670"><span class="hs-identifier hs-var">shorterPath</span></a></span></span><span> </span><span id="local-6989586621679301671"><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301671"><span class="hs-identifier hs-var">longerPath</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-212"></span><span>        </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;hotel &quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301669"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; has conflicting paths: &quot;</span></span><span>
+</span><span id="line-213"></span><span>            </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
+</span><a href="#local-6989586621679301664"><span class="hs-identifier hs-var">displayPath</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301670"><span class="hs-identifier hs-var">shorterPath</span></a></span><span>
+</span><span id="line-214"></span><span>            </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; and &quot;</span></span><span>
+</span><span id="line-215"></span><span>            </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">[String] -&gt; String
+</span><a href="#local-6989586621679301664"><span class="hs-identifier hs-var">displayPath</span></a></span><span> </span><span class="annot"><span class="annottext">[String]
+</span><a href="#local-6989586621679301671"><span class="hs-identifier hs-var">longerPath</span></a></span><span>
+</span><span id="line-216"></span><span>
+</span><span id="line-217"></span><span>    </span><span id="local-6989586621679301664"><span class="annot"><span class="annottext">displayPath :: [String] -&gt; String
+</span><a href="#local-6989586621679301664"><span class="hs-identifier hs-var hs-var">displayPath</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String -&gt; [String] -&gt; String
+forall a. [a] -&gt; [[a]] -&gt; [a]
+</span><span class="hs-identifier hs-var">intercalate</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot; &gt; &quot;</span></span><span>
+</span><span id="line-218"></span><span>
+</span><span id="line-219"></span><span class="annot"><a href="Data.Disney.HotelStay.html#renderHotelDetailsHtml"><span class="hs-identifier hs-type">renderHotelDetailsHtml</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelDetail"><span class="hs-identifier hs-type">HotelDetail</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-220"></span><span id="renderHotelDetailsHtml"><span class="annot"><span class="annottext">renderHotelDetailsHtml :: [HotelDetail] -&gt; String
+</span><a href="Data.Disney.HotelStay.html#renderHotelDetailsHtml"><span class="hs-identifier hs-var hs-var">renderHotelDetailsHtml</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(HotelDetail -&gt; String) -&gt; [HotelDetail] -&gt; String
+forall (t :: * -&gt; *) a b. Foldable t =&gt; (a -&gt; [b]) -&gt; t a -&gt; [b]
+</span><span class="hs-identifier hs-var">concatMap</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Integer -&gt; HotelDetail -&gt; String
+forall {t}. (Ord t, Num t, Show t) =&gt; t -&gt; HotelDetail -&gt; String
+</span><a href="#local-6989586621679301673"><span class="hs-identifier hs-var">renderDetail</span></a></span><span> </span><span class="annot"><span class="annottext">Integer
+</span><span class="hs-number">0</span></span><span class="hs-special">)</span><span>
+</span><span id="line-221"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-222"></span><span>    </span><span id="local-6989586621679301673"><span class="annot"><span class="annottext">renderDetail :: t -&gt; HotelDetail -&gt; String
+</span><a href="#local-6989586621679301673"><span class="hs-identifier hs-var hs-var">renderDetail</span></a></span></span><span> </span><span id="local-6989586621679301689"><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679301689"><span class="hs-identifier hs-var">level</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#HDStay"><span class="hs-identifier hs-type">HDStay</span></a></span><span> </span><span id="local-6989586621679301690"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301690"><span class="hs-keyword hs-var">label</span></a></span></span><span> </span><span id="local-6989586621679301691"><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301691"><span class="hs-identifier hs-var">count</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-223"></span><span>        </span><span class="annot"><span class="annottext">t -&gt; ShowS
+forall {p}. (Ord p, Num p, Show p) =&gt; p -&gt; ShowS
+</span><a href="#local-6989586621679301692"><span class="hs-identifier hs-var">renderSpan</span></a></span><span> </span><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679301689"><span class="hs-identifier hs-var">level</span></a></span><span> </span><span class="annot"><span class="annottext">ShowS -&gt; ShowS
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Natural -&gt; String
+</span><a href="Data.Disney.HotelStay.html#formatStayLabel"><span class="hs-identifier hs-var">formatStayLabel</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301690"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">Natural
+</span><a href="#local-6989586621679301691"><span class="hs-identifier hs-var">count</span></a></span><span>
+</span><span id="line-224"></span><span>    </span><span class="annot"><a href="#local-6989586621679301673"><span class="hs-identifier hs-var">renderDetail</span></a></span><span> </span><span id="local-6989586621679301693"><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679301693"><span class="hs-identifier hs-var">level</span></a></span></span><span> </span><span class="hs-special">(</span><span class="annot"><a href="Data.Disney.HotelStay.html#HDNode"><span class="hs-identifier hs-type">HDNode</span></a></span><span> </span><span id="local-6989586621679301694"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301694"><span class="hs-keyword hs-var">label</span></a></span></span><span> </span><span id="local-6989586621679301695"><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301695"><span class="hs-identifier hs-var">children</span></a></span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-225"></span><span>        </span><span class="annot"><span class="annottext">t -&gt; ShowS
+forall {p}. (Ord p, Num p, Show p) =&gt; p -&gt; ShowS
+</span><a href="#local-6989586621679301692"><span class="hs-identifier hs-var">renderSpan</span></a></span><span> </span><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679301693"><span class="hs-identifier hs-var">level</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301694"><span class="hs-keyword hs-var">label</span></a></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">(HotelDetail -&gt; String) -&gt; [HotelDetail] -&gt; String
+forall (t :: * -&gt; *) a b. Foldable t =&gt; (a -&gt; [b]) -&gt; t a -&gt; [b]
+</span><span class="hs-identifier hs-var">concatMap</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">t -&gt; HotelDetail -&gt; String
+</span><a href="#local-6989586621679301673"><span class="hs-identifier hs-var">renderDetail</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">t
+</span><a href="#local-6989586621679301693"><span class="hs-identifier hs-var">level</span></a></span><span> </span><span class="annot"><span class="annottext">t -&gt; t -&gt; t
+forall a. Num a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-operator hs-var">+</span></span><span> </span><span class="annot"><span class="annottext">t
+</span><span class="hs-number">1</span></span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="annot"><span class="annottext">[HotelDetail]
+</span><a href="#local-6989586621679301695"><span class="hs-identifier hs-var">children</span></a></span><span>
+</span><span id="line-226"></span><span>
+</span><span id="line-227"></span><span>    </span><span id="local-6989586621679301692"><span class="annot"><span class="annottext">renderSpan :: p -&gt; ShowS
+</span><a href="#local-6989586621679301692"><span class="hs-identifier hs-var hs-var">renderSpan</span></a></span></span><span> </span><span id="local-6989586621679301711"><span class="annot"><span class="annottext">p
+</span><a href="#local-6989586621679301711"><span class="hs-identifier hs-var">level</span></a></span></span><span> </span><span id="local-6989586621679301712"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301712"><span class="hs-identifier hs-var">text</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-228"></span><span>        </span><span class="hs-keyword">let</span><span> </span><span id="local-6989586621679301716"><span class="annot"><span class="annottext">classLevel :: p
+</span><a href="#local-6989586621679301716"><span class="hs-identifier hs-var hs-var">classLevel</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">p -&gt; p -&gt; p
+forall a. Ord a =&gt; a -&gt; a -&gt; a
+</span><span class="hs-identifier hs-var">min</span></span><span> </span><span class="annot"><span class="annottext">p
+</span><a href="#local-6989586621679301711"><span class="hs-identifier hs-var">level</span></a></span><span> </span><span class="annot"><span class="annottext">p
+</span><span class="hs-number">3</span></span><span>
+</span><span id="line-229"></span><span>            </span><span id="local-6989586621679301719"><span class="annot"><span class="annottext">className :: String
+</span><a href="#local-6989586621679301719"><span class="hs-identifier hs-var hs-var">className</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">String
+</span><span class="hs-string">&quot;hotel-detail-item hotel-detail-level-&quot;</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; ShowS
+forall a. [a] -&gt; [a] -&gt; [a]
+</span><span class="hs-operator hs-var">++</span></span><span> </span><span class="annot"><span class="annottext">p -&gt; String
+forall a. Show a =&gt; a -&gt; String
+</span><span class="hs-identifier hs-var">show</span></span><span> </span><span class="annot"><span class="annottext">p
+</span><a href="#local-6989586621679301716"><span class="hs-identifier hs-var">classLevel</span></a></span><span>
+</span><span id="line-230"></span><span>        </span><span class="hs-keyword">in</span><span> </span><span class="annot"><span class="annottext">Text -&gt; String
+</span><span class="hs-identifier hs-var">TL.unpack</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; String) -&gt; Text -&gt; String
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">HtmlT Identity () -&gt; Text
+forall a. Html a -&gt; Text
+</span><span class="hs-identifier hs-var">Lucid.renderText</span></span><span> </span><span class="annot"><span class="annottext">(HtmlT Identity () -&gt; Text) -&gt; HtmlT Identity () -&gt; Text
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span>
+</span><span id="line-231"></span><span>            </span><span class="annot"><span class="annottext">[Attribute] -&gt; HtmlT Identity () -&gt; HtmlT Identity ()
+forall arg result. Term arg result =&gt; arg -&gt; result
+</span><span class="hs-identifier hs-var">Lucid.span_</span></span><span> </span><span class="hs-special">[</span><span class="annot"><span class="annottext">Text -&gt; Attribute
+</span><span class="hs-identifier hs-var">Lucid.class_</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; Attribute) -&gt; Text -&gt; Attribute
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Text
+</span><span class="hs-identifier hs-var">T.pack</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301719"><span class="hs-identifier hs-var">className</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Text -&gt; HtmlT Identity ()
+forall a (m :: * -&gt; *). (ToHtml a, Monad m) =&gt; a -&gt; HtmlT m ()
+forall (m :: * -&gt; *). Monad m =&gt; Text -&gt; HtmlT m ()
+</span><span class="hs-identifier hs-var">Lucid.toHtml</span></span><span> </span><span class="annot"><span class="annottext">(Text -&gt; HtmlT Identity ()) -&gt; Text -&gt; HtmlT Identity ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Text
+</span><span class="hs-identifier hs-var">T.pack</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301712"><span class="hs-identifier hs-var">text</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-232"></span><span>
+</span><span id="line-233"></span><span class="annot"><a href="Data.Disney.HotelStay.html#firstInvalidHotelCode"><span class="hs-identifier hs-type">firstInvalidHotelCode</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span>
+</span><span id="line-234"></span><span id="firstInvalidHotelCode"><span class="annot"><span class="annottext">firstInvalidHotelCode :: [String] -&gt; Maybe String
+</span><a href="Data.Disney.HotelStay.html#firstInvalidHotelCode"><span class="hs-identifier hs-var hs-var">firstInvalidHotelCode</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[String] -&gt; Maybe String
+forall a. [a] -&gt; Maybe a
+</span><a href="Data.Disney.HotelStay.html#firstMatch"><span class="hs-identifier hs-var">firstMatch</span></a></span><span> </span><span class="annot"><span class="annottext">([String] -&gt; Maybe String)
+-&gt; ([String] -&gt; [String]) -&gt; [String] -&gt; Maybe String
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">(String -&gt; Bool) -&gt; [String] -&gt; [String]
+forall a. (a -&gt; Bool) -&gt; [a] -&gt; [a]
+</span><span class="hs-identifier hs-var">filter</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Bool -&gt; Bool
+</span><span class="hs-identifier hs-var">not</span></span><span> </span><span class="annot"><span class="annottext">(Bool -&gt; Bool) -&gt; (String -&gt; Bool) -&gt; String -&gt; Bool
+forall b c a. (b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; c
+</span><span class="hs-operator hs-var">.</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; Bool
+</span><a href="#local-6989586621679301728"><span class="hs-identifier hs-var">validHotelCode</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-235"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-236"></span><span>    </span><span id="local-6989586621679301728"><span class="annot"><span class="annottext">validHotelCode :: String -&gt; Bool
+</span><a href="#local-6989586621679301728"><span class="hs-identifier hs-var hs-var">validHotelCode</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Char -&gt; Bool) -&gt; String -&gt; Bool
+forall (t :: * -&gt; *) a. Foldable t =&gt; (a -&gt; Bool) -&gt; t a -&gt; Bool
+</span><span class="hs-identifier hs-var">all</span></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Bool
+</span><a href="#local-6989586621679301731"><span class="hs-identifier hs-var">isAllowedCodeCharacter</span></a></span><span>
+</span><span id="line-237"></span><span>    </span><span id="local-6989586621679301731"><span class="annot"><span class="annottext">isAllowedCodeCharacter :: Char -&gt; Bool
+</span><a href="#local-6989586621679301731"><span class="hs-identifier hs-var hs-var">isAllowedCodeCharacter</span></a></span></span><span> </span><span id="local-6989586621679301739"><span class="annot"><span class="annottext">Char
+</span><a href="#local-6989586621679301739"><span class="hs-identifier hs-var">character</span></a></span></span><span> </span><span class="hs-glyph">=</span><span>
+</span><span id="line-238"></span><span>        </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'A'</span></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
+forall a. Ord a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">&lt;=</span></span><span> </span><span class="annot"><span class="annottext">Char
+</span><a href="#local-6989586621679301739"><span class="hs-identifier hs-var">character</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><span class="hs-operator hs-var">&amp;&amp;</span></span><span> </span><span class="annot"><span class="annottext">Char
+</span><a href="#local-6989586621679301739"><span class="hs-identifier hs-var">character</span></a></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
+forall a. Ord a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">&lt;=</span></span><span> </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'Z'</span></span><span class="hs-special">)</span><span>
+</span><span id="line-239"></span><span>            </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><span class="hs-operator hs-var">||</span></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'0'</span></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
+forall a. Ord a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">&lt;=</span></span><span> </span><span class="annot"><span class="annottext">Char
+</span><a href="#local-6989586621679301739"><span class="hs-identifier hs-var">character</span></a></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><span class="hs-operator hs-var">&amp;&amp;</span></span><span> </span><span class="annot"><span class="annottext">Char
+</span><a href="#local-6989586621679301739"><span class="hs-identifier hs-var">character</span></a></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
+forall a. Ord a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">&lt;=</span></span><span> </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'9'</span></span><span class="hs-special">)</span><span>
+</span><span id="line-240"></span><span>            </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><span class="hs-operator hs-var">||</span></span><span> </span><span class="annot"><span class="annottext">Char
+</span><a href="#local-6989586621679301739"><span class="hs-identifier hs-var">character</span></a></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'_'</span></span><span>
+</span><span id="line-241"></span><span>            </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><span class="hs-operator hs-var">||</span></span><span> </span><span class="annot"><span class="annottext">Char
+</span><a href="#local-6989586621679301739"><span class="hs-identifier hs-var">character</span></a></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Char -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'-'</span></span><span>
+</span><span id="line-242"></span><span>
+</span><span id="line-243"></span><span class="annot"><a href="Data.Disney.HotelStay.html#validateHotelColor"><span class="hs-identifier hs-type">validateHotelColor</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Either</span></span><span> </span><span class="annot"><a href="Data.Disney.HotelStay.html#HotelConfigError"><span class="hs-identifier hs-type">HotelConfigError</span></a></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-244"></span><span id="validateHotelColor"><span class="annot"><span class="annottext">validateHotelColor :: String -&gt; String -&gt; Either HotelConfigError ()
+</span><a href="Data.Disney.HotelStay.html#validateHotelColor"><span class="hs-identifier hs-var hs-var">validateHotelColor</span></a></span></span><span> </span><span id="local-6989586621679301743"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301743"><span class="hs-identifier hs-var">code</span></a></span></span><span> </span><span id="local-6989586621679301744"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301744"><span class="hs-identifier hs-var">color</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="hs-keyword">case</span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301744"><span class="hs-identifier hs-var">color</span></a></span><span> </span><span class="hs-keyword">of</span><span>
+</span><span id="line-245"></span><span>    </span><span class="annot"><span class="annottext">Char
+</span><span class="hs-char">'#'</span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span id="local-6989586621679301745"><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301745"><span class="hs-identifier hs-var">hexDigits</span></a></span></span><span>
+</span><span id="line-246"></span><span>        </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">String -&gt; Int
+forall a. [a] -&gt; Int
+forall (t :: * -&gt; *) a. Foldable t =&gt; t a -&gt; Int
+</span><span class="hs-identifier hs-var">length</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301745"><span class="hs-identifier hs-var">hexDigits</span></a></span><span> </span><span class="annot"><span class="annottext">Int -&gt; Int -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">==</span></span><span> </span><span class="annot"><span class="annottext">Int
+</span><span class="hs-number">6</span></span><span> </span><span class="annot"><span class="annottext">Bool -&gt; Bool -&gt; Bool
+</span><span class="hs-operator hs-var">&amp;&amp;</span></span><span> </span><span class="annot"><span class="annottext">(Char -&gt; Bool) -&gt; String -&gt; Bool
+forall (t :: * -&gt; *) a. Foldable t =&gt; (a -&gt; Bool) -&gt; t a -&gt; Bool
+</span><span class="hs-identifier hs-var">all</span></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Bool
+</span><span class="hs-identifier hs-var">isHexDigit</span></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301745"><span class="hs-identifier hs-var">hexDigits</span></a></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">() -&gt; Either HotelConfigError ()
+forall a b. b -&gt; Either a b
+</span><span class="hs-identifier hs-var">Right</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">)</span><span>
+</span><span id="line-247"></span><span>    </span><span class="annot"><span class="annottext">String
+</span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="annottext">HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. a -&gt; Either a b
+</span><span class="hs-identifier hs-var">Left</span></span><span> </span><span class="annot"><span class="annottext">(HotelConfigError -&gt; Either HotelConfigError ())
+-&gt; HotelConfigError -&gt; Either HotelConfigError ()
+forall a b. (a -&gt; b) -&gt; a -&gt; b
+</span><span class="hs-operator hs-var">$</span></span><span> </span><span class="annot"><span class="annottext">String -&gt; String -&gt; HotelConfigError
+</span><a href="Data.Disney.HotelStay.html#InvalidHotelColor"><span class="hs-identifier hs-var">InvalidHotelColor</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301743"><span class="hs-identifier hs-var">code</span></a></span><span> </span><span class="annot"><span class="annottext">String
+</span><a href="#local-6989586621679301744"><span class="hs-identifier hs-var">color</span></a></span><span>
+</span><span id="line-248"></span><span>
+</span><span id="line-249"></span><span id="local-6989586621679301117"><span class="annot"><a href="Data.Disney.HotelStay.html#firstDuplicate"><span class="hs-identifier hs-type">firstDuplicate</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Eq</span></span><span> </span><span class="annot"><a href="#local-6989586621679301117"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="#local-6989586621679301117"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><a href="#local-6989586621679301117"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-250"></span><span id="firstDuplicate"><span class="annot"><span class="annottext">firstDuplicate :: forall a. Eq a =&gt; [a] -&gt; Maybe a
+</span><a href="Data.Disney.HotelStay.html#firstDuplicate"><span class="hs-identifier hs-var hs-var">firstDuplicate</span></a></span></span><span> </span><span id="local-6989586621679301749"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301749"><span class="hs-identifier hs-var">values</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[a] -&gt; [a] -&gt; Maybe a
+forall {a}. Eq a =&gt; [a] -&gt; [a] -&gt; Maybe a
+</span><a href="#local-6989586621679301750"><span class="hs-identifier hs-var">findDuplicate</span></a></span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301749"><span class="hs-identifier hs-var">values</span></a></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span>
+</span><span id="line-251"></span><span>  </span><span class="hs-keyword">where</span><span>
+</span><span id="line-252"></span><span>    </span><span id="local-6989586621679301750"><span class="annot"><span class="annottext">findDuplicate :: [a] -&gt; [a] -&gt; Maybe a
+</span><a href="#local-6989586621679301750"><span class="hs-identifier hs-var hs-var">findDuplicate</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span> </span><span class="annot"><span class="annottext">[a]
+</span><span class="hs-identifier">_</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe a
+forall a. Maybe a
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>
+</span><span id="line-253"></span><span>    </span><span class="annot"><a href="#local-6989586621679301750"><span class="hs-identifier hs-var">findDuplicate</span></a></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301754"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679301754"><span class="hs-identifier hs-var">value</span></a></span></span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span id="local-6989586621679301755"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301755"><span class="hs-identifier hs-var">rest</span></a></span></span><span class="hs-special">)</span><span> </span><span id="local-6989586621679301756"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301756"><span class="hs-identifier hs-var">seen</span></a></span></span><span>
+</span><span id="line-254"></span><span>        </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679301754"><span class="hs-identifier hs-var">value</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; [a] -&gt; Bool
+forall a. Eq a =&gt; a -&gt; [a] -&gt; Bool
+forall (t :: * -&gt; *) a. (Foldable t, Eq a) =&gt; a -&gt; t a -&gt; Bool
+</span><span class="hs-operator hs-var">`elem`</span></span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301756"><span class="hs-identifier hs-var">seen</span></a></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">a -&gt; Maybe a
+forall a. a -&gt; Maybe a
+</span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679301754"><span class="hs-identifier hs-var">value</span></a></span><span>
+</span><span id="line-255"></span><span>        </span><span class="hs-glyph">|</span><span> </span><span class="annot"><span class="annottext">Bool
+</span><span class="hs-identifier hs-var">otherwise</span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[a] -&gt; [a] -&gt; Maybe a
+</span><a href="#local-6989586621679301750"><span class="hs-identifier hs-var">findDuplicate</span></a></span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301755"><span class="hs-identifier hs-var">rest</span></a></span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679301754"><span class="hs-identifier hs-var">value</span></a></span><span> </span><span class="annot"><span class="annottext">a -&gt; [a] -&gt; [a]
+forall a. a -&gt; [a] -&gt; [a]
+</span><span class="hs-glyph hs-var">:</span></span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301756"><span class="hs-identifier hs-var">seen</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-256"></span><span>
+</span><span id="line-257"></span><span id="local-6989586621679301124"><span class="annot"><a href="Data.Disney.HotelStay.html#firstPathConflict"><span class="hs-identifier hs-type">firstPathConflict</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Eq</span></span><span> </span><span class="annot"><a href="#local-6989586621679301124"><span class="hs-identifier hs-type">a</span></a></span><span> </span><span class="hs-glyph">=&gt;</span><span> </span><span class="hs-special">[</span><span class="hs-special">[</span><span class="annot"><a href="#local-6989586621679301124"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="hs-special">(</span><span class="hs-special">[</span><span class="annot"><a href="#local-6989586621679301124"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span class="hs-special">,</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="#local-6989586621679301124"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span class="hs-special">)</span></span><span>
+</span><span id="line-258"></span><span id="firstPathConflict"><span class="annot"><span class="annottext">firstPathConflict :: forall a. Eq a =&gt; [[a]] -&gt; Maybe ([a], [a])
+</span><a href="Data.Disney.HotelStay.html#firstPathConflict"><span class="hs-identifier hs-var hs-var">firstPathConflict</span></a></span></span><span> </span><span id="local-6989586621679301761"><span class="annot"><span class="annottext">[[a]]
+</span><a href="#local-6989586621679301761"><span class="hs-identifier hs-var">paths</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">[([a], [a])] -&gt; Maybe ([a], [a])
+forall a. [a] -&gt; Maybe a
+</span><a href="Data.Disney.HotelStay.html#firstMatch"><span class="hs-identifier hs-var">firstMatch</span></a></span><span>
+</span><span id="line-259"></span><span>    </span><span class="hs-special">[</span><span> </span><span class="hs-special">(</span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301762"><span class="hs-identifier hs-var">shorterPath</span></a></span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301763"><span class="hs-identifier hs-var">longerPath</span></a></span><span class="hs-special">)</span><span>
+</span><span id="line-260"></span><span>    </span><span class="hs-glyph">|</span><span> </span><span id="local-6989586621679301762"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301762"><span class="hs-identifier hs-var">shorterPath</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[[a]]
+</span><a href="#local-6989586621679301761"><span class="hs-identifier hs-var">paths</span></a></span><span>
+</span><span id="line-261"></span><span>    </span><span class="hs-special">,</span><span> </span><span id="local-6989586621679301763"><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301763"><span class="hs-identifier hs-var">longerPath</span></a></span></span><span> </span><span class="hs-glyph">&lt;-</span><span> </span><span class="annot"><span class="annottext">[[a]]
+</span><a href="#local-6989586621679301761"><span class="hs-identifier hs-var">paths</span></a></span><span>
+</span><span id="line-262"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301762"><span class="hs-identifier hs-var">shorterPath</span></a></span><span> </span><span class="annot"><span class="annottext">[a] -&gt; [a] -&gt; Bool
+forall a. Eq a =&gt; a -&gt; a -&gt; Bool
+</span><span class="hs-operator hs-var">/=</span></span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301763"><span class="hs-identifier hs-var">longerPath</span></a></span><span>
+</span><span id="line-263"></span><span>    </span><span class="hs-special">,</span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301762"><span class="hs-identifier hs-var">shorterPath</span></a></span><span> </span><span class="annot"><span class="annottext">[a] -&gt; [a] -&gt; Bool
+forall a. Eq a =&gt; [a] -&gt; [a] -&gt; Bool
+</span><span class="hs-operator hs-var">`isPrefixOf`</span></span><span> </span><span class="annot"><span class="annottext">[a]
+</span><a href="#local-6989586621679301763"><span class="hs-identifier hs-var">longerPath</span></a></span><span>
+</span><span id="line-264"></span><span>    </span><span class="hs-special">]</span><span>
+</span><span id="line-265"></span><span>
+</span><span id="line-266"></span><span id="local-6989586621679301158"><span class="annot"><a href="Data.Disney.HotelStay.html#firstMatch"><span class="hs-identifier hs-type">firstMatch</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="hs-special">[</span><span class="annot"><a href="#local-6989586621679301158"><span class="hs-identifier hs-type">a</span></a></span><span class="hs-special">]</span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Maybe</span></span><span> </span><span class="annot"><a href="#local-6989586621679301158"><span class="hs-identifier hs-type">a</span></a></span></span><span>
+</span><span id="line-267"></span><span id="firstMatch"><span class="annot"><span class="annottext">firstMatch :: forall a. [a] -&gt; Maybe a
+</span><a href="Data.Disney.HotelStay.html#firstMatch"><span class="hs-identifier hs-var hs-var">firstMatch</span></a></span></span><span> </span><span class="hs-special">[</span><span class="hs-special">]</span><span>      </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">Maybe a
+forall a. Maybe a
+</span><span class="hs-identifier hs-var">Nothing</span></span><span>
+</span><span id="line-268"></span><span class="annot"><a href="Data.Disney.HotelStay.html#firstMatch"><span class="hs-identifier hs-var">firstMatch</span></a></span><span> </span><span class="hs-special">(</span><span id="local-6989586621679301765"><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679301765"><span class="hs-identifier hs-var">x</span></a></span></span><span> </span><span class="annot"><span class="hs-glyph hs-type">:</span></span><span> </span><span class="annot"><span class="annottext">[a]
+</span><span class="hs-identifier">_</span></span><span class="hs-special">)</span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">a -&gt; Maybe a
+forall a. a -&gt; Maybe a
+</span><span class="hs-identifier hs-var">Just</span></span><span> </span><span class="annot"><span class="annottext">a
+</span><a href="#local-6989586621679301765"><span class="hs-identifier hs-var">x</span></a></span><span>
+</span><span id="line-269"></span><span>
+</span><span id="line-270"></span><span class="annot"><a href="Data.Disney.HotelStay.html#isBlank"><span class="hs-identifier hs-type">isBlank</span></a></span><span> </span><span class="hs-glyph">::</span><span> </span><span class="annot"><span class="hs-identifier hs-type">String</span></span><span> </span><span class="hs-glyph">-&gt;</span><span> </span><span class="annot"><span class="hs-identifier hs-type">Bool</span></span><span>
+</span><span id="line-271"></span><span id="isBlank"><span class="annot"><span class="annottext">isBlank :: String -&gt; Bool
+</span><a href="Data.Disney.HotelStay.html#isBlank"><span class="hs-identifier hs-var hs-var">isBlank</span></a></span></span><span> </span><span class="hs-glyph">=</span><span> </span><span class="annot"><span class="annottext">(Char -&gt; Bool) -&gt; String -&gt; Bool
+forall (t :: * -&gt; *) a. Foldable t =&gt; (a -&gt; Bool) -&gt; t a -&gt; Bool
+</span><span class="hs-identifier hs-var">all</span></span><span> </span><span class="annot"><span class="annottext">Char -&gt; Bool
+</span><span class="hs-identifier hs-var">isSpace</span></span><span>
+</span><span id="line-272"></span></pre></body></html>
